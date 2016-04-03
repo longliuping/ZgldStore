@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="猜你喜欢"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000" />
+
+    <com.zgld.mall.widget.MyGridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:horizontalSpacing="5dp"
+        android:numColumns="2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:listSelector="@color/transparent"
+        android:paddingTop="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" >
+    </com.zgld.mall.widget.MyGridView>
+
+</LinearLayout>

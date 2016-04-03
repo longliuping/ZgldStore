@@ -1,0 +1,11 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/transparent_status_bar"
+    android:orientation="vertical"
+    android:background="@color/back_default"
+    tools:context="com.zgld.mall.fragment.HomeFragment">
+    <include layout="@layout/include_head"></include>
+
+</LinearLayout>

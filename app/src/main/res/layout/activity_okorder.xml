@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/transparent_status_bar"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#EFEFF0"
+        android:orientation="vertical" >
+
+        <include layout="@layout/include_head" />
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#EFEFF0"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/next"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:padding="10dp" >
+                    <TextView
+                        android:id="@+id/address_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择收货地址"
+                        android:layout_centerVertical="true"
+                        />
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:textColor="#161616" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_marginRight="40dp"
+                        android:textColor="#7D7D7D" />
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text=">"
+                        android:textColor="#767676" />
+                </RelativeLayout>
+
+                <com.zgld.mall.widget.MyExpandableListView
+                    android:id="@+id/listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="60dp"
+                    android:background="#EFEFF0"
+                    android:divider="#00000000"
+                    android:dividerHeight="0dp" >
+                </com.zgld.mall.widget.MyExpandableListView>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#D5D5D5" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/item_payment_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="合计金额:￥0.00"
+                android:textColor="#FC490B"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/item_pay"
+                android:layout_width="70dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/login_button_selector"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="确定"
+                android:textColor="#FFFFFF" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/transparent_status_bar">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/view_default_background">
+        <include layout="@layout/include_head"></include>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:weightSum="3">
+           <com.zgld.mall.widget.NiceSpinner
+               android:id="@+id/nice_spinner_province"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"/>
+           <com.zgld.mall.widget.NiceSpinner
+               android:id="@+id/nice_spinner_city"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"/>
+           <com.zgld.mall.widget.NiceSpinner
+               android:id="@+id/nice_spinner_county"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"/>
+       </LinearLayout>
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:orientation="vertical">
+                <com.zgld.mall.widget.MyGridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:background="#EEEFF0"
+                    android:listSelector="@color/transparent"
+                    android:numColumns="3"></com.zgld.mall.widget.MyGridView>
+            </LinearLayout>
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+    </LinearLayout>
+</LinearLayout>

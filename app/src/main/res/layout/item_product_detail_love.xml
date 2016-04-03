@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/grid_selector_background"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <com.boen.wearingcloud.widget.SquareLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+        </com.boen.wearingcloud.widget.SquareLayout>
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="智能穿戴客"
+            android:textColor="#424242" />
+
+        <RelativeLayout
+            android:id="@+id/item_num"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/item_sales_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="￥1000"
+                android:textColor="#9C9C9C"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/item_love_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="10000000"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/item_love"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/item_love_num"
+                android:background="@drawable/item_cloude_love" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

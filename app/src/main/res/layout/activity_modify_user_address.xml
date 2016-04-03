@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/transparent_status_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#EFEFF0"
+        android:orientation="vertical" >
+
+        <include layout="@layout/include_head" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:hint="姓名"
+            android:maxLength="10"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHint="#737373" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#EFEFF0" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:hint="联系电话"
+            android:inputType="number"
+            android:maxLength="11"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHint="#737373" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#EFEFF0" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/landline"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:hint="座机"
+            android:inputType="number"
+            android:maxLength="17"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHint="#737373" />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:hint="省市区"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:focusableInTouchMode="false"
+            android:longClickable="false"
+            android:textColorHint="#737373" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#EFEFF0" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/detail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:hint="详细地址"
+            android:maxLength="60"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#737373" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#EFEFF0" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/zip_code"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:hint="邮政编码"
+            android:inputType="number"
+            android:maxLength="100"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#737373" />
+
+        <Button
+            android:id="@+id/complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_button_selector"
+            android:padding="10dp"
+            android:text="修改"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</RelativeLayout>

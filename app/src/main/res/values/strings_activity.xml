@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--  ModifyUserPasswordActivity  -->
+	<string name="update_failed">修改失败</string>
+	<string name="update_success">修改成功</string>
+    <!-- AddAddressActivity -->
+	<string name="name_not_be_empty">名字不能为空</string>
+	<string name="phone_not_be_empty">电话不能为空</string>
+	<string name="address_not_be_empty">地址不能为空</string>
+	<string name="detail_not_be_empty">详细地址不能为空</string>
+	
+	<!-- BuyersOrdersActivity -->
+	<string name="cancel_order_success">取消订单成功</string>
+	<string name="cancel_order_failed">取消订单失败</string>
+	<string name="confirm_sign_success">确认收货成功</string>
+	<string name="confirm_sign_failed">确认收货失败</string>
+	
+	<!-- ProductManage -->
+	<string name="product_remove_success">产品下架成功</string>
+	<string name="product_remove_failed">产品下架失败</string>
+	<string name="product_delete_success">删除成功</string>
+	<string name="product_delete_failed">删除失败</string>
+	<string name="product_top_success">置顶成功</string>
+	<string name="product_top_failed">置顶失败</string>
+	
+	<!-- ProductDetailActivity -->
+	<string name="can_not_sell_their_own_products">不能购买自己的产品</string>
+	<string name="can_not_add_their_own_products">已经上架过了</string>
+	
+	<!-- ProductManageActivity -->
+	<string name="product_publish">新品发布</string>
+	<string name="go_on">去上架</string>
+	<string name="down_frame">下架</string>
+	<string name="are_you_sure_you_want_the_next_frame">确定要下架吗</string>
+	
+	<!-- SearchProductActivity -->
+	<string name="please_enter_content">请输入内容</string>
+	
+	<!-- SettingActivity -->
+	<string name="check_for_updates">检查更新中...</string>
+	<string name="no_new_version">没有新版本</string>
+	<string name="cache_success">清除缓存成功</string>
+	
+	<!-- UpdateSupplierPhoneActivity -->
+	<string name="cell_phone_number_is_not_correct">手机号码长度不正确</string>
+	
+	<!-- AddLogisticsActivity -->
+	<string name="add_logistics_name_is_not_null">物流公司名称不能为空</string>
+	<string name="add_logistics_number_is_not_null">物流号不能为空</string>
+	
+	<!-- ExperienceStoreDetailActivity -->
+	<string name="experience_store_detail_contact_tel">联系电话：</string>
+	<string name="experience_store_detail_address">\n联系地址：</string>
+	<string name="experience_store_detail_shop_describe">\n描述：</string>
+	
+	<!-- LoginActivity -->
+	<string name="login_username_is_not_null">用户名不能为空</string>
+	<string name="login_pwd_is_not_null">密码不能为空</string>
+	<string name="logining">登录中...</string>
+	<string name="login_successed">登录成功</string>
+	<string name="login_failed">账号或者密码错误</string>
+	<string name="login_no_user">没有该用户</string>
+	<string name="login_username_or_password_error">用户名或者密码错误</string>
+	
+	<!-- ForgetPasswordActivity -->
+	<string name="forget_pwd_new_pwd_is_not_null">新密码不能为空</string>
+	<string name="forget_pwd_affirm_pwd_is_not_null">确认密码不能为空</string>
+	<string name="forget_pwd_new_and_affirm_error">新密码和确认密码不一致</string>
+	<string name="forget_pwd_pwd_length_error">密码长度不能小于6位数</string>
+	<string name="forget_pwd_phone_error">手机号码填写不正确!</string>
+	<string name="forget_pwd_send_verification_code">正在发送验证码!</string>
+	<string name="forget_pwd_verification_code_input_error">验证码输入不正确!</string>
+	<string name="forget_pwd_check_verification_code">正在验证验证码!</string>
+	<string name="forget_pwd_verification_code_send_failure">验证码发送失败!</string>
+	<string name="forget_pwd_verification_code_error">验证码错误!</string>
+	<string name="forget_pwd_successed">找回密码成功!</string>
+	<string name="forget_pwd_failure">找回密码失败!</string>
+	<string name="forget_pwd_re_sending">重新发送</string>
+	<string name="forget_pwd_wait">请等待%1$s秒</string>
+	
+	<!-- ModifyUserPasswordActivity -->
+	<string name="modify_user_new_password_is_not_null">新密码不能为空</string>
+	<string name="modify_user_new_password_length_error">新密码长度需大于等于6位</string>
+	<string name="modify_user_confirm_password_is_not_null">确认密码不能为空</string>
+	<string name="modify_user_confirm_password_length_error">确认长度需大于等于6位</string>
+	<string name="modify_user_new_password_and_confirm_password_not_consistent">新密码和确认密码不一致</string>
+	
+	<!-- RegistrationAgreementActivity -->
+	<string name="ra_agreement">file:///android_asset/agreement.html</string>
+	<!-- AboutActivity -->
+	<string name="about_address">file:///android_asset/about.html</string>
+	
+	<!-- 登录注册 -->
+	<string name="register_nick_name_not_null">昵称不能为空</string>
+	<string name="register_photo_number_error">手机号码填写不正确!</string>
+	
+</resources>

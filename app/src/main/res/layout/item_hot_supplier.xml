@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/grid_selector_background" android:padding="3dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:orientation="vertical"  android:background="@drawable/item_cloude_bg">
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/demo"
+            />
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#393939"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:minLines="2"
+            android:background="@color/white"
+            android:maxLines="2"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="3dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/item_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="#999999"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

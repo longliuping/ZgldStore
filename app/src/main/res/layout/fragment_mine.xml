@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/transparent_status_bar"
+    android:orientation="vertical"
+    android:background="@color/back_default"
+    tools:context="com.zgld.mall.fragment.HomeFragment">
+    <include layout="@layout/include_head"></include>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#EFEFF0"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scrollbars="none"
+                android:background="#D6D6D6"
+                >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical" >
+
+                    <include layout="@layout/include_my_data" />
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="15dp" />
+                    <com.zgld.mall.widget.MyListView
+                        android:id="@+id/list_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="#E5E5E5"
+                        android:dividerHeight="1dp"
+                        android:background="#EEEFF0"
+                        android:listSelector="@color/transparent"
+                        >
+                    </com.zgld.mall.widget.MyListView>
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="#E5E5E5" />
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>

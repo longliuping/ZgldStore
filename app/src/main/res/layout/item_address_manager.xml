@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <CheckBox
+        android:id="@+id/item_car_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:button="@drawable/car_checkbox_style" />
+	<TextView 
+	    android:id="@+id/name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="#161717"
+	    android:textSize="16sp"
+	    android:singleLine="true"
+	    android:layout_toRightOf="@id/item_car_checkbox"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="70dp"
+	    />
+	<TextView 
+	    android:id="@+id/address"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="#919292"
+	    android:layout_toRightOf="@id/item_car_checkbox"
+	    android:layout_marginLeft="10dp"
+	    android:layout_below="@id/name"
+	    android:maxLines="2"
+	    android:layout_marginRight="70dp"
+	    
+	    />
+	<ImageView 
+	    android:id="@+id/item_delete"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/item_address_delete"
+	    android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true"
+	    />
+	<ImageView 
+	    android:id="@+id/item_edit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/item_address_edit"
+	    android:layout_toLeftOf="@id/item_delete"
+	    android:layout_marginRight="10dp"
+	    android:layout_centerVertical="true"
+	    />
+</RelativeLayout>

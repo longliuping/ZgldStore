@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="10dp"
+     >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" >
+
+        <ImageView
+            android:id="@+id/item_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+             />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_head"
+            android:gravity="center_vertical"
+            android:text="张三"
+            android:textColor="#030303" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="我的评论"
+        android:textColor="#424242" />
+
+    <TextView
+        android:id="@+id/item_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="2015/06/02"
+        android:textColor="#727272" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#EFEFF0" />
+
+</LinearLayout>

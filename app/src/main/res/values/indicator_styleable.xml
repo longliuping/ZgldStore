@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyWidget" parent="@android:style/Theme" />
+
+    <style name="MyWidget.TabText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tab_indicator_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+    <declare-styleable name="TitleIndicator">
+        <attr name="titlePadding" format="dimension" />
+        <!-- Left/right padding of not active view titles. -->
+        <attr name="clipPadding" format="dimension" />
+        <attr name="textColor" format="color|reference" />
+        <attr name="textSizeNormal" format="dimension" />
+        <attr name="textSizeSelected" format="dimension" />
+        <attr name="footerLineHeight" format="dimension" />
+        <attr name="footerColor" format="color" />
+        <attr name="footerTriangleHeight" format="dimension" />
+    </declare-styleable>
+
+     <attr name="icon" format="reference"></attr>
+    <attr name="color" format="color"></attr>
+    <attr name="text" format="string"></attr>
+    <attr name="text_size" format="dimension"></attr>
+    
+    <declare-styleable name="BottomView">
+        <attr name="icon"></attr>
+        <attr name="color"></attr>
+        <attr name="text"></attr>
+        <attr name="text_size"></attr>
+    </declare-styleable>
+</resources>

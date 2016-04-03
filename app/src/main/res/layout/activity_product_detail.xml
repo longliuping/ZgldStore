@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/transparent_status_bar"
+     >
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/product_detailscrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/view_default_background" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+            <include layout="@layout/imclude_product_jazz"></include>
+            <include layout="@layout/include_product_detail" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:background="#EFEFF0" />
+
+            <include layout="@layout/include_product_detail_user" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:background="#EFEFF0" />
+
+            <include layout="@layout/include_product_detail_banner" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:background="#EFEFF0"
+                android:visibility="gone"
+                />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/transparent" >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/product_detail_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/back"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menu_base"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/bottom_menu" />
+    </RelativeLayout>
+
+</RelativeLayout>
