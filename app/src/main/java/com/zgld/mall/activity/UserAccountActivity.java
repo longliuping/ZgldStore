@@ -1,11 +1,13 @@
 package com.zgld.mall.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,13 +24,13 @@ import java.util.List;
 /**
  * 用户账户
  */
-public class UserAccountActivity extends BaseActivity {
+public class UserAccountActivity extends BaseActivity implements AdapterView.OnItemClickListener{
     YAccount users;
     ListView listview;
     MenuAdapter menuAdapter;
     List<Menu> listInfo = new ArrayList<>();
-    Class [] className = new Class[]{RechargeDetailsActivity.class,PresentDetailActivity.class};
-    String [] names = new String[]{"充值明细","提现明细"};
+    Class [] className = new Class[]{RechargeDetailsActivity.class,PresentDetailActivity.class,FreezeDetailsActivity.class};
+    String [] names = new String[]{"充值明细","提现明细","冻结明细"};
 
     @Override
     public void handleMsg(Message msg) {
@@ -55,7 +57,8 @@ public class UserAccountActivity extends BaseActivity {
             return;
         }
         listview = (ListView) findViewById(R.id.listview);
-        for (int i =0;i<2;i++){
+        listview.setOnItemClickListener(this);
+        for (int i =0;i<names.length;i++){
             Menu info = new Menu();
             info.setClassName(className[i]);
             info.setName(names[i]);
@@ -65,6 +68,13 @@ public class UserAccountActivity extends BaseActivity {
         menuAdapter = new MenuAdapter();
         listview.setAdapter(menuAdapter);
         menuAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this,listInfo.get(position).getClassName());
+        intent.putExtra("name",listInfo.get(position).getName());
+        startActivity(intent);
     }
 
     class Menu implements Serializable{

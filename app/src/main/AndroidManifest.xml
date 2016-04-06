@@ -132,7 +132,8 @@
         <activity android:name=".activity.UpdateUserEmailActivity" />
         <activity android:name=".activity.UserAccountActivity" />
         <activity android:name=".activity.RechargeDetailsActivity" />
-        <activity android:name=".activity.PresentDetailActivity"></activity>
+        <activity android:name=".activity.PresentDetailActivity" />
+        <activity android:name=".activity.FreezeDetailsActivity"></activity>
     </application>
 
 </manifest>

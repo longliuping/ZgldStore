@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 
-public class RechargeDetailsActivity extends BaseActivity {
+public class FreezeDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStyle();
-        setContentView(R.layout.activity_recharge_details);
+        setContentView(R.layout.activity_freeze_details);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -22,7 +22,7 @@ public class RechargeDetailsActivity extends BaseActivity {
             }
         });
         TextView title = (TextView) findViewById(R.id.title_center);
-        title.setText(this.getIntent().getStringExtra("name")+"");
+        title.setText(this.getIntent().getStringExtra("name") + "");
     }
 
     @Override
