@@ -9,6 +9,7 @@ import com.zgld.mall.beans.City;
 import com.zgld.mall.beans.County;
 import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.Province;
+import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.utils.Contents;
 
 import android.content.Intent;
@@ -49,7 +50,7 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
         }
     }
     Button complete;
-    HishopUserShippingAddresses info = new HishopUserShippingAddresses();
+    UserShippingAddresses info = new UserShippingAddresses();
     EditText address, name, phone, landline, detail, zip_code;
 
     @Override
@@ -66,7 +67,7 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
                 finish();
             }
         });
-        info = (HishopUserShippingAddresses) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (UserShippingAddresses) this.getIntent().getSerializableExtra(Contents.INFO);
         if (info == null) {
             finish();
             return;
@@ -91,8 +92,8 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
         zip_code = (EditText) findViewById(R.id.zip_code);
 
         name.setText(info.getShipTo());
-        phone.setText(info.getCellPhone());
-        landline.setText(info.getTelPhone());
+//        phone.setText(info.getCellPhone());
+//        landline.setText(info.getTelPhone());
 //        address.setText(info.getShippingRegion());
         detail.setText(info.getAddress());
         zip_code.setText(info.getZipcode());
@@ -131,10 +132,10 @@ County county;
                     Toast.makeText(this, getString(R.string.name_not_be_empty), Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (TextUtils.isEmpty(phone.getText().toString())) {
-                    Toast.makeText(this, getString(R.string.phone_not_be_empty), Toast.LENGTH_SHORT).show();
-                    break;
-                }
+//                if (TextUtils.isEmpty(phone.getText().toString())) {
+//                    Toast.makeText(this, getString(R.string.phone_not_be_empty), Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
                 if (TextUtils.isEmpty(address.getText().toString())) {
                     Toast.makeText(this, getString(R.string.address_not_be_empty), Toast.LENGTH_SHORT).show();
                     break;
@@ -144,7 +145,7 @@ County county;
                     break;
                 }
                 Map<String, String> m = new HashMap<String, String>();
-                m.put("address.shippingId", info.getShippingId()+"");
+                m.put("address.addressId", info.getAddressId()+"");
                 m.put("address.shipTo", name.getText().toString());
                 m.put("address.address", detail.getText().toString());
                 m.put("address.zipcode", zip_code.getText().toString());
@@ -160,7 +161,7 @@ County county;
                     m.put("address.regionId", county.getId() + "");
                 }
                 m.put("shippingRegion", address.getText().toString());
-                m.put("shippingId", info.getShippingId() + "");
+                m.put("shippingId", info.getAddressId() + "");
                 getData(com.android.volley.Request.Method.POST, 202, "addresses/update_user_shipping_addresses.html", m, null, 1);
                 break;
         }

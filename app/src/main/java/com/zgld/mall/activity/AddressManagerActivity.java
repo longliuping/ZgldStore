@@ -16,6 +16,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.AddressAdapter;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopUserShippingAddresses;
+import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.UserToken;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 public class AddressManagerActivity extends BaseActivity implements OnItemClickListener, OnRefreshListener2,
         AddressAdapter.AddressAdapterListener {
     PullToRefreshListView listview;
-    List<HishopUserShippingAddresses> listInfo = new ArrayList<HishopUserShippingAddresses>();
+    List<UserShippingAddresses> listInfo = new ArrayList<UserShippingAddresses>();
     AddressAdapter infoAdapter;
 
     @Override
@@ -67,15 +68,12 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
           switch (msg.what) {
               case 201:
                   JSONArray jsonArray = new JSONObject(json).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
-                  listInfo = new ArrayList<HishopUserShippingAddresses>();
-                  entityType = new TypeToken<List<HishopUserShippingAddresses>>() {
+                  listInfo = new ArrayList<UserShippingAddresses>();
+                  entityType = new TypeToken<List<UserShippingAddresses>>() {
                   }.getType();
-                  List<HishopUserShippingAddresses> list = gson.fromJson(jsonArray.toString(), entityType);
+                  List<UserShippingAddresses> list = gson.fromJson(jsonArray.toString(), entityType);
                   if (list != null) {
-                      for (int i = 0; i < list.size(); i++) {
-                          HishopUserShippingAddresses info = list.get(i);
-                          listInfo.add(info);
-                      }
+                      listInfo.addAll(list);
                   }
                   infoAdapter = new AddressAdapter(this, listInfo, this);
                   listview.setAdapter(infoAdapter);
@@ -163,13 +161,17 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO Auto-generated method stub
-
+        UserShippingAddresses info = listInfo.get(position);
+        Intent intent = new Intent();
+        intent.putExtra(Contents.INFO, info);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
     public void selectedChecked(int position) {
         // TODO Auto-generated method stub
-        HishopUserShippingAddresses info = listInfo.get(position);
+        UserShippingAddresses info = listInfo.get(position);
         Intent intent = new Intent();
         intent.putExtra(Contents.INFO, info);
         setResult(RESULT_OK, intent);
@@ -199,7 +201,7 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
                         // TODO Auto-generated method stub
                         dialog.dismiss();
                         Map<String,String> m = new HashMap<>();
-                        m.put("address.shippingId",listInfo.get(deletePosition).getShippingId()+"");
+                        m.put("address.addressId",listInfo.get(deletePosition).getAddressId()+"");
                         getData(Request.Method.POST, 202, "addresses/delete_user_shipping_addresses.html", m, null, 1);
                     }
 

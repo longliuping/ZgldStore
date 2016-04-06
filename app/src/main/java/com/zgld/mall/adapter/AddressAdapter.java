@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.beans.HishopUserShippingAddresses;
+import com.zgld.mall.beans.UserShippingAddresses;
 
 /**
  * 地址
@@ -30,11 +31,11 @@ public class AddressAdapter extends BaseAdapter {
 	}
 
 	Context context;
-	List<HishopUserShippingAddresses> listInfo;
+	List<UserShippingAddresses> listInfo;
 	LayoutInflater layoutInflater;
 	AddressAdapterListener listener;
 
-	public AddressAdapter(Context context, List<HishopUserShippingAddresses> listInfo, AddressAdapterListener listener) {
+	public AddressAdapter(Context context, List<UserShippingAddresses> listInfo, AddressAdapterListener listener) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.listInfo = listInfo;
@@ -82,10 +83,15 @@ public class AddressAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		HishopUserShippingAddresses info = listInfo.get(position);
+		UserShippingAddresses info = listInfo.get(position);
 		if (info != null) {
-
-			holder.name.setText("收货人:" + info.getShipTo() + "  " + info.getCellPhone());
+			convertView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					listener.selectedChecked(position);
+				}
+			});
+			holder.name.setText("收货人:" + info.getShipTo() + "  ");
 			holder.address.setText("收货地址:" + info.getAddress());
 			holder.item_car_checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 

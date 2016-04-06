@@ -161,13 +161,13 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
     void initData() {
         YAccount user = new UserDataShare(this).getUserData();
         if(user!=null){
-            int types[] = new int[]{2,1,1,1,1,1};
-            String names[] = new String[]{"上传头像","性别","电话号码","手机号码","电子邮件","修改密码"};
-            String values[] = new String[]{user.getAccountHead()+"",Contents.getSex(user.getAccountSex()),user.getUserProfile().getCellPhone(),user.getUserProfile().getTelPhone(),user.getAccountEmail(),""};
+            int types[] = new int[]{2,1,1,1,1,1,1};
+            String names[] = new String[]{"上传头像","性别","电话号码","手机号码","电子邮件","修改密码","管理收货地址"};
+            String values[] = new String[]{user.getAccountHead()+"",Contents.getSex(user.getAccountSex()),user.getUserProfile().getCellPhone(),user.getUserProfile().getTelPhone(),user.getAccountEmail(),"",""};
             Class className[] = new Class[]{null,UpdateUserSexActivity.class,UpdateUserCellPhoneActivity.class,UpdateTelPhoneActivity.class,UpdateUserEmailActivity.class,UpdateUserPasswordActivity
-            .class};
+            .class,AddressManagerActivity.class};
             listInfo = new ArrayList<>();
-            for (int i=0;i<6;i++)
+            for (int i=0;i < types.length;i++)
             {
                 Personal info = new Personal();
                 info.setType(types[i]);
