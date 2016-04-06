@@ -21,6 +21,7 @@ import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.HishopShoppingCarts;
 import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
@@ -167,7 +168,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 startActivityForResult(intent, 200);
                 break;
             case R.id.item_pay:
-                AspnetUsers users = new UserDataShare(this).getUserData();
+                YAccount users = new UserDataShare(this).getUserData();
                 if(users==null){
                     Contents.loginPage(this,null,200);
                     return;
@@ -194,8 +195,8 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 m.put("skuNumber", nums.toString());
                 m.put("modeId","8");
                 m.put("templateId","2");
-                m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-                m.put(Contents.USERID,users.getUserId()+"");
+                m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
+                m.put(Contents.USERID,users.getUsers().getUserId()+"");
                 getData(com.android.volley.Request.Method.POST, 205, "order/submit_order.html", m, null, 1);
                 break;
         }

@@ -144,9 +144,6 @@ County county;
                     break;
                 }
                 Map<String, String> m = new HashMap<String, String>();
-                AspnetUsers user =new UserDataShare(this).getUserData();
-                m.put("token",user.getUserToken().getAccountToken());
-                m.put("userId",user.getUserId()+"");
                 m.put("address.shippingId", info.getShippingId()+"");
                 m.put("address.shipTo", name.getText().toString());
                 m.put("address.address", detail.getText().toString());

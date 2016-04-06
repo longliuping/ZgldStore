@@ -24,6 +24,7 @@ import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopOrderItems;
 import com.zgld.mall.beans.HishopOrders;
 import com.zgld.mall.beans.OrderStatus;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
@@ -371,10 +372,10 @@ public interface BuyersOrdersAdapterListener{
 					public void customDialogClickRight() {
 						dialog.dismiss();
 						Map<String,String> m = new HashMap<>();
-						AspnetUsers users = new UserDataShare(context).getUserData();
+						YAccount users = new UserDataShare(context).getUserData();
 						if(users!=null){
-							m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-							m.put(Contents.USERID, users.getUserId() + "");
+							m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
+							m.put(Contents.USERID, users.getUsers().getUserId()+"");
 							m.put("orderid",listInfo.get(groupPosition).getOrderId());
 							new OrderAsync(context, Request.Method.POST, 306, "order/cancel_order.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
 

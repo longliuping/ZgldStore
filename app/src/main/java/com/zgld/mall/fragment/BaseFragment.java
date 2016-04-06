@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
+import com.zgld.mall.UserDataShare;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
@@ -113,6 +116,13 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
      * @return
      */
     public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+        if(Request.Method.POST ==method && m!=null) {
+            YAccount user = new UserDataShare(activity).getUserData();
+            if(user!=null) {
+                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
+                m.put(Contents.USERID, user.getUsers().getUserId() + "");
+            }
+        }
         if (NetWorkTools.isHasNet(activity)) {
             if (pageIndex == 1) {
                 if (confirmDialog == null) {
@@ -154,12 +164,14 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
                    Message msg = handler.obtainMessage();
                    msg.what = tag;
                    Bundle data = new Bundle();
-                   JSONObject object = new JSONObject(json);
-                   data.putString(Contents.JSON, json);
-                   data.putInt(Contents.STATUS, object.getInt(Contents.STATUS));
-                   data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
-                   data.putBoolean("cache", false);
-                   msg.setData(data);
+                  if(json!=null && json.length()>10){
+                      JSONObject object = new JSONObject(json);
+                      data.putString(Contents.JSON, json);
+                      data.putInt(Contents.STATUS, object.getInt(Contents.STATUS));
+                      data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
+                      data.putBoolean("cache", false);
+                      msg.setData(data);
+                  }
                    if (confirmDialog != null && confirmDialog.isShowing()) {
                        confirmDialog.dismiss();
                    }

@@ -17,6 +17,7 @@ import com.zgld.mall.adapter.AddressAdapter;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.UserToken;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 
@@ -142,9 +143,7 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
 
     void initData() {
         Map<String,String> m = new HashMap<>();
-        AspnetUsers user =new UserDataShare(this).getUserData();
-        m.put(Contents.TOKEN,user.getUserToken().getAccountToken());
-        m.put(Contents.USERID,user.getUserId()+"");
+        YAccount user =new UserDataShare(this).getUserData();
         getData(com.android.volley.Request.Method.POST, 201, "addresses/user_shipping_addresses.html", m, null, 1);
     }
 
@@ -200,10 +199,6 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
                         // TODO Auto-generated method stub
                         dialog.dismiss();
                         Map<String,String> m = new HashMap<>();
-                        AspnetUsers user =new UserDataShare(AddressManagerActivity.this).getUserData();
-                        UserToken userToken = user.getUserToken();
-                        m.put(Contents.TOKEN,userToken.getAccountToken());
-                        m.put(Contents.USERID, user.getUserId() + "");
                         m.put("address.shippingId",listInfo.get(deletePosition).getShippingId()+"");
                         getData(Request.Method.POST, 202, "addresses/delete_user_shipping_addresses.html", m, null, 1);
                     }

@@ -8,7 +8,11 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.zgld.mall.R;
+import com.zgld.mall.UserDataShare;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.AsyncGameRunner;
@@ -79,6 +83,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
         }
     }
     public void getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+        if(Request.Method.POST ==method && m!=null) {
+            YAccount user = new UserDataShare(this).getUserData();
+            if(user!=null) {
+                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
+                m.put(Contents.USERID, user.getUsers().getUserId() + "");
+            }
+        }
         if (NetWorkTools.isHasNet(getApplicationContext())) {
             if (pageIndex == 1) {
                 if (confirmDialog == null) {

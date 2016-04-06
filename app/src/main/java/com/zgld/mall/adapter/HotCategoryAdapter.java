@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
+import com.zgld.mall.beans.Categories;
 import com.zgld.mall.beans.HotCategory;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
  */
 public class HotCategoryAdapter extends BaseAdapter{
     Context context;
-    List<HotCategory> listInfo = null;
-    public HotCategoryAdapter(Context context,List<HotCategory> listInfo){
+    List<Categories> listInfo = null;
+    public HotCategoryAdapter(Context context,List<Categories> listInfo){
         this.context = context;
         this.listInfo = listInfo;
     }
@@ -56,12 +57,12 @@ public class HotCategoryAdapter extends BaseAdapter{
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        HotCategory info = listInfo.get(position);
+        Categories info = listInfo.get(position);
         if(info!=null){
-            vh.item_name.setText(info.getHotname());
+            vh.item_name.setText(info.getName());
 
-            if(info.getHotimg()!=null && !info.getHotimg().isEmpty()) {
-                SysApplication.DisplayImage(info.getHotimg(), vh.item_image);
+            if(info.getIconUrl()!=null && !info.getIconUrl().isEmpty()) {
+                SysApplication.DisplayImage(info.getIconUrl(), vh.item_image);
             }
 //            if(info.getHotid()!=null && info.getHotid()>0){
 //                vh.item_image.setImageResource(info.getResId());

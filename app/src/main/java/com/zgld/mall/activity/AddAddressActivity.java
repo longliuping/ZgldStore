@@ -20,6 +20,7 @@ import com.zgld.mall.beans.City;
 import com.zgld.mall.beans.County;
 import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.Province;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONObject;
@@ -143,9 +144,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
                 } else {
                     m.put("address.regionId", county.getId() + "");
                 }
-                AspnetUsers user = new UserDataShare(this).getUserData();
-                m.put(Contents.TOKEN,user.getUserToken().getAccountToken());
-                m.put(Contents.USERID,user.getUserId()+"");
                 getData(com.android.volley.Request.Method.POST, 202, "addresses/add_user_shipping_addresses.html", m, null, 1);
                 break;
         }

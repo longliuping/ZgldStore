@@ -23,6 +23,7 @@ import com.zgld.mall.adapter.PersonalDataAdapter;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.Personal;
 import com.zgld.mall.beans.ProductImageUpload;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BitmapUtil;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
@@ -56,7 +57,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
                     if(msg.getData().getInt(Contents.STATUS)==200){
                         JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
                         Gson gson = new Gson();
-                        AspnetUsers user = gson.fromJson(jsonObject.toString(), new TypeToken<AspnetUsers>() {
+                        YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<AspnetUsers>() {
                         }.getType());
                         new UserDataShare(this).saveUserData(user);
                         initData();
@@ -88,7 +89,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
         listview = (ListView) findViewById(R.id.listview);
         listview.setOnItemClickListener(this);
         Map<String,String> m = new HashMap<>();
-        AspnetUsers user = new UserDataShare(this).getUserData();
+        YAccount user = new UserDataShare(this).getUserData();
         if(user==null){
             finish();
             return;
@@ -96,8 +97,8 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(this);
         logout.setVisibility(View.VISIBLE);
-        m.put(Contents.TOKEN,user.getUserToken().getAccountToken());
-        m.put(Contents.USERID, user.getUserId() + "");
+        m.put(Contents.TOKEN,user.getUsers().getAppUserToken());
+        m.put(Contents.USERID, user.getUsers().getUserId() + "");
         getData(Request.Method.POST, 201, "user/userinfo.html", m, null, 2);
         initData();
     }
@@ -151,21 +152,18 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
     }
     private void uploadPhoto(Bundle extras) {
         Map<String,String> m = new HashMap<>();
-        AspnetUsers user = new UserDataShare(this).getUserData();
         Bitmap bitmap = extras.getParcelable("data");
         String result = BitmapUtil.bitmapToBase64(bitmap);
         m.put("userinfo.head",result);
-        m.put(Contents.TOKEN, user.getUserToken().getAccountToken());
-        m.put(Contents.USERID, user.getUserId() + "");
         getData(Request.Method.POST, 201, "user/update_user_head.html",m,null,2);
     }
 
     void initData() {
-        AspnetUsers user = new UserDataShare(this).getUserData();
+        YAccount user = new UserDataShare(this).getUserData();
         if(user!=null){
             int types[] = new int[]{2,1,1,1,1,1};
             String names[] = new String[]{"上传头像","性别","电话号码","手机号码","电子邮件","修改密码"};
-            String values[] = new String[]{user.getHead()+"",Contents.getSex(user.getGender()),user.getAspnetMembers().getCellPhone(),user.getAspnetMembers().getTelPhone(),user.getEmail(),""};
+            String values[] = new String[]{user.getAccountHead()+"",Contents.getSex(user.getAccountSex()),user.getUserProfile().getCellPhone(),user.getUserProfile().getTelPhone(),user.getAccountEmail(),""};
             Class className[] = new Class[]{null,UpdateUserSexActivity.class,UpdateUserCellPhoneActivity.class,UpdateTelPhoneActivity.class,UpdateUserEmailActivity.class,UpdateUserPasswordActivity
             .class};
             listInfo = new ArrayList<>();

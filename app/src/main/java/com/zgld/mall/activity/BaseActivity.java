@@ -18,12 +18,15 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
+import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.GsonObject;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
@@ -154,6 +157,13 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      */
     public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
         // RequestManager.init(this);
+        if(Request.Method.POST ==method && m!=null) {
+            YAccount user = new UserDataShare(this).getUserData();
+            if(user!=null) {
+                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
+                m.put(Contents.USERID, user.getUsers().getUserId() + "");
+            }
+        }
         if (NetWorkTools.isHasNet(getApplicationContext())) {
             if (pageIndex == 1) {
                 if (confirmDialog == null || !confirmDialog.isShowing()) {

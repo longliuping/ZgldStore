@@ -38,6 +38,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.BuyersOrdersAdapter;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopOrders;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.NetWorkTools;
@@ -90,9 +91,6 @@ public class BuyersOrders4Fragment extends BuyersOrdersBaseFragment implements O
             return;
         }
         Map<String,String> m = new HashMap<>();
-        AspnetUsers users = new UserDataShare(activity).getUserData();
-        m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-        m.put(Contents.USERID,users.getUserId()+"");
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,20+"");
         m.put("id", "4");

@@ -10,7 +10,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.beans.AspnetMembers;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.UserProfile;
 import com.zgld.mall.beans.UserToken;
+import com.zgld.mall.beans.Users;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 
@@ -57,10 +60,10 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 	 * @return
 	 * @throws JSONException
 	 */
-	public AspnetUsers updateUser(Message message) throws JSONException {
+	public YAccount updateUser(Message message) throws JSONException {
 		JSONObject jsonObject = new JSONObject(message.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
 		String json = jsonObject.toString();
-		AspnetUsers users = new Gson().fromJson(json, new TypeToken<AspnetUsers>() {
+		YAccount users = new Gson().fromJson(json, new TypeToken<YAccount>() {
 		}.getType());
 		UserDataShare share = new UserDataShare(context);
 		share.saveUserData(users);
@@ -104,34 +107,49 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 	 * 
 	 * @return
 	 */
-	public AspnetUsers getUserData() {
-		AspnetUsers info = null;
+	public YAccount getUserData() {
+		YAccount info = null;
 		if (isLogin()) {
-			info = new AspnetUsers();
-			info.setEmail(haredPreferences.getString("email", ""));
-			info.setUserName(haredPreferences.getString("userName", ""));
-			info.setGender(haredPreferences.getInt("gender", 0));
-			info.setHead(haredPreferences.getString("head", ""));
+			info = new YAccount();
+			info.setAccountId(haredPreferences.getInt("userId", 0));
+			info.setRoleSetId(haredPreferences.getInt("roleSetId", 0));
+			info.setUnitSetId(haredPreferences.getInt("unitSetId", 0));
+			info.setAccountSex(haredPreferences.getInt("accountSex", 0));
+			info.setAccountState(haredPreferences.getInt("accountState", 0));
+			info.setAccountLeavel(haredPreferences.getInt("accountLeavel", 0));
+
+			info.setAccountName(haredPreferences.getString("accountName", ""));
+			info.setAccountRealName(haredPreferences.getString("accountRealName", ""));
+			info.setAccountPassword(haredPreferences.getString("accountPassword", ""));
+			info.setAccountHead(haredPreferences.getString("accountHead", ""));
+			info.setAccountEmail(haredPreferences.getString("accountEmail", ""));
+			info.setAccountMobile(haredPreferences.getString("accountMobile", ""));
+			info.setAccountIntro(haredPreferences.getString("accountIntro", ""));
 			int userId = haredPreferences.getInt("userId", 0);
-			info.setUserId(userId);
+			info.setAccountId(userId);
 
-			UserToken token = new UserToken();
-			token.setAccountToken(haredPreferences.getString("accountToken",""));
-			info.setUserToken(token);
+			Users users = new Users();
+			users.setUserAccountStatus(haredPreferences.getInt("userAccountStatus", 0));
+			users.setUserType(haredPreferences.getInt("userType", 3));
+			users.setAppUserToken(haredPreferences.getString("appUserToken", ""));
+			users.setUserBankCard(haredPreferences.getString("userBankCard", ""));
+			users.setUserId(userId);
+			info.setUsers(users);
 
-			AspnetMembers member = new AspnetMembers();
-			member.setReferralUserId(haredPreferences.getInt("referralUserId", 0));
-			member.setTopRegionId(haredPreferences.getInt("topRegionId", 0));
-			member.setRegionId(haredPreferences.getInt("regionId", 0));
-			member.setRealName(haredPreferences.getString("realName", ""));
-			member.setAddress(haredPreferences.getString("address", ""));
-			member.setZipcode(haredPreferences.getString("zipcode", ""));
-			member.setTelPhone(haredPreferences.getString("telPhone", ""));
-			member.setCellPhone(haredPreferences.getString("cellPhone", ""));
-			member.setQq(haredPreferences.getString("qq", ""));
-			member.setWangwang(haredPreferences.getString("wangwang", ""));
-			member.setMsn(haredPreferences.getString("msn", ""));
-			info.setAspnetMembers(member);
+			UserProfile profile = new UserProfile();
+			profile.setUserProfileId(haredPreferences.getInt("userProfileId", 0));
+			profile.setPoints(haredPreferences.getInt("points", 0));
+			profile.setRegionId(haredPreferences.getInt("regionId", 0));
+			profile.setGender(haredPreferences.getInt("gender", 0));
+			profile.setPublicToken(haredPreferences.getString("publicToken", ""));
+			profile.setRealName(haredPreferences.getString("realName",""));
+			profile.setAddress(haredPreferences.getString("address",""));
+			profile.setQq(haredPreferences.getString("qq",""));
+			profile.setMsn(haredPreferences.getString("msn",""));
+			profile.setTelPhone(haredPreferences.getString("telPhone",""));
+			profile.setCellPhone(haredPreferences.getString("cellPhone",""));
+			profile.setUserId(userId);
+			info.setUserProfile(profile);
 //			Contents.setUser(info);
 		}
 		return info;
@@ -142,30 +160,43 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 	 * 
 	 * @param info
 	 */
-	public void saveUserData(AspnetUsers info) {
+	public void saveUserData(YAccount info) {
 		// 实例化SharedPreferences.Editor对象（第二步）
 		SharedPreferences.Editor editor = haredPreferences.edit();
 		// 用putString的方法保存数据
-		editor.putString("email", info.getEmail());
-		editor.putString("userName", info.getUserName());
-		editor.putInt("gender", info.getGender());
-		editor.putInt("userId", info.getUserId());
-		editor.putString("head", info.getHead());
+		editor.putInt("userId", info.getAccountId());
+		editor.putInt("roleSetId", info.getRoleSetId());
+		editor.putInt("unitSetId", info.getUnitSetId());
+		editor.putInt("accountSex", info.getAccountSex());
+		editor.putInt("accountState", info.getAccountState());
+		editor.putInt("accountLeavel", info.getAccountLeavel());
+		editor.putString("accountName", info.getAccountName());
+		editor.putString("accountRealName", info.getAccountRealName());
+		editor.putString("accountPassword", info.getAccountPassword());
+		editor.putString("accountHead", info.getAccountHead());
+		editor.putString("accountEmail", info.getAccountEmail());
+		editor.putString("accountMobile", info.getAccountMobile());
+		editor.putString("accountIntro", info.getAccountIntro());
 
-		editor.putString("accountToken", info.getUserToken().getAccountToken());
-		editor.putString("tokenRemark", info.getUserToken().getTokenRemark());
-
-		editor.putInt("referralUserId",info.getAspnetMembers().getReferralUserId());
-		editor.putInt("topRegionId", info.getAspnetMembers().getTopRegionId());
-		editor.putInt("regionId", info.getAspnetMembers().getRegionId());
-		editor.putString("realName", info.getAspnetMembers().getRealName());
-		editor.putString("address",info.getAspnetMembers().getAddress());
-		editor.putString("zipcode",info.getAspnetMembers().getZipcode());
-		editor.putString("telPhone",info.getAspnetMembers().getTelPhone());
-		editor.putString("cellPhone",info.getAspnetMembers().getCellPhone());
-		editor.putString("qq",info.getAspnetMembers().getQq());
-		editor.putString("wangwang",info.getAspnetMembers().getWangwang());
-		editor.putString("msn", info.getAspnetMembers().getMsn());
+		if(info.getUsers()!=null) {
+			editor.putInt("userAccountStatus", info.getUsers().getUserAccountStatus());
+			editor.putInt("userType",info.getUsers().getUserType());
+			editor.putString("appUserToken", info.getUsers().getAppUserToken());
+			editor.putString("userBankCard", info.getUsers().getUserBankCard());
+		}
+		if(info.getUserProfile()!=null){
+			editor.putInt("userProfileId", info.getUserProfile().getUserProfileId());
+			editor.putInt("points", info.getUserProfile().getPoints());
+			editor.putInt("regionId", info.getUserProfile().getRegionId());
+			editor.putInt("gender", info.getUserProfile().getGender());
+			editor.putString("publicToken", info.getUserProfile().getPublicToken());
+			editor.putString("realName", info.getUserProfile().getRealName());
+			editor.putString("address", info.getUserProfile().getAddress());
+			editor.putString("qq", info.getUserProfile().getQq());
+			editor.putString("msn", info.getUserProfile().getMsn());
+			editor.putString("telPhone", info.getUserProfile().getTelPhone());
+			editor.putString("cellPhone", info.getUserProfile().getCellPhone());
+		}
 		editor.putBoolean(ISLOGIN, true);
 		// 提交当前数据
 		editor.commit();

@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
@@ -38,6 +39,7 @@ import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.HishopShoppingCarts;
 import com.zgld.mall.beans.UserToken;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
@@ -212,6 +214,13 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 
 	public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
 		// RequestManager.init(this);
+		if(Request.Method.POST ==method && m!=null) {
+			YAccount user = new UserDataShare(activity).getUserData();
+			if(user!=null) {
+				m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
+				m.put(Contents.USERID, user.getUsers().getUserId() + "");
+			}
+		}
 		if (NetWorkTools.isHasNet(activity)) {
 			if (pageIndex == 1) {
 				if (confirmDialog == null || !confirmDialog.isShowing()) {
@@ -241,11 +250,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			bottom.setVisibility(View.GONE);
 			null_data_default.setVisibility(View.VISIBLE);
 		} else {
-			AspnetUsers user = new UserDataShare(activity).getUserData();
 			Map<String,String> m = new HashMap<>();
-			UserToken userToken = user.getUserToken();
-			m.put(Contents.TOKEN,userToken.getAccountToken());
-			m.put(Contents.USERID, user.getUserId() + "");
 			getData(Method.POST, 201, "car/user_car_product.html", m, null, 1);
 		}
 	}
@@ -601,9 +606,9 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 
 					private void deleteProduct() {
 						Map<String, String> m = new HashMap<String, String>();
-						AspnetUsers users = new UserDataShare(activity).getUserData();
-						m.put(Contents.TOKEN, users.getUserToken().getAccountToken());
-						m.put(Contents.USERID,users.getUserId() + "");
+						YAccount users = new UserDataShare(activity).getUserData();
+						m.put(Contents.TOKEN, users.getUsers().getAppUserToken());
+						m.put(Contents.USERID,users.getUsers().getUserId() + "");
 						m.put("productId", listInfo.get(groupPosition).getListHishopProducts().get(childPosition).getProductId() + "");
 						m.put("skuId", listInfo.get(groupPosition).getListHishopProducts().get(childPosition).getHishopSkus().getSkuId());
 						getData(Method.POST, 203, "car/delete_car_product.html", m, null, 1);

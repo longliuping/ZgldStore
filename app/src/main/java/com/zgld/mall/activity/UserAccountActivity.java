@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
  * 用户账户
  */
 public class UserAccountActivity extends BaseActivity {
-    AspnetUsers users;
+    YAccount users;
     ListView listview;
     MenuAdapter menuAdapter;
     List<Menu> listInfo = new ArrayList<>();

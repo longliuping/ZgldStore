@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.EmailUtil;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class UpdateUserSexActivity extends BaseActivity implements View.OnClickListener{
     Button submit;
     View right_male, right_female, male, female;
-    AspnetUsers users;
+    YAccount users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +111,6 @@ public class UpdateUserSexActivity extends BaseActivity implements View.OnClickL
                     } else {
                         m.put("userinfo.gender", "0");
                     }
-                    m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-                    m.put(Contents.USERID,users.getUserId()+"");
                     getData(Request.Method.POST,201,"user/update_user_gender.html",m,null,1);
                 }
                 break;

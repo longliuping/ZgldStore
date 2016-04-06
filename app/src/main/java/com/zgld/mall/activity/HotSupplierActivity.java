@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.HomeProductAdapter;
 import com.zgld.mall.adapter.HotSupplierAdapter;
+import com.zgld.mall.beans.Categories;
 import com.zgld.mall.beans.City;
 import com.zgld.mall.beans.County;
 import com.zgld.mall.beans.HotCategory;
@@ -41,7 +42,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class HotSupplierActivity extends BaseActivity implements AdapterView.OnItemSelectedListener,PullToRefreshBase.OnRefreshListener2 ,AdapterView.OnItemClickListener{
-    HotCategory info = null;
+    Categories info = null;
 
     Province province;
     NiceSpinner niceSpinnerProvince;
@@ -71,13 +72,13 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
                 finish();
             }
         });
-        info = (HotCategory) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (Categories) this.getIntent().getSerializableExtra(Contents.INFO);
         if(info==null){
             finish();
             return;
         }
         TextView title = (TextView) findViewById(R.id.title_center);
-        title.setText(info.getHotname());
+        title.setText(info.getName());
         try {
             InputStream inStream = this.getResources().getAssets().open("address.xml");
             SAXParserFactory spf = SAXParserFactory.newInstance();// 创建解析器
@@ -177,7 +178,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,18+"");
         m.put("areaid",areaid+"");
-        m.put("hotid",info.getHotid()+"");
+        m.put("hotid",info.getCategoryId()+"");
         getData(Request.Method.POST, 201, "supplier/hot_area_supplier.html", m, null, pageNum);
     }
     @Override

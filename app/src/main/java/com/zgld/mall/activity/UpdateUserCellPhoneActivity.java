@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.EmailUtil;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class UpdateUserCellPhoneActivity extends BaseActivity implements View.OnClickListener{
     Button submit;
     EditText name;
-    AspnetUsers users;
+    YAccount users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +77,6 @@ public class UpdateUserCellPhoneActivity extends BaseActivity implements View.On
                     Toast.makeText(this, "内容不能为空", Toast.LENGTH_LONG).show();
                 }else{
                     Map<String,String> m = new HashMap<>();
-                    m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-                    m.put(Contents.USERID,users.getUserId()+"");
                     m.put("cellPhone",name.getText().toString());
                     getData(Request.Method.POST,201,"user/update_cellphone.html",m,null,1);
                 }

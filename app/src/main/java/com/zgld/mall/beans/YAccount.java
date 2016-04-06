@@ -30,5 +30,21 @@ public class YAccount extends AbstractYAccount implements java.io.Serializable {
 	public void setUserToken(Users userToken) {
 		this.userToken = userToken;
 	}
-	
+	Users users;
+	UserProfile userProfile;
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
 }

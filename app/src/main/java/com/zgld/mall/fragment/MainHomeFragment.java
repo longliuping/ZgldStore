@@ -25,6 +25,7 @@ import com.zgld.mall.R;
 import com.zgld.mall.activity.HotSupplierActivity;
 import com.zgld.mall.adapter.HotCategoryAdapter;
 import com.zgld.mall.adapter.MaintypeAdapter;
+import com.zgld.mall.beans.Categories;
 import com.zgld.mall.beans.HishopCategories;
 import com.zgld.mall.beans.HishopProductTypes;
 import com.zgld.mall.beans.HotCategory;
@@ -43,7 +44,7 @@ public class MainHomeFragment extends BaseFragment {
     MaintypeAdapter infoAdapter;
     HotCategoryAdapter hotCategoryAdapter;
     GridView gridview;
-    List<HotCategory> listMenu = new ArrayList<>();
+    List<Categories> listMenu = new ArrayList<>();
     public MainHomeFragment() {
         // Required empty public constructor
     }
@@ -79,7 +80,7 @@ public class MainHomeFragment extends BaseFragment {
                     break;
                 case 203:
                     json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
-                    listMenu = new Gson().fromJson(json, new TypeToken<List<HotCategory>>() {
+                    listMenu = new Gson().fromJson(json, new TypeToken<List<Categories>>() {
                     }.getType());
                     hotCategoryAdapter = new HotCategoryAdapter(activity,listMenu);
                     gridview.setAdapter(hotCategoryAdapter);

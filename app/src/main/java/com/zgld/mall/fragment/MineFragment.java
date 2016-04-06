@@ -25,6 +25,7 @@ import com.zgld.mall.activity.PersonalDataActivity;
 import com.zgld.mall.activity.SettingActivity;
 import com.zgld.mall.activity.UserAccountActivity;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
 
 import org.w3c.dom.Text;
@@ -122,16 +123,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
     }
     void initData(){
-        AspnetUsers users = new UserDataShare(activity).getUserData();
+        YAccount users = new UserDataShare(activity).getUserData();
         if(users!=null){
             default_user.setVisibility(View.VISIBLE);
             null_user.setVisibility(View.GONE);
             TextView name = (TextView) view.findViewById(R.id.name);
-            name.setText(users.getUserName());
+            name.setText(users.getAccountName());
             TextView cdk_number = (TextView) view.findViewById(R.id.cdk_number);
-            cdk_number.setText(users.getUserId()+"");
+            cdk_number.setText(users.getAccountId()+"");
             ImageView head = (ImageView) view.findViewById(R.id.head);
-            SysApplication.DisplayUserImage(users.getHead(), head);
+            SysApplication.DisplayUserImage(users.getAccountHead(), head);
         }else{
             default_user.setVisibility(View.GONE);
             null_user.setVisibility(View.VISIBLE);

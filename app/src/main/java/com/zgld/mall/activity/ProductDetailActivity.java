@@ -31,6 +31,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.HishopSkus;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.jazzy.JazzPageChangeListener;
 import com.zgld.mall.jazzy.JazzProductDetailAdapter;
 import com.zgld.mall.jazzy.JazzyProductDetailViewPager;
@@ -410,13 +411,11 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     @Override
     public void confirm(int number, String strNorms,HishopSkus hishopSkus, Integer valueId,Integer attributeId) {
         Map<String,String> m = new HashMap<>();
-        AspnetUsers users = new UserDataShare(this).getUserData();
+        YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
             m.put("skuId", hishopSkus.getSkuId());
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
-            m.put("token", users.getUserToken().getAccountToken());
-            m.put("userId", users.getUserId()+"");
             getData(Request.Method.POST, 207, "car/add_product_car.html", m, null
                     , 1);
         }else{

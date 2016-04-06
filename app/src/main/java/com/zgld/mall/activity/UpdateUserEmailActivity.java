@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.EmailUtil;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class UpdateUserEmailActivity extends BaseActivity implements View.OnClickListener{
     Button submit;
     EditText name;
-    AspnetUsers users;
+    YAccount users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +79,6 @@ public class UpdateUserEmailActivity extends BaseActivity implements View.OnClic
                     Toast.makeText(this,"邮箱格式错误",Toast.LENGTH_LONG).show();
                 }else{
                     Map<String,String> m = new HashMap<>();
-                    m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-                    m.put(Contents.USERID,users.getUserId()+"");
                     m.put("userinfo.email",name.getText().toString());
                     getData(Request.Method.POST,201,"user/update_user_email.html",m,null,1);
                 }

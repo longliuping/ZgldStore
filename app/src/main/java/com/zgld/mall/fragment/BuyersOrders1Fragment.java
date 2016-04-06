@@ -90,9 +90,6 @@ public class BuyersOrders1Fragment extends BuyersOrdersBaseFragment implements O
             return;
         }
         Map<String,String> m = new HashMap<>();
-        AspnetUsers users = new UserDataShare(activity).getUserData();
-        m.put(Contents.TOKEN,users.getUserToken().getAccountToken());
-        m.put(Contents.USERID,users.getUserId()+"");
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,20+"");
         m.put("id","1");

@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONObject;
@@ -54,7 +55,7 @@ public class RegisterActivity extends BaseActivity implements  View.OnClickListe
                     if(msg.getData().getInt(Contents.STATUS)==200){
                         JSONObject jsonObject = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
                         Gson gson = new Gson();
-                        AspnetUsers users = gson.fromJson(jsonObject.toString(), new TypeToken<AspnetUsers>() {
+                        YAccount users = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
                         }.getType());
                         new UserDataShare(this).saveUserData(users);
                         setResult(RESULT_OK);

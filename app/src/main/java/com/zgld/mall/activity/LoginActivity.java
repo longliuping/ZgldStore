@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.AspnetUsers;
+import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 
@@ -61,9 +62,9 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
             switch (msg.what){
                 case 201:
                     JSONObject jo = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
-                    AspnetUsers user = new Gson().fromJson(jo.toString(), new TypeToken<AspnetUsers>() {
+                    YAccount user = new Gson().fromJson(jo.toString(), new TypeToken<YAccount>() {
                     }.getType());
-                    Toast.makeText(getApplicationContext(),user.getUserName(),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),user.getUserName(),Toast.LENGTH_SHORT).show();
                     new UserDataShare(this).saveUserData(user);
                     new UserDataShare(this).saveLoginInfo(et_user_name.getText().toString(), et_user_password.getText()
                                 .toString());
