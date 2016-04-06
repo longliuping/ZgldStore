@@ -57,7 +57,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
                     if(msg.getData().getInt(Contents.STATUS)==200){
                         JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
                         Gson gson = new Gson();
-                        YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<AspnetUsers>() {
+                        YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
                         }.getType());
                         new UserDataShare(this).saveUserData(user);
                         initData();
@@ -154,7 +154,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
         Map<String,String> m = new HashMap<>();
         Bitmap bitmap = extras.getParcelable("data");
         String result = BitmapUtil.bitmapToBase64(bitmap);
-        m.put("userinfo.head",result);
+        m.put("userinfo.accountHead",result);
         getData(Request.Method.POST, 201, "user/update_user_head.html",m,null,2);
     }
 

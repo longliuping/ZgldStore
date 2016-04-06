@@ -79,7 +79,7 @@ public class UpdateUserEmailActivity extends BaseActivity implements View.OnClic
                     Toast.makeText(this,"邮箱格式错误",Toast.LENGTH_LONG).show();
                 }else{
                     Map<String,String> m = new HashMap<>();
-                    m.put("userinfo.email",name.getText().toString());
+                    m.put("userinfo.accountEmail",name.getText().toString());
                     getData(Request.Method.POST,201,"user/update_user_email.html",m,null,1);
                 }
                 break;

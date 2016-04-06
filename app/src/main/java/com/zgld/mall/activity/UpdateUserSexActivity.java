@@ -107,9 +107,9 @@ public class UpdateUserSexActivity extends BaseActivity implements View.OnClickL
                 }else{
                     Map<String,String> m = new HashMap<>();
                     if (right_male.getVisibility() == View.VISIBLE) {
-                        m.put("userinfo.gender", "1");
+                        m.put("userinfo.accountSex", "1");
                     } else {
-                        m.put("userinfo.gender", "0");
+                        m.put("userinfo.accountSex", "0");
                     }
                     getData(Request.Method.POST,201,"user/update_user_gender.html",m,null,1);
                 }
