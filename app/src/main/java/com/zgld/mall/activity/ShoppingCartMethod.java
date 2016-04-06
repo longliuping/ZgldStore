@@ -165,22 +165,24 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			if (confirmDialog != null && confirmDialog.isShowing()) {
 				confirmDialog.dismiss();
 			}
-			JSONObject object = new JSONObject(json);
-			if(object.getInt(Contents.STATUS)==201) {
-				dialog = new CustomDialog(activity, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
-					@Override
-					public void customDialogClickLeft() {
-						dialog.dismiss();
-						Contents.loginPage(activity, null, 200);
-					}
+			if(json!=null && json.length()>10){
+				JSONObject object = new JSONObject(json);
+				if(object.getInt(Contents.STATUS)==201) {
+					dialog = new CustomDialog(activity, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
+						@Override
+						public void customDialogClickLeft() {
+							dialog.dismiss();
+							Contents.loginPage(activity, null, 200);
+						}
 
-					@Override
-					public void customDialogClickRight() {
-						dialog.dismiss();
-						Contents.loginPage(activity, null, 200);
-					}
-				}, false);
-				dialog.show();
+						@Override
+						public void customDialogClickRight() {
+							dialog.dismiss();
+							Contents.loginPage(activity, null, 200);
+						}
+					}, false);
+					dialog.show();
+				}
 			}
 			handler.sendMessage(msg);
 		}catch (Exception e){
@@ -268,6 +270,9 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 				Gson gson = new Gson();
 				Type entityType = null;
 				JSONArray jsonArray = null;
+				if(json==null || json.length()<10){
+					return;
+				}
 				JSONObject jsonObject = new JSONObject(json);
 				String msgStr = jsonObject.getString(Contents.MSG);
 				if(!msgStr.equals(Contents.SUCCESS)) {

@@ -57,6 +57,7 @@ public class RegisterActivity extends BaseActivity implements  View.OnClickListe
                         Gson gson = new Gson();
                         YAccount users = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
                         }.getType());
+                        new UserDataShare(this).saveLoginInfo(user_name.getText().toString(),user_password.getText().toString());
                         new UserDataShare(this).saveUserData(users);
                         setResult(RESULT_OK);
                         finish();
