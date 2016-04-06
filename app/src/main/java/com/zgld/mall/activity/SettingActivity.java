@@ -64,7 +64,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener, Cu
 			}
 		});
 		listview = (ListView) findViewById(R.id.listview);
-		for (int i =0;i<3;i++){
+		for (int i =0;i<names.length;i++){
 			SettingMenu info = new SettingMenu();
 			info.setName(names[i]);
 			info.setType(types[i]);
