@@ -59,33 +59,35 @@ public class MainHomeFragment extends BaseFragment {
         home_fragment_scrollview.onRefreshComplete();
         try{
             String json = msg.getData().getString(Contents.DATA);
-            switch (msg.what){
-                case  201:
-                    mAdLoopView = (AdLoopView) view.findViewById(R.id.home_frag_rotate_vp);
-                    // 初始化RotateView数据
+           if(json!=null && json.length()>10){
+               switch (msg.what){
+                   case  201:
+                       mAdLoopView = (AdLoopView) view.findViewById(R.id.home_frag_rotate_vp);
+                       // 初始化RotateView数据
 //                    String json = LocalFileUtils.getStringFormAsset(activity.getApplicationContext(), "loopview.json");
-                    mAdLoopView.refreshData(json);
-                    mAdLoopView.startAutoLoop();mAdLoopView.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
-                    }
-                });
-                    break;
-                case 202:
-                    json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
-                    List<HishopCategories> hishopCategoriesList = new Gson().fromJson(json,new TypeToken<List<HishopCategories>>() {
-                    }.getType());
-                    infoAdapter = new MaintypeAdapter(getContext(),hishopCategoriesList);
-                    listview.setAdapter(infoAdapter);
-                    break;
-                case 203:
-                    json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
-                    listMenu = new Gson().fromJson(json, new TypeToken<List<Categories>>() {
-                    }.getType());
-                    hotCategoryAdapter = new HotCategoryAdapter(activity,listMenu);
-                    gridview.setAdapter(hotCategoryAdapter);
-                    break;
-            }
+                       mAdLoopView.refreshData(json);
+                       mAdLoopView.startAutoLoop();mAdLoopView.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+                       }
+                   });
+                       break;
+                   case 202:
+                       json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
+                       List<HishopCategories> hishopCategoriesList = new Gson().fromJson(json,new TypeToken<List<HishopCategories>>() {
+                       }.getType());
+                       infoAdapter = new MaintypeAdapter(getContext(),hishopCategoriesList);
+                       listview.setAdapter(infoAdapter);
+                       break;
+                   case 203:
+                       json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
+                       listMenu = new Gson().fromJson(json, new TypeToken<List<Categories>>() {
+                       }.getType());
+                       hotCategoryAdapter = new HotCategoryAdapter(activity,listMenu);
+                       gridview.setAdapter(hotCategoryAdapter);
+                       break;
+               }
+           }
         }catch (Exception e){
             e.printStackTrace();;
         }
