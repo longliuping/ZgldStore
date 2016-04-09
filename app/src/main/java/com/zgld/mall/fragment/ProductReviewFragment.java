@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.android.volley.Request.Method;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -13,10 +12,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.ProductReviewAdapter;
-import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.ProductReview;
 import com.zgld.mall.beans.ProductReviewData;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 
 import android.app.Activity;
@@ -25,14 +24,13 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class ProductReviewFragment extends ProductBaseFragment implements OnRefreshListener2 {
 	List<ProductReviewData> list;
 	PullToRefreshListView listView;
 	View view;
-	Supplier info;
+	YShop info;
 	int pageIndex = 1;
 	Activity activity;
 
@@ -47,7 +45,7 @@ public class ProductReviewFragment extends ProductBaseFragment implements OnRefr
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		info = (Supplier) activity.getIntent().getSerializableExtra("info");
+		info = (YShop) activity.getIntent().getSerializableExtra("info");
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public class ProductReviewFragment extends ProductBaseFragment implements OnRefr
 			// + "&size=100&pageIndex=" + pageIndex + "&startDate", null, null,
 			// 1);
 			Map<String, String> m = new HashMap<String, String>();
-			m.put("productId", info.getHishopProducts().getProductId()+"");
+			m.put("productId", info.getProducts().getProductId()+"");
 			m.put("Size", 10 + "");
 			m.put("pageIndex", pageIndex + "");
 //			getData(Method.POST, 666, "ProductReviews/QueryProductReview", m, null, 1);

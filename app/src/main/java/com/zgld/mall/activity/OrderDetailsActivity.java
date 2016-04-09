@@ -12,7 +12,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.OrderDetailsAdapter;
-import com.zgld.mall.beans.HishopOrders;
+import com.zgld.mall.beans.Orders;
 import com.zgld.mall.utils.Contents;
 
 import android.os.Message;
@@ -33,7 +33,7 @@ public class OrderDetailsActivity extends BaseActivity {
     OrderDetailsAdapter infoAdapter;
     int pageIndex = 1;
 
-    public static List<HishopOrders> listInfo = new ArrayList<>();
+    public static List<Orders> listInfo = new ArrayList<>();
 
     TextView name, address, address_title;
     Address addressInfo;
@@ -94,7 +94,7 @@ public class OrderDetailsActivity extends BaseActivity {
         Type entityType = null;
         switch (msg.what) {
             case 201:
-                entityType = new TypeToken<HishopOrders>() {
+                entityType = new TypeToken<Orders>() {
                 }.getType();
                 try {
 //                    listInfo = new Orders.OrderItems();

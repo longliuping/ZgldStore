@@ -16,11 +16,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.OKOrderAdapter;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopProducts;
-import com.zgld.mall.beans.HishopShoppingCarts;
-import com.zgld.mall.beans.HishopUserShippingAddresses;
-import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.Products;
+import com.zgld.mall.beans.ShoppingCarts;
+import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
@@ -28,7 +26,6 @@ import com.zgld.mall.utils.PriceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2, AdapterView.OnItemClickListener, View.OnClickListener,
@@ -41,10 +38,10 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
     TextView item_pay;
     TextView item_payment_amount;
     RelativeLayout bottom;
-    ArrayList<HishopShoppingCarts> listInfo = new ArrayList<>();
+    ArrayList<ShoppingCarts> listInfo = new ArrayList<>();
     RelativeLayout next;
     TextView name, address, address_title;
-    HishopUserShippingAddresses addressInfo;
+    UserShippingAddresses addressInfo;
     int totalProductNumber = 0;// 总数量
     int totalMarketPrice = 0;// 市场总价
     int totalSalePrice = 0;//销售总价
@@ -56,16 +53,16 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
         super.onCreate(savedInstanceState);
         initStyle();
         setContentView(R.layout.activity_okorder);
-        listInfo = (ArrayList<HishopShoppingCarts>)this.getIntent().getSerializableExtra("listInfo");
+        listInfo = (ArrayList<ShoppingCarts>)this.getIntent().getSerializableExtra("listInfo");
         if(listInfo==null || listInfo.size()<=0){
             finish();
             return;
         }
         for (int i = 0;i<listInfo.size();i++){
-            HishopShoppingCarts car = listInfo.get(i);
-            for (int j = 0;j<car.getListHishopProducts().size();j++){
-                HishopProducts pro = car.getListHishopProducts().get(j);
-                totalSalePrice+=pro.getHishopSkus().getSalePrice()*car.getQuantity();
+            ShoppingCarts car = listInfo.get(i);
+            for (int j = 0;j<car.getListProducts().size();j++){
+                Products pro = car.getListProducts().get(j);
+                totalSalePrice+=pro.getSalePrice()*car.getQuantity();
                 totalMarketPrice+=pro.getMarketPrice()*car.getQuantity();
             }
         }
@@ -145,7 +142,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 200) {
-                addressInfo = (HishopUserShippingAddresses) data.getSerializableExtra("info");
+                addressInfo = (UserShippingAddresses) data.getSerializableExtra("info");
                 bindAddress();
             }
         }
@@ -153,7 +150,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
 
     void bindAddress() {
         if (address != null) {
-            name.setText("收货人:" + addressInfo.getShipTo() + "   " + addressInfo.getCellPhone());
+//            name.setText("收货人:" + addressInfo.getShipTo() + "   " + addressInfo.getCellPhone());
             address.setText("" + addressInfo.getAddress());
             address_title.setVisibility(View.GONE);
         }
@@ -181,7 +178,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 StringBuffer skuId = new StringBuffer();
                 StringBuffer nums = new StringBuffer();
                 for (int i = 0; i < listInfo.size(); i++) {
-                    skuId.append(listInfo.get(i).getSkuId() + ",");
+                    skuId.append(listInfo.get(i).getSku() + ",");
                     nums.append(listInfo.get(i).getQuantity() + ",");
                 }
                 if (!TextUtils.isEmpty(skuId)) {
@@ -190,7 +187,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 if (!TextUtils.isEmpty(nums)) {
                     nums.deleteCharAt(nums.length() - 1);
                 }
-                m.put("shippingId", addressInfo.getShippingId()+"");
+                m.put("shippingId", addressInfo.getAddressId()+"");
                 m.put("skuId", skuId.toString());
                 m.put("skuNumber", nums.toString());
                 m.put("modeId","8");

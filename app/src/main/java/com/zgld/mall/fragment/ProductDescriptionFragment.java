@@ -1,12 +1,11 @@
 package com.zgld.mall.fragment;
 
-import com.android.volley.Request.Method;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.zgld.mall.R;
-import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 
 import android.app.Activity;
@@ -21,7 +20,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 public class ProductDescriptionFragment extends ProductBaseFragment implements OnRefreshListener2 {
 	View view;
 	PullToRefreshWebView textView;
-	Supplier info = new Supplier();
+	YShop info = new YShop();
 	Activity activity;
 
 	@Override
@@ -35,7 +34,7 @@ public class ProductDescriptionFragment extends ProductBaseFragment implements O
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		info = (Supplier) activity.getIntent().getSerializableExtra("info");
+		info = (YShop) activity.getIntent().getSerializableExtra("info");
 	}
 
 	@Override
@@ -118,7 +117,7 @@ public class ProductDescriptionFragment extends ProductBaseFragment implements O
 		settings.setAppCacheEnabled(true);
 		settings.setCacheMode(settings.LOAD_CACHE_ELSE_NETWORK);
 		String style = "<div style=\"width:100%; text-align:center;\" >";
-		textView.getRefreshableView().loadDataWithBaseURL(Contents.BASE_IMAGE_PATH, style + info.getHishopProducts().getDescription() + "</div>",
+		textView.getRefreshableView().loadDataWithBaseURL(Contents.BASE_IMAGE_PATH, style + info.getProducts().getDescription() + "</div>",
 				"text/html", "utf-8", "");
 	}
 

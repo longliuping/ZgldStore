@@ -13,7 +13,6 @@ public abstract class AbstractTaobaoProducts implements java.io.Serializable {
 	// Fields
 
 	private Integer productId;
-	private HishopProducts hishopProducts;
 	private Long cid;
 	private String stuffStatus;
 	private String proTitle;
@@ -43,58 +42,6 @@ public abstract class AbstractTaobaoProducts implements java.io.Serializable {
 	public AbstractTaobaoProducts() {
 	}
 
-	/** minimal constructor */
-	public AbstractTaobaoProducts(HishopProducts hishopProducts, Long cid,
-			String proTitle, Long num, String locationState,
-			String locationCity, String freightPayer, Boolean hasInvoice,
-			Boolean hasWarranty, Boolean hasDiscount, Long validThru) {
-		this.hishopProducts = hishopProducts;
-		this.cid = cid;
-		this.proTitle = proTitle;
-		this.num = num;
-		this.locationState = locationState;
-		this.locationCity = locationCity;
-		this.freightPayer = freightPayer;
-		this.hasInvoice = hasInvoice;
-		this.hasWarranty = hasWarranty;
-		this.hasDiscount = hasDiscount;
-		this.validThru = validThru;
-	}
-
-	/** full constructor */
-	public AbstractTaobaoProducts(HishopProducts hishopProducts, Long cid,
-			String stuffStatus, String proTitle, Long num,
-			String locationState, String locationCity, String freightPayer,
-			Double postFee, Double expressFee, Double emsfee,
-			Boolean hasInvoice, Boolean hasWarranty, Boolean hasDiscount,
-			Long validThru, Date listTime, String propertyAlias,
-			String inputPids, String inputStr, String skuProperties,
-			String skuQuantities, String skuPrices, String skuOuterIds) {
-		this.hishopProducts = hishopProducts;
-		this.cid = cid;
-		this.stuffStatus = stuffStatus;
-		this.proTitle = proTitle;
-		this.num = num;
-		this.locationState = locationState;
-		this.locationCity = locationCity;
-		this.freightPayer = freightPayer;
-		this.postFee = postFee;
-		this.expressFee = expressFee;
-		this.emsfee = emsfee;
-		this.hasInvoice = hasInvoice;
-		this.hasWarranty = hasWarranty;
-		this.hasDiscount = hasDiscount;
-		this.validThru = validThru;
-		this.listTime = listTime;
-		this.propertyAlias = propertyAlias;
-		this.inputPids = inputPids;
-		this.inputStr = inputStr;
-		this.skuProperties = skuProperties;
-		this.skuQuantities = skuQuantities;
-		this.skuPrices = skuPrices;
-		this.skuOuterIds = skuOuterIds;
-	}
-
 	// Property accessors
 
 	public Integer getProductId() {
@@ -105,13 +52,6 @@ public abstract class AbstractTaobaoProducts implements java.io.Serializable {
 		this.productId = productId;
 	}
 
-	public HishopProducts getHishopProducts() {
-		return this.hishopProducts;
-	}
-
-	public void setHishopProducts(HishopProducts hishopProducts) {
-		this.hishopProducts = hishopProducts;
-	}
 
 	public Long getCid() {
 		return this.cid;

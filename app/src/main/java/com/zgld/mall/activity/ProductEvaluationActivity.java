@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.ProductWaitEvaluationAdapter;
-import com.zgld.mall.beans.HishopOrders;
+import com.zgld.mall.beans.Orders;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONException;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductEvaluationActivity extends BaseActivity implements View.OnClickListener {
-    HishopOrders info = new HishopOrders();
+    Orders info = new Orders();
     TextView comment;
     EditText connent;
     CheckBox item_car_manufactor;
@@ -78,7 +78,7 @@ public class ProductEvaluationActivity extends BaseActivity implements View.OnCl
         });
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(getString(R.string.title_product_evaluation));
-        info = (HishopOrders) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (Orders) this.getIntent().getSerializableExtra(Contents.INFO);
         comment = (TextView) findViewById(R.id.comment);
         comment.setOnClickListener(this);
         connent = (EditText) findViewById(R.id.connent);
@@ -91,7 +91,7 @@ public class ProductEvaluationActivity extends BaseActivity implements View.OnCl
         if (info != null) {
             ExpandableListView listview = (ExpandableListView) findViewById(R.id.listview);
             listview.setGroupIndicator(null);
-            List<HishopOrders> listInfo = new ArrayList<HishopOrders>();
+            List<Orders> listInfo = new ArrayList<Orders>();
             listInfo.add(info);
             ProductWaitEvaluationAdapter infoAdapter = new ProductWaitEvaluationAdapter(this, listInfo);
             listview.setAdapter(infoAdapter);

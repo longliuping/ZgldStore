@@ -15,8 +15,6 @@ import com.zgld.mall.R;
 import com.zgld.mall.activity.ProductDetailActivity;
 import com.zgld.mall.activity.ProductTypeActivity;
 import com.zgld.mall.beans.Categories;
-import com.zgld.mall.beans.HishopCategories;
-import com.zgld.mall.beans.HishopProductTypes;
 import com.zgld.mall.utils.Contents;
 
 import java.util.List;

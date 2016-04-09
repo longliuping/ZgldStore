@@ -1,19 +1,14 @@
 package com.zgld.mall.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import com.zgld.mall.R;
-import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.City;
 import com.zgld.mall.beans.County;
-import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.Province;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.utils.Contents;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;

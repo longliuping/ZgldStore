@@ -17,16 +17,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopSkus;
-import com.zgld.mall.beans.HishopUserShippingAddresses;
-import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.Sku;
+import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.fragment.ProductDescriptionFragment;
 import com.zgld.mall.fragment.ProductParamFragment;
 import com.zgld.mall.fragment.ProductReviewFragment;
@@ -45,7 +43,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
         OnPageChangeListener, PublishSelectPicPopupWindow.PublishSelectPicPopupWindowListener {
     private TextView title;
     private Intent intent;
-    private Supplier info = new Supplier();
+    private YShop info = new YShop();
     Button correlation_add;
     TextView product_menu_1, product_menu_2, product_menu_3, product_menu_4;
 
@@ -71,7 +69,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
         initStyle();
         setContentView(R.layout.activity_product_option_fragment);
         intent = getIntent();
-        info = (Supplier) intent.getSerializableExtra(Contents.INFO);
+        info = (YShop) intent.getSerializableExtra(Contents.INFO);
         initView();
         initFragment();
     }
@@ -261,7 +259,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 200) {
-                HishopUserShippingAddresses addressInfo = (HishopUserShippingAddresses) data.getSerializableExtra("info");
+                UserShippingAddresses addressInfo = (UserShippingAddresses) data.getSerializableExtra("info");
 
             }
         }
@@ -272,12 +270,12 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
     String ids = "";
 
     @Override
-    public void confirm(int number, String strNorms,HishopSkus hishopSkus, Integer valueId,Integer attributeId) {
+    public void confirm(int number, String strNorms,Sku hishopSkus, Integer valueId,Integer attributeId) {
         // TODO Auto-generated method stub
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-            m.put("skuId", hishopSkus.getSkuId());
+            m.put("skuId", hishopSkus.getSku()+"");
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
             getData(Request.Method.POST, 207, "car/add_product_car.html", m, null

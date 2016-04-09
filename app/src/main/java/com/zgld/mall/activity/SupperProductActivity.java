@@ -1,6 +1,5 @@
 package com.zgld.mall.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -18,14 +17,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.adapter.HomeProductAdapter;
-import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.Supplier;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

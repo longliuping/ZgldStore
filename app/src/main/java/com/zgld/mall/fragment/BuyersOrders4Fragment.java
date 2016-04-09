@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.google.gson.Gson;
@@ -34,18 +33,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.zgld.mall.R;
-import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.BuyersOrdersAdapter;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopOrders;
-import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.Orders;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.NetWorkTools;
 
 public class BuyersOrders4Fragment extends BuyersOrdersBaseFragment implements OnRefreshListener2,
         OnItemClickListener, OnClickListener,BuyersOrdersAdapter.BuyersOrdersAdapterListener {
-    List<HishopOrders> listInfo = new ArrayList<HishopOrders>();
+    List<Orders> listInfo = new ArrayList<Orders>();
     PullToRefreshExpandableListView listview;
     BuyersOrdersAdapter infoAdapter;
     View view;
@@ -112,15 +108,15 @@ public class BuyersOrders4Fragment extends BuyersOrdersBaseFragment implements O
             switch (msg.what) {
                 case 202:
                     if (pageNum == 1) {
-                        listInfo = new ArrayList<HishopOrders>();
+                        listInfo = new ArrayList<Orders>();
                         infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
                         listview.getRefreshableView().setAdapter(infoAdapter);
                     }
                     JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA);
                     jsonArray = jsonObject.getJSONArray(Contents.LISTINIFO);
-                    entityType = new TypeToken<List<HishopOrders>>() {
+                    entityType = new TypeToken<List<Orders>>() {
                     }.getType();
-                    List<HishopOrders> list = gson.fromJson(jsonArray.toString(), entityType);
+                    List<Orders> list = gson.fromJson(jsonArray.toString(), entityType);
                     if (list != null && list.size() > 0) {
                         listInfo.addAll(list);
                         infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
@@ -229,7 +225,7 @@ public class BuyersOrders4Fragment extends BuyersOrdersBaseFragment implements O
             }
         });
         pageNum = 1;
-        listInfo = new ArrayList<HishopOrders>();
+        listInfo = new ArrayList<Orders>();
         infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
         listview.getRefreshableView().setAdapter(infoAdapter);
         infoAdapter.notifyDataSetChanged();

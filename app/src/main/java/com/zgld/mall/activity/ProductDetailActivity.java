@@ -1,11 +1,9 @@
 package com.zgld.mall.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,21 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.zgld.mall.AppManager;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopSkus;
-import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.ProductImages;
+import com.zgld.mall.beans.Sku;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.jazzy.JazzPageChangeListener;
 import com.zgld.mall.jazzy.JazzProductDetailAdapter;
 import com.zgld.mall.jazzy.JazzyProductDetailViewPager;
@@ -40,18 +36,15 @@ import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProductDetailActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener,
         PullToRefreshBase.OnRefreshListener2, PublishSelectPicPopupWindow.PublishSelectPicPopupWindowListener, JazzProductDetailAdapter.JazzProductDetailAdapterListener {
-    Supplier info;
+    YShop info;
     int productId = 0;
     PullToRefreshScrollView scrollview;
 
@@ -101,7 +94,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
                 case 205:
                     JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
                     String gsonStr = jsonObject.toString();
-                    info = new Gson().fromJson(gsonStr,new TypeToken<Supplier>(){}.getType());
+                    info = new Gson().fromJson(gsonStr,new TypeToken<YShop>(){}.getType());
                     initJazzView();
                     initBData();
                     break;
@@ -166,12 +159,12 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     }
 
     private void initBData() {
-        item_user_name.setText(info.getSupplierName());
-        item_user_shop_address.setText(info.getSupplierDescribe());
-        item_title.setText(info.getHishopProducts().getProductName());
-        item_sale_price.setText("销售价："+ PriceUtil.priceY(info.getHishopProducts().getListHishopSkus().get(0).getSalePrice()+""));
-        item_market_price.setText("市场价:"+PriceUtil.priceY(info.getHishopProducts().getMarketPrice()+""));
-        SysApplication.DisplayUserImage(info.getSupplierUrl1(), item_user_head);
+        item_user_name.setText(info.getUserId()+"");
+        item_user_shop_address.setText(info.getShopAddress());
+        item_title.setText(info.getProducts().getProductName());
+        item_sale_price.setText("销售价："+ PriceUtil.priceY(info.getProducts().getSalePrice()+""));
+        item_market_price.setText("市场价:"+PriceUtil.priceY(info.getProducts().getMarketPrice()+""));
+        SysApplication.DisplayUserImage(info.getShopLicenseImg(), item_user_head);
     }
 
     private void initData() {
@@ -297,17 +290,22 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             mViewPager = (JazzyProductDetailViewPager) findViewById(R.id.index_product_images_container);
             mIndicator = (LinearLayout) findViewById(R.id.index_product_images_indicator);
             mImageUrls = new ArrayList<String>();
-            if (!TextUtils.isEmpty(info.getHishopProducts().getImageUrl1())) {
-                mImageUrls.add(info.getHishopProducts().getImageUrl1());
-            }
-            if (!TextUtils.isEmpty(info.getHishopProducts().getImageUrl2())) {
-                mImageUrls.add(info.getHishopProducts().getImageUrl2());
-            }
-            if (!TextUtils.isEmpty(info.getHishopProducts().getImageUrl3())) {
-                mImageUrls.add(info.getHishopProducts().getImageUrl3());
-            }
-            if (!TextUtils.isEmpty(info.getHishopProducts().getImageUrl4())) {
-                mImageUrls.add(info.getHishopProducts().getImageUrl4());
+//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl1())) {
+//                mImageUrls.add(info.getProducts().getImageUrl1());
+//            }
+//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl2())) {
+//                mImageUrls.add(info.getProducts().getImageUrl2());
+//            }
+//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl3())) {
+//                mImageUrls.add(info.getProducts().getImageUrl3());
+//            }
+//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl4())) {
+//                mImageUrls.add(info.getProducts().getImageUrl4());
+//            }
+            if(info.getProducts().getListProductImages()!=null){
+                for (ProductImages images:info.getProducts().getListProductImages()){
+                    mImageUrls.add(images.getImageUrl());
+                }
             }
 
             /////
@@ -409,11 +407,11 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     }
 
     @Override
-    public void confirm(int number, String strNorms,HishopSkus hishopSkus, Integer valueId,Integer attributeId) {
+    public void confirm(int number, String strNorms,Sku hishopSkus, Integer valueId,Integer attributeId) {
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-            m.put("skuId", hishopSkus.getSkuId());
+            m.put("skuId", hishopSkus.getSku()+"");
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
             getData(Request.Method.POST, 207, "car/add_product_car.html", m, null

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SelectedInfo {
     SelectedInfoAdapter selectedInfoAdapter;
-    List<HishopAttributeValues> listInfo;
+    List<Sku> listInfo;
     GridView gridview;
     int attributeId;
 
@@ -23,11 +23,11 @@ public class SelectedInfo {
         this.selectedInfoAdapter = selectedInfoAdapter;
     }
 
-    public List<HishopAttributeValues> getListInfo() {
+    public List<Sku> getListInfo() {
         return listInfo;
     }
 
-    public void setListInfo(List<HishopAttributeValues> listInfo) {
+    public void setListInfo(List<Sku> listInfo) {
         this.listInfo = listInfo;
     }
 

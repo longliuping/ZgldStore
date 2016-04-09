@@ -15,7 +15,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.zgld.mall.R;
-import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.UserShippingAddresses;
 
 /**

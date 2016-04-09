@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
-import com.zgld.mall.beans.HishopProducts;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.utils.PriceUtil;
 

@@ -9,17 +9,17 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.zgld.mall.R;
-import com.zgld.mall.beans.HishopAttributeValues;
-import com.zgld.mall.beans.HishopAttributes;
+import com.zgld.mall.beans.Sku;
+import com.zgld.mall.beans.Skugroup;
 
 import java.util.List;
 
 public class SelectedBaseInfoAdapter extends BaseAdapter {
 	Context context;
-	List<HishopAttributes> listInfo;
+	List<Skugroup> listInfo;
 	LayoutInflater layoutInflater;
 	SelectedInfoAdapter.SelectedInfoAdapterCallback callback;
-	public SelectedBaseInfoAdapter(Context context, List<HishopAttributes> listInfo,SelectedInfoAdapter.SelectedInfoAdapterCallback callback) {
+	public SelectedBaseInfoAdapter(Context context, List<Skugroup> listInfo,SelectedInfoAdapter.SelectedInfoAdapterCallback callback) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.listInfo = listInfo;
@@ -62,10 +62,10 @@ public class SelectedBaseInfoAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		HishopAttributes info = listInfo.get(position);
+		Skugroup info = listInfo.get(position);
 		if (info != null) {
-			holder.item_name.setText(info.getAttributeName());
-			holder.item_gridview.setAdapter(new SelectedInfoAdapter(context,info.getListHishopAttributeValues(),callback));
+			holder.item_name.setText(info.getSkugroupName());
+			holder.item_gridview.setAdapter(new SelectedInfoAdapter(context,info.getListSkus(),callback));
 		}
 		return convertView;
 	}

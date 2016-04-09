@@ -9,16 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zgld.mall.R;
-import com.zgld.mall.beans.HishopOrderItems;
-import com.zgld.mall.beans.HishopOrders;
+import com.zgld.mall.beans.OrderItems;
+import com.zgld.mall.beans.Orders;
 
 public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 
-	HishopOrders listInfo;
+	Orders listInfo;
 	LayoutInflater layoutInflater;
 	Context context;
 
-	public OrderDetailsAdapter(Context context, HishopOrders listInfo) {
+	public OrderDetailsAdapter(Context context, Orders listInfo) {
 		// TODO Auto-generated constructor stub
 		this.listInfo = listInfo;
 		layoutInflater = LayoutInflater.from(context);
@@ -30,7 +30,7 @@ public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public int getGroupCount() {
-		return listInfo.getListHishopOrderItems().size();
+		return listInfo.getListOrderItems().size();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// return listInfo.get(groupPosition).getProducts().size();
-		return listInfo.getListHishopOrderItems().size();
+		return listInfo.getListOrderItems().size();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// return listInfo.get(groupPosition).getProducts().get(childPosition);
-		return listInfo.getListHishopOrderItems().get(childPosition);
+		return listInfo.getListOrderItems().get(childPosition);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		HishopOrderItems info = listInfo.getListHishopOrderItems().get(0);
+		OrderItems info = listInfo.getListOrderItems().get(0);
 //		if (info != null) {
 //			holder.item_car_manufactor_name.setText(info.getUsername() + ">");
 //		}
@@ -148,7 +148,7 @@ public class OrderDetailsAdapter extends BaseExpandableListAdapter {
 			holder = (ChildViewHoldeer) convertView.getTag();
 		}
 		holder.bottom.setVisibility(View.GONE);
-		final HishopOrderItems info = listInfo.getListHishopOrderItems().get(childPosition);
+		final OrderItems info = listInfo.getListOrderItems().get(childPosition);
 		if (info != null) {
 			holder.item_title.setText("");
 //			if (info.getNorms() != null) {

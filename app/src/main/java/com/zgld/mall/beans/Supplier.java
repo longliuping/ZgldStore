@@ -16,15 +16,6 @@ public class Supplier extends AbstractSupplier implements java.io.Serializable {
 		super(supplierName);
 	}
 
-	HishopProducts hishopProducts;
-
-	public HishopProducts getHishopProducts() {
-		return hishopProducts;
-	}
-
-	public void setHishopProducts(HishopProducts hishopProducts) {
-		this.hishopProducts = hishopProducts;
-	}
 	boolean checked;
 
 	public boolean isChecked() {

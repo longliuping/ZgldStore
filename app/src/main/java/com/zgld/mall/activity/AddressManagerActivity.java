@@ -14,10 +14,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.AddressAdapter;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopUserShippingAddresses;
 import com.zgld.mall.beans.UserShippingAddresses;
-import com.zgld.mall.beans.UserToken;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
@@ -28,7 +25,6 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 

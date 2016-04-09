@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -20,16 +19,13 @@ import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.AspnetUsers;
-import com.zgld.mall.beans.HishopOrderItems;
-import com.zgld.mall.beans.HishopOrders;
-import com.zgld.mall.beans.OrderStatus;
+import com.zgld.mall.beans.OrderItems;
+import com.zgld.mall.beans.Orders;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 import com.zgld.mall.utils.PriceUtil;
-import com.zgld.mall.utils.StringUtils;
 
 import org.json.JSONObject;
 
@@ -38,13 +34,13 @@ public interface BuyersOrdersAdapterListener{
 	public void update(int tag,Bundle bundle);
 }
 
-	List<HishopOrders> listInfo;
+	List<Orders> listInfo;
 	LayoutInflater layoutInflater;
 	Context context;
 	CustomDialog dialog;
 	boolean display = false;// 处理完成后，是否显示当前item
 	BuyersOrdersAdapterListener listener;
-	public BuyersOrdersAdapter(Context context, List<HishopOrders> listInfo,BuyersOrdersAdapterListener listener) {
+	public BuyersOrdersAdapter(Context context, List<Orders> listInfo,BuyersOrdersAdapterListener listener) {
 		this.listInfo = listInfo;
 		this.layoutInflater = LayoutInflater.from(context);
 		this.context = context;
@@ -81,7 +77,7 @@ public interface BuyersOrdersAdapterListener{
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// return listInfo.get(groupPosition).getProducts().size();
-		return listInfo.get(groupPosition).getListHishopOrderItems().size();
+		return listInfo.get(groupPosition).getListOrderItems().size();
 	}
 
 	/**
@@ -90,7 +86,7 @@ public interface BuyersOrdersAdapterListener{
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// return listInfo.get(groupPosition).getProducts().get(childPosition);
-		return listInfo.get(groupPosition).getListHishopOrderItems().get(childPosition);
+		return listInfo.get(groupPosition).getListOrderItems().get(childPosition);
 	}
 
 	/**
@@ -129,7 +125,7 @@ public interface BuyersOrdersAdapterListener{
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		HishopOrders info = listInfo.get(groupPosition);
+		Orders info = listInfo.get(groupPosition);
 		if (info != null) {
 			convertView.setOnClickListener(new OnClickListener() {
 
@@ -142,23 +138,23 @@ public interface BuyersOrdersAdapterListener{
 			});
 			holder.item_name.setText("订单号："+info.getOrderId());
 			String str = "";
-			switch (info.getOrderStatus()) {
-			case 1:
-				str = "等待付款";
-				break;
-			case 2:
-				str = "等待发货";
-				break;
-			case 3:
-				str = "已发货";
-				break;
-			case 4:
-				str = "已关闭";
-				break;
-			case 5:
-				str = "成功订单";
-				break;
-			}
+//			switch (info.getOrderStatus()) {
+//			case 1:
+//				str = "等待付款";
+//				break;
+//			case 2:
+//				str = "等待发货";
+//				break;
+//			case 3:
+//				str = "已发货";
+//				break;
+//			case 4:
+//				str = "已关闭";
+//				break;
+//			case 5:
+//				str = "成功订单";
+//				break;
+//			}
 			holder.item_status.setText(str);
 		}
 		return convertView;
@@ -205,81 +201,81 @@ public interface BuyersOrdersAdapterListener{
 		} else {
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		HishopOrderItems info = listInfo.get(groupPosition).getListHishopOrderItems().get(childPosition);
+		OrderItems info = listInfo.get(groupPosition).getListOrderItems().get(childPosition);
 		holder.item_base_bottom.setVisibility(View.GONE);
 		holder.item_pay.setVisibility(View.GONE);
 		holder.item_cancel.setVisibility(View.GONE);
 		holder.item_refund.setVisibility(View.GONE);
 		holder.item_view_logistics.setVisibility(View.GONE);
 		if(info!=null){
-			SysApplication.DisplayImage(info.getThumbnailsUrl(),holder.item_image);
-			holder.item_title.setText(info.getItemDescription());
-			holder.item_detail.setText(info.getSkucontent());
-			holder.item_price.setText(PriceUtil.priceY(info.getItemListPrice() + ""));
+//			SysApplication.DisplayImage(info.getThumbnailsUrl(),holder.item_image);
+//			holder.item_title.setText(info.getItemDescription());
+//			holder.item_detail.setText(info.getSkucontent());
+//			holder.item_price.setText(PriceUtil.priceY(info.getItemListPrice() + ""));
 			holder.item_number.setText("X"+info.getQuantity());
 			if(isLastChild){
 				holder.item_base_bottom.setVisibility(View.VISIBLE);
 				int num = 0;
-				for (int i =0;i<listInfo.get(groupPosition).getListHishopOrderItems().size();i++){
-					HishopOrderItems item = listInfo.get(groupPosition).getListHishopOrderItems().get(i);
+				for (int i =0;i<listInfo.get(groupPosition).getListOrderItems().size();i++){
+					OrderItems item = listInfo.get(groupPosition).getListOrderItems().get(i);
 					num+=item.getQuantity();
 				}
 				holder.item_number_all.setText(num+"");
 				holder.item_postage.setText(PriceUtil.priceY(listInfo.get(groupPosition).getFreight()+""));
-				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotal()+""));
+//				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotal()+""));
 
-				switch (listInfo.get(groupPosition).getOrderStatus()) {
-					case 1:
-//						str = "等待付款";
-						holder.item_pay.setVisibility(View.VISIBLE);
-						holder.item_pay.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-
-							}
-						});
-						holder.item_cancel.setVisibility(View.VISIBLE);
-						holder.item_cancel.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								cancelOrder(groupPosition,childPosition);
-							}
-						});
-						break;
-					case 2:
-//						str = "等待发货";
-						holder.item_refund.setVisibility(View.VISIBLE);
-						holder.item_refund.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-
-							}
-						});
-						break;
-					case 3:
-//						str = "已发货";
-						holder.item_view_logistics.setVisibility(View.VISIBLE);
-						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-
-							}
-						});
-						break;
-					case 4:
-//						str = "已关闭";
-						break;
-					case 5:
-//						str = "成功订单";
-						holder.item_view_logistics.setVisibility(View.VISIBLE);
-						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-
-							}
-						});
-						break;
-				}
+//				switch (listInfo.get(groupPosition).getOrderStatus()) {
+//					case 1:
+////						str = "等待付款";
+//						holder.item_pay.setVisibility(View.VISIBLE);
+//						holder.item_pay.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//
+//							}
+//						});
+//						holder.item_cancel.setVisibility(View.VISIBLE);
+//						holder.item_cancel.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//								cancelOrder(groupPosition,childPosition);
+//							}
+//						});
+//						break;
+//					case 2:
+////						str = "等待发货";
+//						holder.item_refund.setVisibility(View.VISIBLE);
+//						holder.item_refund.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//
+//							}
+//						});
+//						break;
+//					case 3:
+////						str = "已发货";
+//						holder.item_view_logistics.setVisibility(View.VISIBLE);
+//						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//
+//							}
+//						});
+//						break;
+//					case 4:
+////						str = "已关闭";
+//						break;
+//					case 5:
+////						str = "成功订单";
+//						holder.item_view_logistics.setVisibility(View.VISIBLE);
+//						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
+//							@Override
+//							public void onClick(View v) {
+//
+//							}
+//						});
+//						break;
+//				}
 
 			}
 		}
@@ -356,7 +352,7 @@ public interface BuyersOrdersAdapterListener{
 	 */
 	public void payOrder(final int groupPosition, final int childPosition) {
 		Map<String, String> m = new HashMap<String, String>();
-		final HishopOrders orderInfo = listInfo.get(groupPosition);
+		final Orders orderInfo = listInfo.get(groupPosition);
 	}
 
 	/**
@@ -376,7 +372,7 @@ public interface BuyersOrdersAdapterListener{
 						if(users!=null){
 							m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
 							m.put(Contents.USERID, users.getUsers().getUserId()+"");
-							m.put("orderid",listInfo.get(groupPosition).getOrderId());
+							m.put("orderid",listInfo.get(groupPosition).getOrderId()+"");
 							new OrderAsync(context, Request.Method.POST, 306, "order/cancel_order.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
 
 								@Override
@@ -387,7 +383,7 @@ public interface BuyersOrdersAdapterListener{
 //										listInfo.remove(groupPosition);
 											String json = data.getString(Contents.JSON);
 											JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
-											HishopOrders orders = new Gson().fromJson(jsonObject.toString(),new TypeToken<HishopOrders>(){}.getType());
+											Orders orders = new Gson().fromJson(jsonObject.toString(),new TypeToken<Orders>(){}.getType());
 											if(orders!=null){
 												listInfo.set(groupPosition,orders);
 											}

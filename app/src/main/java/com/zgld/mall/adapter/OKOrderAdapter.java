@@ -1,12 +1,9 @@
 package com.zgld.mall.adapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +16,8 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
-import com.zgld.mall.activity.ProductDetailActivity;
-import com.zgld.mall.beans.HishopProducts;
-import com.zgld.mall.beans.HishopShoppingCarts;
-import com.zgld.mall.beans.HishopSkuitems;
-import com.zgld.mall.utils.Contents;
+import com.zgld.mall.beans.Products;
+import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.utils.PriceUtil;
 
 public class OKOrderAdapter extends BaseExpandableListAdapter {
@@ -31,12 +25,12 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		void remark(int groupPosition, int childPosition, String remark);
 	}
 
-	ArrayList<HishopShoppingCarts> listInfo = new ArrayList<>();
+	ArrayList<ShoppingCarts> listInfo = new ArrayList<>();
 	LayoutInflater layoutInflater;
 	Context context;
 	BaseExpandableListAdapterListener listener;
 
-	public OKOrderAdapter(Context context, ArrayList<HishopShoppingCarts> listInfo, BaseExpandableListAdapterListener listener) {
+	public OKOrderAdapter(Context context, ArrayList<ShoppingCarts> listInfo, BaseExpandableListAdapterListener listener) {
 		// TODO Auto-generated constructor stub
 		this.listInfo = listInfo;
 		layoutInflater = LayoutInflater.from(context);
@@ -73,7 +67,7 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return listInfo.get(groupPosition).getListHishopProducts().size();
+		return listInfo.get(groupPosition).getListProducts().size();
 	}
 
 
@@ -82,7 +76,7 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return listInfo.get(groupPosition).getListHishopProducts().get(childPosition);
+		return listInfo.get(groupPosition).getListProducts().get(childPosition);
 	}
 
 	/**
@@ -119,11 +113,11 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		HishopShoppingCarts info = listInfo.get(groupPosition);
+		ShoppingCarts info = listInfo.get(groupPosition);
 		if (info != null) {
 
-			if(info.getSupplier()!=null){
-				holder.item_car_manufactor_name.setText(info.getSupplier().getSupplierName());
+			if(info.getyShop()!=null){
+				holder.item_car_manufactor_name.setText(info.getyShop().getUserId() + "");
 			}
 		}
 		return convertView;
@@ -164,18 +158,18 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		}
 		final ChildViewHoldeer h = holder;
 		holder.bottom.setVisibility(View.GONE);
-		final HishopProducts info = listInfo.get(groupPosition).getListHishopProducts().get(childPosition);
+		final Products info = listInfo.get(groupPosition).getListProducts().get(childPosition);
 		if (info != null) {
 			if (isLastChild) {
 				holder.bottom.setVisibility(View.VISIBLE);
 			}
 			holder.item_title.setText(info.getProductName());
-			SysApplication.DisplayImage(info.getImageUrl1(), holder.item_image);
+			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
 			holder.item_number_base.setText(listInfo.get(groupPosition).getQuantity() + "");
 			holder.item_number.setText("X" + listInfo.get(groupPosition).getQuantity());
-			holder.item_price.setText(PriceUtil.priceY(info.getHishopSkus().getSalePrice()+""));
+			holder.item_price.setText(PriceUtil.priceY(info.getSalePrice()+""));
 			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
-			holder.item_price_base.setText(PriceUtil.priceY((info.getHishopSkus().getSalePrice() * listInfo.get(groupPosition).getQuantity()) + ""));
+			holder.item_price_base.setText(PriceUtil.priceY((info.getSalePrice() * listInfo.get(groupPosition).getQuantity()) + ""));
 			holder.item_image.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -206,16 +200,16 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 					listener.remark(groupPosition, childPosition, s.toString());
 				}
 			});
-			List<HishopSkuitems> listHishopSkuitems = info.getListHishopSkuitems();
-			if(listHishopSkuitems!=null){
-				StringBuffer str = new StringBuffer("");
-				for (int i =0;i<listHishopSkuitems.size();i++){
-					HishopSkuitems item = listHishopSkuitems.get(i);
-					str.append(item.getHishopAttributes().getAttributeName()+":");
-					str.append(item.getHishopAttributeValues().getValueStr()+";");
-				}
-				holder.item_detail.setText(str.toString()+"商品货号:"+info.getHishopSkus().getSku());
-			}
+//			List<HishopSkuitems> listHishopSkuitems = info.getListHishopSkuitems();
+//			if(listHishopSkuitems!=null){
+//				StringBuffer str = new StringBuffer("");
+//				for (int i =0;i<listHishopSkuitems.size();i++){
+//					HishopSkuitems item = listHishopSkuitems.get(i);
+//					str.append(item.getHishopAttributes().getAttributeName()+":");
+//					str.append(item.getHishopAttributeValues().getValueStr()+";");
+//				}
+//				holder.item_detail.setText(str.toString()+"商品货号:"+info.getHishopSkus().getSku());
+//			}
 		}
 		return convertView;
 	}
