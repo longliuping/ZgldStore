@@ -31,8 +31,8 @@ import java.util.Map;
 public class AsyncGameRunner {
 	public static ConfirmDialog confirmDialog = null;
 	static CustomDialog dialog = null;
-	public static RequestQueue request(int method, final int tag, final String url, final RequestListenr re, Context context, Map m,String title, int pageIndex) {
-		if (pageIndex == 1) {
+	public static RequestQueue request(final int tag, final String url, final RequestListenr re, Context context, Map m,String title) {
+		if (title!=null && title.length()>2) {
 			if (confirmDialog == null) {
 				confirmDialog = new ConfirmDialog(context, title);
 			}
@@ -42,7 +42,7 @@ public class AsyncGameRunner {
 			confirmDialog.show();
 		}
 		RequestQueue queue = Volley.newRequestQueue(context);
-		if (Request.Method.GET == method) {
+		if (m==null) {
 			getReqest(context,tag, url, re, queue);
 		} else {
 			postReqest(context,tag, url, re, queue, m);

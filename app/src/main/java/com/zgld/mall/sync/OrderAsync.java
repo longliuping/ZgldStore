@@ -43,7 +43,7 @@ public class OrderAsync implements RequestListenr {
 
 	void init() {
 		if (NetWorkTools.isHasNet(context)) {
-			AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, context, m,null,1);
+			AsyncGameRunner.request( tag, Contents.BASE_URL + url, this, context, m,null);
 		} else {
 			Toast.makeText(context, context.getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT).show();
 		}

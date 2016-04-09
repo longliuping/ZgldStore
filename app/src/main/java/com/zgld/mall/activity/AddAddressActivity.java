@@ -144,7 +144,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
                 } else {
                     m.put("address.regionId", county.getId() + "");
                 }
-                getData(com.android.volley.Request.Method.POST, 202, "addresses/add_user_shipping_addresses.html", m, null, 1);
+                getData(202, "addresses/add_user_shipping_addresses.html", m, null);
                 break;
         }
     }

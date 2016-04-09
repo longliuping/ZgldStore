@@ -96,7 +96,7 @@ public class UpdateUserPasswordActivity extends BaseActivity implements View.OnC
                     Map<String,String> m = new HashMap<>();
                     m.put("oldPassword",old_pwd.getText().toString());
                     m.put("password",new_pwd.getText().toString());
-                    getData(Request.Method.POST,201,"user/update_user_password.html",m,null,1);
+                    getData(201,"user/update_user_password.html",m,null);
                 }
                 break;
         }

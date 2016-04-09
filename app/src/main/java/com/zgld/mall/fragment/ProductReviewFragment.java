@@ -73,7 +73,7 @@ public class ProductReviewFragment extends ProductBaseFragment implements OnRefr
 			m.put("productId", info.getProducts().getProductId()+"");
 			m.put(Contents.PAGENUM,pageIndex+"");
 			m.put(Contents.PAGESIZE,20+"");
-			getData(Request.Method.POST, 666, "reviews/view_product_reviews.html", m, null, pageIndex);
+			getData( 666, "reviews/view_product_reviews.html", m, null);
 		}
 	}
 

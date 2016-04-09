@@ -61,7 +61,7 @@ public class ProductTypeActivity extends BaseActivity implements AdapterView.OnI
         initData();
     }
     void initData(){
-        getData(Request.Method.GET, 201, "product/home_type_product.html?id="+info.getCategoryId()+"&pageSize=18&pageNum="+pageNum, null, null, pageNum);
+        getData(201, "product/home_type_product.html?id="+info.getCategoryId()+"&pageSize=18&pageNum="+pageNum, null, null);
     }
     @Override
     public void handleMsg(Message msg) {

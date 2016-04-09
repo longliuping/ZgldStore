@@ -90,7 +90,7 @@ public class BuyersOrders1Fragment extends BuyersOrdersBaseFragment implements O
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,20+"");
         m.put("id","1");
-        getData(Method.POST, 202, "order/user_order.html", m, null, pageNum);
+        getData(202, "order/user_order.html", m, null);
     }
 
     @Override

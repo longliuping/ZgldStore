@@ -169,8 +169,8 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
 
     private void initData() {
         // 产品详细
-        getData(com.android.volley.Request.Method.GET, 205, "product/product_detail.html?id=" + productId, null,
-                null, 1);
+        getData( 205, "product/product_detail.html?id=" + productId, null,
+                null);
     }
 
     @Override
@@ -403,8 +403,8 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             m.put("skuId", hishopSkus.getSku()+"");
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
-            getData(Request.Method.POST, 207, "car/add_product_car.html", m, null
-                    , 1);
+            getData(207, "car/add_product_car.html", m, null
+                    );
         }else{
             Contents.loginPage(this,null,200);
         }

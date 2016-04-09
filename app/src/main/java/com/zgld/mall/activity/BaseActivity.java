@@ -100,17 +100,15 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
     }
     long time = 0;
     /**
-     * @param method 请求方式
      * @param tag  请求标识
      * @param url  请求地址
      * @param m  请求参数
      * @param title  请求过程中对话框的标题
-     * @param pageIndex  请求页数
      * @return
      */
-    public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+    public RequestQueue getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, getApplicationContext(), m,title,pageIndex);
+            return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, getApplicationContext(), m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -122,28 +120,24 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
     }
     /**
      * 没有连接网络，加载缓存json
-     *
-     * @param method
      * @param tag
      * @param url
      * @param m
      * @param title
-     * @param pageIndex
      */
-    public void getDataCache(int method, int tag, String url, Map m, String title, int pageIndex) {
-        if (pageIndex == 1) {
-            RequestQueue queue = Volley.newRequestQueue(this);
-            Cache.Entry en = queue.getCache().get(Contents.BASE_URL + url);
-            if (en != null && en.data != null) {
-                String json = new String(en.data);
-                Message msg = handler.obtainMessage();
-                msg.what = tag;
-                Bundle data = new Bundle();
-                data.putString(Contents.JSON, json);
-                msg.setData(data);
-                handler.sendMessage(msg);
-            }
+    public void getDataCache(int tag, String url, Map m, String title) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        Cache.Entry en = queue.getCache().get(Contents.BASE_URL + url);
+        if (en != null && en.data != null) {
+            String json = new String(en.data);
+            Message msg = handler.obtainMessage();
+            msg.what = tag;
+            Bundle data = new Bundle();
+            data.putString(Contents.JSON, json);
+            msg.setData(data);
+            handler.sendMessage(msg);
         }
+
     }
     /**
      * 图片缩放剪切

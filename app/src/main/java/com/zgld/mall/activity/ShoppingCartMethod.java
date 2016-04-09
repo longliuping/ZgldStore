@@ -183,9 +183,9 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		}
 	}
 
-	public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+	public RequestQueue getData(int tag, String url, Map m, String title) {
 		if (NetWorkTools.isHasNet(activity)) {
-			return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, activity, m,title,pageIndex);
+			return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, activity, m,title);
 		} else {
 			Toast.makeText(activity, activity.getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT)
 					.show();
@@ -204,7 +204,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			null_data_default.setVisibility(View.VISIBLE);
 		} else {
 			Map<String,String> m = new HashMap<>();
-			getData(Method.POST, 201, "car/user_car_product.html", m, null, 1);
+			getData( 201, "car/user_car_product.html", m, null);
 		}
 	}
 
@@ -568,7 +568,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						m.put(Contents.USERID,users.getUsers().getUserId() + "");
 						m.put("productId", listInfo.get(groupPosition).getListProducts().get(childPosition).getProductId() + "");
 //						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getHishopSkus().getSkuId());
-						getData(Method.POST, 203, "car/delete_car_product.html", m, null, 1);
+						getData(203, "car/delete_car_product.html", m, null);
 					}
 
 					@Override

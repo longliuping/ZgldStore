@@ -126,9 +126,9 @@ public class MainHomeFragment extends BaseFragment {
         });
 
         initLoopView();
-        getDataCache(Request.Method.GET, 201, "home_banner.html", null, null, 1);
-        getDataCache(Request.Method.GET, 202, "product/home_all_product.html", null, null, 1);
-        getDataCache(Request.Method.GET, 203, "home_hot_category.html", null, null, 1);
+        getDataCache( 201, "home_banner.html", null, null);
+        getDataCache( 202, "product/home_all_product.html", null, null);
+        getDataCache( 203, "home_hot_category.html", null, null);
         gridview = (GridView) view.findViewById(R.id.gridview);
         hotCategoryAdapter = new HotCategoryAdapter(activity,listMenu);
         gridview.setAdapter(hotCategoryAdapter);
@@ -145,9 +145,9 @@ public class MainHomeFragment extends BaseFragment {
         initData();
     }
     public void initData(){
-        getData(Request.Method.GET, 201, "home_banner.html", null, null, 1);
-        getData(Request.Method.GET, 202, "product/home_all_product.html", null, null, 1);
-        getData(Request.Method.GET, 203, "home_hot_category.html", null, null, 1);
+        getData(201, "home_banner.html", null, null);
+        getData(202, "product/home_all_product.html", null, null);
+        getData(203, "home_hot_category.html", null, null);
     }
     /**
      * 初始化LoopView

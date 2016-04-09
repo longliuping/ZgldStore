@@ -78,7 +78,7 @@ public class UpdateUserCellPhoneActivity extends BaseActivity implements View.On
                 }else{
                     Map<String,String> m = new HashMap<>();
                     m.put("cellPhone",name.getText().toString());
-                    getData(Request.Method.POST,201,"user/update_cellphone.html",m,null,1);
+                    getData(201,"user/update_cellphone.html",m,null);
                 }
                 break;
         }

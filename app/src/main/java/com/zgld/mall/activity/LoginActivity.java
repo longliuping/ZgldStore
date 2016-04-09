@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
                     m.put("name",et_user_name.getText().toString());
                     m.put("password",et_user_password.getText().toString());
                     m.put("id","1");
-                    getData(Request.Method.POST, 201, "user/user_login.html", m, null,1);
+                    getData(201, "user/user_login.html", m, null);
                 }
                 break;
         }

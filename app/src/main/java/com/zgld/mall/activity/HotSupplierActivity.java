@@ -179,7 +179,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
         m.put(Contents.PAGESIZE,18+"");
         m.put("areaid",areaid+"");
         m.put("hotid",info.getCategoryId()+"");
-        getData(Request.Method.POST, 201, "supplier/hot_area_supplier.html", m, null, pageNum);
+        getData( 201, "supplier/hot_area_supplier.html", m, null);
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

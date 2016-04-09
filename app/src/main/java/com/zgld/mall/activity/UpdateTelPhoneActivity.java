@@ -80,7 +80,7 @@ public class UpdateTelPhoneActivity extends BaseActivity implements View.OnClick
                 }else{
                     Map<String,String> m = new HashMap<>();
                     m.put("telPhone",name.getText().toString());
-                    getData(Request.Method.POST,201,"user/update_telphone.html",m,null,1);
+                    getData(201,"user/update_telphone.html",m,null);
                 }
                 break;
         }

@@ -105,7 +105,7 @@ public class UpdateUserSexActivity extends BaseActivity implements View.OnClickL
                     } else {
                         m.put("userinfo.accountSex", "0");
                     }
-                    getData(Request.Method.POST,201,"user/update_user_gender.html",m,null,1);
+                    getData(201,"user/update_user_gender.html",m,null);
                 }
                 break;
         }

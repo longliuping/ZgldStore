@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
@@ -61,17 +62,15 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
     }
     /**
      * 获取网络数据的方法
-     * @param method 请求方法(get或post)
      * @param tag 请求标识
      * @param url 请求的地址
      * @param m 请求参数
      * @param title  请求的标题
-     * @param pageIndex  请求的页数
      * @return
      */
-    public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+    public RequestQueue getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(activity)) {
-            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, getActivity(), m,title,pageIndex);
+            return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, getActivity(), m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -85,33 +84,28 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
 
     /**
      *
-     * @param method
      * @param tag
      * @param url
      * @param m
      * @param title
-     * @param pageIndex
      */
-    public void getDataCache(int method, int tag, String url, Map m, String title, int pageIndex) {
+    public void getDataCache(int tag, String url, Map m, String title) {
        try{
-           if (pageIndex == 1) {
-               RequestQueue queue = Volley.newRequestQueue(activity);
-               Cache.Entry en = queue.getCache().get(Contents.BASE_URL + url);
-               if (en != null && en.data != null) {
-                   String json = new String(en.data);
-                   Message msg = handler.obtainMessage();
-                   msg.what = tag;
-                   Bundle data = new Bundle();
-                  if(json!=null && json.length()>10){
-                      JSONObject object = new JSONObject(json);
-                      data.putString(Contents.JSON, json);
-                      data.putInt(Contents.STATUS, object.getInt(Contents.STATUS));
-                      data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
-                      data.putBoolean("cache", false);
-                      msg.setData(data);
-                  }
-                   handler.sendMessage(msg);
-               }
+           RequestQueue queue = Volley.newRequestQueue(activity);
+           Cache.Entry en = queue.getCache().get(Contents.BASE_URL + url);
+           if (en != null && en.data != null) {
+               String json = new String(en.data);
+               Message msg = handler.obtainMessage();
+               msg.what = tag;
+               Bundle data = new Bundle();
+              if(json!=null && json.length()>10){
+                  JSONObject object = new JSONObject(json);
+                  data.putString(Contents.JSON, json);
+                  data.putInt(Contents.STATUS, object.getInt(Contents.STATUS));
+                  data.putString(Contents.DATA, object.getJSONObject(Contents.DATA).toString());
+                  msg.setData(data);
+              }
+               handler.sendMessage(msg);
            }
        }catch (Exception e){
            e.printStackTrace();;

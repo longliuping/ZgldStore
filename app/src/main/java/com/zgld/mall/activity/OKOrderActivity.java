@@ -194,7 +194,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 m.put("templateId","2");
                 m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
                 m.put(Contents.USERID,users.getUsers().getUserId()+"");
-                getData(com.android.volley.Request.Method.POST, 205, "order/submit_order.html", m, null, 1);
+                getData( 205, "order/submit_order.html", m, null);
                 break;
         }
     }

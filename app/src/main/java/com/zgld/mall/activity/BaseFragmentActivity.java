@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.AsyncGameRunner;
@@ -63,9 +65,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
     public void onException(String exception) {
         handler.sendEmptyMessage(Contents.TAG_ERROES);
     }
-    public void getData(int method, int tag, String url, Map m, String title, int pageIndex) {
+    public void getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
+            AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, this, m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

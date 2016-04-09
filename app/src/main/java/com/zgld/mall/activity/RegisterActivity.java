@@ -96,7 +96,7 @@ public class RegisterActivity extends BaseActivity implements  View.OnClickListe
                     if(user_code.getText()!=null){
                         m.put("id",user_code.getText().toString());
                     }
-                    getData(Request.Method.POST, 201, "user/user_register.html",m,null,1);
+                    getData(201, "user/user_register.html",m,null);
                 }
                 break;
         }

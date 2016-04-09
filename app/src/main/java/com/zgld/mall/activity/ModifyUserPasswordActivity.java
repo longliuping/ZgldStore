@@ -99,6 +99,6 @@ public class ModifyUserPasswordActivity extends BaseActivity {
 //        m.put("token", Contents.getUser(this).getToken());
 //        m.put("userId", Contents.getUser(this).getUserId());
         m.put("password", new_confirm_pwd.getText().toString());
-        getData(com.android.volley.Request.Method.POST, 201, "User/UserUpdatePwd", m, null, 1);
+        getData( 201, "User/UserUpdatePwd", m, null);
     }
 }
