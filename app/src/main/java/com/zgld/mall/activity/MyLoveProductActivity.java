@@ -1,6 +1,5 @@
 package com.zgld.mall.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.zgld.mall.R;
@@ -15,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,9 +29,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.zgld.mall.SysApplication;
 import com.zgld.mall.adapter.ProductListAdapter;
-import com.zgld.mall.beans.Product;
+import com.zgld.mall.beans.Products;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.NetWorkTools;
 import com.zgld.mall.widget.MyGridView;
@@ -44,7 +41,7 @@ import com.zgld.mall.widget.MyGridView;
  */
 public class MyLoveProductActivity extends BaseActivity implements OnRefreshListener2, OnItemClickListener,
         OnClickListener {
-    List<Product> listInfo;
+    List<Products> listInfo;
     PullToRefreshScrollView scrollview;
     MyGridView gridview;
     ProductListAdapter infoAdapter;
@@ -77,22 +74,19 @@ public class MyLoveProductActivity extends BaseActivity implements OnRefreshList
             }
             switch (msg.what) {
                 case 201:
-                    entityType = new TypeToken<List<Product>>() {
+                    entityType = new TypeToken<List<Products>>() {
                     }.getType();
                     if (pageIndex == 1) {
-                        listInfo = new ArrayList<Product>();
+                        listInfo = new ArrayList<Products>();
                         infoAdapter = new ProductListAdapter(this, listInfo);
                         gridview.setAdapter(infoAdapter);
                     }
-                    List<Product> list = gson.fromJson(jsonArray.toString(), entityType);
+                    List<Products> list = gson.fromJson(jsonArray.toString(), entityType);
                     if (list == null || list.size() <= 0) {
                         Toast.makeText(this, getString(R.string.no_data), Toast.LENGTH_SHORT).show();
                     }
                     if (list != null) {
-                        for (int i = 0; i < list.size(); i++) {
-                            Product info = list.get(i);
-                            listInfo.add(info);
-                        }
+                        listInfo.addAll(list);
                     }
                     infoAdapter.notifyDataSetChanged();
                     pageIndex++;

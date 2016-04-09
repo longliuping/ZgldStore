@@ -18,15 +18,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
-import com.zgld.mall.adapter.ProductParamAdapter;
-import com.zgld.mall.beans.ProductParam;
 import com.zgld.mall.beans.Supplier;
 import com.zgld.mall.utils.Contents;
 
 public class ProductParamFragment extends ProductBaseFragment implements OnRefreshListener2 {
 	Gson gson;
 	PullToRefreshListView listView;
-	List<ProductParam> list;
+//	List<ProductParam> list;
 	View view;
 	Supplier product;
 	Activity activity;
@@ -78,15 +76,12 @@ public class ProductParamFragment extends ProductBaseFragment implements OnRefre
 			if (json == null) {
 				return;
 			}
-			list = gson.fromJson(json, new TypeToken<List<ProductParam>>() {
-			}.getType());
-			if (list == null || list.size() <= 0) {
-				Toast.makeText(activity, activity.getString(R.string.no_data), Toast.LENGTH_SHORT).show();
-			}
-			if (null != list) {
-				ProductParamAdapter paramAdapter = new ProductParamAdapter(activity, list);
-				listView.setAdapter(paramAdapter);
-			}
+//			list = gson.fromJson(json, new TypeToken<List<ProductParam>>() {
+//			}.getType());
+//			if (null != list) {
+//				ProductParamAdapter paramAdapter = new ProductParamAdapter(activity, list);
+//				listView.setAdapter(paramAdapter);
+//			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

@@ -17,5 +17,12 @@ public class ProductReviews extends AbstractProductReviews implements java.io.Se
 	public ProductReviews(Integer shopId, Integer productId, Integer userId, String reviewText, String userName, String userEmail, String reviewDate) {
 		super(shopId, productId, userId, reviewText, userName, userEmail, reviewDate);
 	}
+	YAccount userInfo;
+	public YAccount getUserInfo() {
+		return userInfo;
+	}
 
+	public void setUserInfo(YAccount userInfo) {
+		this.userInfo = userInfo;
+	}
 }

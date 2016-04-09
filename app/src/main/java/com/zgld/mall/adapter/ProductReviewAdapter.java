@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.crypto.spec.IvParameterSpec;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,17 +16,17 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
-import com.zgld.mall.beans.ProductReview;
+import com.zgld.mall.beans.ProductReviews;
 
 /*
  * 累计评论适配器
  */
 public class ProductReviewAdapter extends BaseAdapter {
-	private List<ProductReview> list;
+	private List<ProductReviews> list;
 	private Context context;
 	private LayoutInflater layoutInflater;
 
-	public ProductReviewAdapter(List<ProductReview> list, Context context) {
+	public ProductReviewAdapter(List<ProductReviews> list, Context context) {
 		super();
 		this.list = list;
 		this.context = context;
@@ -67,20 +66,16 @@ public class ProductReviewAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ProductReview productReview = list.get(position);
+		ProductReviews productReview = list.get(position);
 		if (productReview != null) {
-			SysApplication.DisplayUserImageClick(productReview.getHeadImg(), viewHolder.ivHead);
-			viewHolder.tvName.setText(productReview.getUserName());
+			SysApplication.DisplayUserImage(productReview.getUserInfo().getAccountHead(), viewHolder.ivHead);
+			viewHolder.tvName.setText(productReview.getUserInfo().getAccountName());
 			viewHolder.tvContent.setText(productReview.getReviewText());
-
 			String reviewDate = productReview.getReviewDate();
-
 			long mdate = Long.parseLong(get_StringNum(reviewDate));
-
 			Date date = new Date(mdate);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
 			String str = format.format(date);
-
 			viewHolder.tvDate.setText(str);
 		}
 		return convertView;

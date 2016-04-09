@@ -216,6 +216,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
                 if (new UserDataShare(this).getUserData() == null) {
                     Contents.loginPage(this,null,200);
                     return;
+
                 }
                 startActivity(new Intent(this, ShoppingCartActivity.class));
                 break;

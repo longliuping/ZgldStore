@@ -11,15 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zgld.mall.R;
-import com.zgld.mall.SysApplication;
-import com.zgld.mall.beans.Product;
+import com.zgld.mall.beans.Products;
 import com.zgld.mall.utils.PriceUtil;
 
 public class ProductListAdapter extends BaseAdapter {
-	List<Product> listInfo;
+	List<Products> listInfo;
 	LayoutInflater layoutInflater;
 
-	public ProductListAdapter(Context context, List<Product> listInfo) {
+	public ProductListAdapter(Context context, List<Products> listInfo) {
 		// TODO Auto-generated constructor stub
 		this.listInfo = listInfo;
 		layoutInflater = LayoutInflater.from(context);
@@ -67,7 +66,7 @@ public class ProductListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Product info = listInfo.get(position);
+		Products info = listInfo.get(position);
 		if (info != null) {
 //			SysApplication.DisplayImage(info.getImageUrl1(), holder.item_image);
 //			holder.item_title.setText(info.getProductName());
