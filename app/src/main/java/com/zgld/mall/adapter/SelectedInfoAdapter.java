@@ -65,25 +65,25 @@ public class SelectedInfoAdapter extends BaseAdapter {
 		}
 		holder.title.setTextAppearance(context, R.style.item_text_default);
 		convertView.setBackgroundResource(R.drawable.item_text_default_shape);
-//		final HishopAttributeValues info = listInfo.get(position);
-//		if (info != null) {
-//			if (info.isSelected()) {
-//				holder.title.setTextAppearance(context, R.style.item_text_selected);
-//				convertView.setBackgroundResource(R.drawable.item_text_selected_shape);
-//			}
-//			holder.title.setText(info.getValueStr());
-//			convertView.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					for (int i =0;i<listInfo.size();i++){
-//						listInfo.get(i).setSelected(false);
-//					}
-//					info.setSelected(true);
-//					SelectedInfoAdapter.this.notifyDataSetChanged();
-//					callback.onItemClick(info,position);
-//				}
-//			});
-//		}
+		final Sku info = listInfo.get(position);
+		if (info != null) {
+			if (info.isSelected()) {
+				holder.title.setTextAppearance(context, R.style.item_text_selected);
+				convertView.setBackgroundResource(R.drawable.item_text_selected_shape);
+			}
+			holder.title.setText(info.getAttributeNames());
+			convertView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					for (int i =0;i<listInfo.size();i++){
+						listInfo.get(i).setSelected(false);
+					}
+					info.setSelected(true);
+					SelectedInfoAdapter.this.notifyDataSetChanged();
+					callback.onItemClick(info,position);
+				}
+			});
+		}
 		return convertView;
 	}
 

@@ -206,10 +206,10 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
                 }
                 break;
             case R.id.add_car:
-                if (new UserDataShare(this).getUserData() == null) {
-                    Contents.loginPage(this,null,200);
-                    return;
-                }
+//                if (new UserDataShare(this).getUserData() == null) {
+//                    Contents.loginPage(this,null,200);
+//                    return;
+//                }
                 showPop();
                 break;
             case R.id.cart:
@@ -290,18 +290,6 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             mViewPager = (JazzyProductDetailViewPager) findViewById(R.id.index_product_images_container);
             mIndicator = (LinearLayout) findViewById(R.id.index_product_images_indicator);
             mImageUrls = new ArrayList<String>();
-//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl1())) {
-//                mImageUrls.add(info.getProducts().getImageUrl1());
-//            }
-//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl2())) {
-//                mImageUrls.add(info.getProducts().getImageUrl2());
-//            }
-//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl3())) {
-//                mImageUrls.add(info.getProducts().getImageUrl3());
-//            }
-//            if (!TextUtils.isEmpty(info.getProducts().getImageUrl4())) {
-//                mImageUrls.add(info.getProducts().getImageUrl4());
-//            }
             if(info.getProducts().getListProductImages()!=null){
                 for (ProductImages images:info.getProducts().getListProductImages()){
                     mImageUrls.add(images.getImageUrl());

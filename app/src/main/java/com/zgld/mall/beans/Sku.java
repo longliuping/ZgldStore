@@ -15,5 +15,13 @@ public class Sku extends AbstractSku implements java.io.Serializable {
 	public Sku(Integer skugroupId, Integer shopId, Integer productId, Integer stock, Double price, String attributeNames, String attributeValues) {
 		super(skugroupId, shopId, productId, stock, price, attributeNames, attributeValues);
 	}
+	boolean selected;
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }

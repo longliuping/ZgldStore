@@ -22,6 +22,15 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 	List<Skugroup> listSkugroups;
 	List<Sku> listSkus;
 	List<ProductImages> listProductImages;
+	boolean checked;
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 
 	public List<Skugroup> getListSkugroups() {
 		return listSkugroups;
