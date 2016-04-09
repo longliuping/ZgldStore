@@ -160,9 +160,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			Bundle data = new Bundle();
 			data.putString(Contents.JSON, json);
 			msg.setData(data);
-			if (confirmDialog != null && confirmDialog.isShowing()) {
-				confirmDialog.dismiss();
-			}
 			if(json!=null && json.length()>10){
 				JSONObject object = new JSONObject(json);
 				if(object.getInt(Contents.STATUS)==201) {
@@ -200,9 +197,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
-			if (confirmDialog != null && confirmDialog.isShowing()) {
-				confirmDialog.dismiss();
-			}
 		}
 		if (exception != null && exception.equals("com.android.volley.ServerError")) {
 			Toast.makeText(activity, activity.getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
@@ -213,25 +207,8 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	}
 
 	public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
-		// RequestManager.init(this);
-		if(Request.Method.POST ==method && m!=null) {
-			YAccount user = new UserDataShare(activity).getUserData();
-			if(user!=null) {
-				m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
-				m.put(Contents.USERID, user.getUsers().getUserId() + "");
-			}
-		}
 		if (NetWorkTools.isHasNet(activity)) {
-			if (pageIndex == 1) {
-				if (confirmDialog == null || !confirmDialog.isShowing()) {
-					confirmDialog = new ConfirmDialog(activity, title);
-				}
-				if (confirmDialog.isShowing()) {
-					confirmDialog.dismiss();
-				}
-				confirmDialog.show();
-			}
-			return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, activity, m);
+			return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, activity, m,title,pageIndex);
 		} else {
 			Toast.makeText(activity, activity.getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT)
 					.show();
@@ -240,7 +217,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	}
 
 	private void initData() {
-//		listInfo = new ArrayList<>();
 		if (!NetWorkTools.isHasNet(activity)) {
 			listview.onRefreshComplete();
 		}

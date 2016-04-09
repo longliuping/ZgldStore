@@ -4,9 +4,7 @@ import java.util.Map;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.zgld.mall.R;
-import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.AsyncGameRunner;
 import com.zgld.mall.volley.NetWorkTools;
@@ -20,7 +18,6 @@ public class OrderAsync implements RequestListenr {
 	}
 
 	Context context = null;
-	protected ConfirmDialog confirmDialog = null;
 	int method;
 	int tag;
 	String url;
@@ -45,14 +42,7 @@ public class OrderAsync implements RequestListenr {
 
 	void init() {
 		if (NetWorkTools.isHasNet(context)) {
-			if (confirmDialog == null || !confirmDialog.isShowing()) {
-				confirmDialog = new ConfirmDialog(context, title);
-			}
-			if (confirmDialog.isShowing()) {
-				confirmDialog.dismiss();
-			}
-			confirmDialog.show();
-			AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, context, m);
+			AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, context, m,null,1);
 		} else {
 			Toast.makeText(context, context.getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT).show();
 		}
@@ -62,9 +52,6 @@ public class OrderAsync implements RequestListenr {
 	public void onCompelete(int tag, String json) {
 		// TODO Auto-generated method stub
 		try{
-			if (confirmDialog != null && confirmDialog.isShowing()) {
-				confirmDialog.dismiss();
-			}
 			JSONObject object = new JSONObject(json);
 			String msgStr = object.getString(Contents.MSG);
 			if(!msgStr.equals(Contents.SUCCESS)) {
@@ -83,13 +70,5 @@ public class OrderAsync implements RequestListenr {
 	@Override
 	public void onException(String exception) {
 		// TODO Auto-generated method stub
-		if (confirmDialog != null && confirmDialog.isShowing()) {
-			confirmDialog.dismiss();
-		}
-		if (exception != null && exception.equals("com.android.volley.ServerError")) {
-			Toast.makeText(context, context.getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(context, context.getString(R.string.network_connection_timeout), Toast.LENGTH_SHORT).show();
-		}
 	}
 }

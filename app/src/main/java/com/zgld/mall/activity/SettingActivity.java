@@ -151,7 +151,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener, Cu
 		BroadcastUtils.sendUserLogout(this);
 		Contents.loginPage(this,null,200);
 	}
-
+	ConfirmDialog confirmDialog = null;
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		SettingMenu info = listInfo.get(position);

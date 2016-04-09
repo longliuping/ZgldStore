@@ -8,12 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.android.volley.Request;
 import com.zgld.mall.R;
-import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.YAccount;
-import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.AsyncGameRunner;
 import com.zgld.mall.volley.NetWorkTools;
@@ -26,7 +21,6 @@ import java.util.Map;
  * Created by LongLiuPing on 2016/3/3.阿巴斯
  */
 public abstract class BaseFragmentActivity extends FragmentActivity  implements RequestListenr {
-    protected ConfirmDialog confirmDialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +54,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
         Bundle data = new Bundle();
         data.putString(Contents.JSON, json);
         msg.setData(data);
-        if (confirmDialog != null && confirmDialog.isShowing()) {
-            confirmDialog.dismiss();
-        }
         handler.sendMessage(msg);
     }
 
@@ -73,34 +64,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
     @Override
     public void onException(String exception) {
         handler.sendEmptyMessage(Contents.TAG_ERROES);
-        if (confirmDialog != null && confirmDialog.isShowing()) {
-            confirmDialog.dismiss();
-        }
-        if (exception != null && exception.equals("com.android.volley.ServerError")) {
-            Toast.makeText(this, getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.network_connection_timeout), Toast.LENGTH_SHORT).show();
-        }
     }
     public void getData(int method, int tag, String url, Map m, String title, int pageIndex) {
-        if(Request.Method.POST ==method && m!=null) {
-            YAccount user = new UserDataShare(this).getUserData();
-            if(user!=null) {
-                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
-                m.put(Contents.USERID, user.getUsers().getUserId() + "");
-            }
-        }
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            if (pageIndex == 1) {
-                if (confirmDialog == null) {
-                    confirmDialog = new ConfirmDialog(this, title);
-                }
-                if (confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
-                confirmDialog.show();
-            }
-            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m);
+            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

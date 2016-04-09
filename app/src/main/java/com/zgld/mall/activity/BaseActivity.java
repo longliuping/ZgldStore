@@ -2,7 +2,6 @@ package com.zgld.mall.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,16 +17,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
-import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.GsonObject;
-import com.zgld.mall.beans.YAccount;
-import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 import com.zgld.mall.volley.AsyncGameRunner;
@@ -44,7 +36,6 @@ import java.util.Map;
  * Created by ILoveYou on 2016/3/3.
  */
 public abstract class BaseActivity extends Activity  implements RequestListenr {
-    protected ConfirmDialog confirmDialog = null;
     CustomDialog dialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +95,6 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
            data.putString(Contents.JSON, json);
            data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
            msg.setData(data);
-           if (confirmDialog != null && confirmDialog.isShowing()) {
-               confirmDialog.dismiss();
-           }
            if(object.getInt(Contents.STATUS)==201){
                dialog = new CustomDialog(this, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
                    @Override
@@ -136,14 +124,6 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
     @Override
     public void onException(String exception) {
         handler.sendEmptyMessage(Contents.TAG_ERROES);
-        if (confirmDialog != null && confirmDialog.isShowing()) {
-            confirmDialog.dismiss();
-        }
-        if (exception != null && exception.equals("com.android.volley.ServerError")) {
-            Toast.makeText(this, getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.network_connection_timeout), Toast.LENGTH_SHORT).show();
-        }
     }
     long time = 0;
     /**
@@ -156,25 +136,8 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      * @return
      */
     public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
-        // RequestManager.init(this);
-        if(Request.Method.POST ==method && m!=null) {
-            YAccount user = new UserDataShare(this).getUserData();
-            if(user!=null) {
-                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
-                m.put(Contents.USERID, user.getUsers().getUserId() + "");
-            }
-        }
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            if (pageIndex == 1) {
-                if (confirmDialog == null || !confirmDialog.isShowing()) {
-                    confirmDialog = new ConfirmDialog(this, title);
-                }
-                if (confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
-                confirmDialog.show();
-            }
-            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m);
+            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -196,16 +159,7 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      */
     public void getDataCache(int method, int tag, String url, Map m, String title, int pageIndex) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            if (pageIndex == 1) {
-                if (confirmDialog == null || !confirmDialog.isShowing()) {
-                    confirmDialog = new ConfirmDialog(this, title);
-                }
-                if (confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
-                confirmDialog.show();
-            }
-            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m);
+            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -223,32 +177,8 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
                 Bundle data = new Bundle();
                 data.putString(Contents.JSON, json);
                 msg.setData(data);
-                if (confirmDialog != null && confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
                 handler.sendMessage(msg);
             }
-        }
-    }
-
-    public void getDataAddress(int method, int tag, String url, Map m, String title, boolean isshowDialog) {
-        if (NetWorkTools.isHasNet(getApplicationContext())) {
-            if (isshowDialog) {
-                if (confirmDialog == null || !confirmDialog.isShowing()) {
-                    confirmDialog = new ConfirmDialog(this, title);
-                }
-                if (confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
-                confirmDialog.show();
-            }
-            AsyncGameRunner.request(method, tag, url, this, this, m);
-        } else {
-            if (time + 2000 < new Date().getTime()) {
-                time = new Date().getTime();
-                Toast.makeText(this, getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT).show();
-            }
-            handler.sendEmptyMessage(Contents.TAG_ERROES);
         }
     }
     /**

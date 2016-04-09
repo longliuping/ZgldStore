@@ -8,13 +8,9 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
-import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.YAccount;
-import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 import com.zgld.mall.volley.AsyncGameRunner;
@@ -30,7 +26,6 @@ import java.util.Map;
  * Created by ILoveYou on 2016/3/4.
  */
 public abstract class BaseFragment extends Fragment implements RequestListenr {
-    protected ConfirmDialog confirmDialog = null;
     CustomDialog dialog;
     public Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -63,9 +58,6 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
           data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
           data.putBoolean("cache", false);
           msg.setData(data);
-          if (confirmDialog != null && confirmDialog.isShowing()) {
-              confirmDialog.dismiss();
-          }
           if(object.getInt(Contents.STATUS)==201){
               dialog = new CustomDialog(getContext(), R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
                   @Override
@@ -94,16 +86,7 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
 
     @Override
     public void onException(String exception) {
-        if (confirmDialog != null && confirmDialog.isShowing()) {
-            confirmDialog.dismiss();
-        }
         handler.sendEmptyMessage(Contents.TAG_ERROES);
-        if (exception != null && exception.equals("com.android.volley.ServerError")) {
-            Toast.makeText(activity, activity.getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(activity, activity.getString(R.string.network_connection_timeout), Toast.LENGTH_SHORT)
-                    .show();
-        }
     }
     /**
      * 获取网络数据的方法
@@ -116,24 +99,8 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
      * @return
      */
     public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
-        if(Request.Method.POST ==method && m!=null) {
-            YAccount user = new UserDataShare(activity).getUserData();
-            if(user!=null) {
-                m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
-                m.put(Contents.USERID, user.getUsers().getUserId() + "");
-            }
-        }
         if (NetWorkTools.isHasNet(activity)) {
-            if (pageIndex == 1) {
-                if (confirmDialog == null) {
-                    confirmDialog = new ConfirmDialog(activity, title);
-                }
-                if (confirmDialog.isShowing()) {
-                    confirmDialog.dismiss();
-                }
-                confirmDialog.show();
-            }
-            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, getActivity(), m);
+            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, getActivity(), m,title,pageIndex);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -172,9 +139,6 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
                       data.putBoolean("cache", false);
                       msg.setData(data);
                   }
-                   if (confirmDialog != null && confirmDialog.isShowing()) {
-                       confirmDialog.dismiss();
-                   }
                    handler.sendMessage(msg);
                }
            }
