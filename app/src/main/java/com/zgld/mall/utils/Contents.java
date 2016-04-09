@@ -27,6 +27,7 @@ public class Contents {
     public static final String USERID = "userId";
     public static final String DATA = "data";
     public static final String INFO = "info";
+    public static final String GSON_OBJECT = "gson_object";
     public static final String LISTINIFO = "listInfo";
     public static final String MSG = "msg";
     public static final String STATUS = "status";
@@ -89,6 +90,11 @@ public class Contents {
         Intent intent = new Intent(activity,LoginActivity.class);
         intent.putExtra(DATA,bundle);
         activity.startActivityForResult(intent,flag);
+    }
+    public static void loginPage(Context activity,Bundle bundle){
+        Intent intent = new Intent(activity,LoginActivity.class);
+        intent.putExtra(DATA,bundle);
+        activity.startActivity(intent);
     }
     public static void updateCarProduct(Context context) {
         Intent intent = new Intent(Contents.CAR_UPDATE);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.UserDataShare;
+import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.OrderItems;
 import com.zgld.mall.beans.Orders;
 import com.zgld.mall.beans.YAccount;
@@ -376,18 +378,19 @@ public interface BuyersOrdersAdapterListener{
 							new OrderAsync(context, Request.Method.POST, 306, "order/cancel_order.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
 
 								@Override
-								public void complete(int tag, Bundle data) {
+								public void complete(Message msg) {
 									try
 									{
-										if (tag == 306 && data.getInt(Contents.STATUS)==200) {
+										GsonObject gsonObject = (GsonObject)msg.getData().getSerializable(Contents.GSON_OBJECT);
+										if (gsonObject.getTag() == 306 && gsonObject.getStatus()==200) {
 //										listInfo.remove(groupPosition);
-											String json = data.getString(Contents.JSON);
+											String json = gsonObject.getJson();
 											JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
 											Orders orders = new Gson().fromJson(jsonObject.toString(),new TypeToken<Orders>(){}.getType());
 											if(orders!=null){
 												listInfo.set(groupPosition,orders);
 											}
-											listener.update(tag,null);
+											listener.update(gsonObject.getTag(),null);
 //										listInfo.get(groupPosition).setOrderStatus(4);
 										}
 										BuyersOrdersAdapter.this.notifyDataSetChanged();

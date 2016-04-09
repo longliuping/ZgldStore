@@ -1,24 +1,18 @@
 package com.zgld.mall.activity;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
-import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.EmailUtil;
-import com.zgld.mall.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

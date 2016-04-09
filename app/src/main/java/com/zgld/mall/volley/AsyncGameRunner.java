@@ -1,6 +1,8 @@
 package com.zgld.mall.volley;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Message;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -13,9 +15,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
+import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
+import com.zgld.mall.utils.CustomDialog;
+
+import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,6 +30,7 @@ import java.util.Map;
 
 public class AsyncGameRunner {
 	public static ConfirmDialog confirmDialog = null;
+	static CustomDialog dialog = null;
 	public static RequestQueue request(int method, final int tag, final String url, final RequestListenr re, Context context, Map m,String title, int pageIndex) {
 		if (pageIndex == 1) {
 			if (confirmDialog == null) {
@@ -36,21 +43,62 @@ public class AsyncGameRunner {
 		}
 		RequestQueue queue = Volley.newRequestQueue(context);
 		if (Request.Method.GET == method) {
-			getReqest(tag, url, re, queue);
+			getReqest(context,tag, url, re, queue);
 		} else {
 			postReqest(context,tag, url, re, queue, m);
 		}
 		return queue;
 	}
 
-	public static void getReqest(final int tag, final String url, final RequestListenr re, RequestQueue queue) {
+	private static void getReqest(final Context context,final int tag, final String url, final RequestListenr re, RequestQueue queue) {
 		StringRequest sr = new StringRequest(Request.Method.GET, url, new Listener<String>() {
 			@Override
-			public void onResponse(String arg0) {
-				if (confirmDialog != null && confirmDialog.isShowing()) {
-					confirmDialog.dismiss();
+			public void onResponse(String json) {
+				GsonObject gsonObject  = new GsonObject();;
+				try{
+					gsonObject.setJson(json);
+					gsonObject.setTag(tag);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
+					if(json!=null && json.length()>10){
+						JSONObject object = new JSONObject(json);
+						String msgStr = object.getString(Contents.MSG);
+						if(!msgStr.equals(Contents.SUCCESS)) {
+							Toast.makeText(context, msgStr, Toast.LENGTH_SHORT).show();
+						}
+						gsonObject.setMsg(object.getString(Contents.MSG));
+						gsonObject.setStatus(object.getInt(Contents.STATUS));
+						gsonObject.setData(object.getJSONObject(Contents.DATA));
+						if(object.getInt(Contents.STATUS)==201){
+							dialog = new CustomDialog(context, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
+								@Override
+								public void customDialogClickLeft() {
+									dialog.dismiss();
+									Contents.loginPage(context, null);
+								}
+
+								@Override
+								public void customDialogClickRight() {
+									dialog.dismiss();
+									Contents.loginPage(context,null);
+								}
+							},false);
+							dialog.show();
+						}
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}finally {
+					Message msg = new Message();
+					msg.what = tag;
+					Bundle data = new Bundle();
+					data.putInt(Contents.STATUS,gsonObject.getStatus());
+					data.putSerializable(Contents.GSON_OBJECT, gsonObject);
+					data.putString(Contents.JSON, gsonObject.getJson());
+					msg.setData(data);
+					re.onCompelete(msg);
 				}
-				re.onCompelete(tag, arg0);
 			}
 		}, new Response.ErrorListener() {
 
@@ -62,11 +110,10 @@ public class AsyncGameRunner {
 				re.onException(arg0.toString());
 			}
 		});
-//		RequestManager.getRequestQueue().add(sr);
 		queue.add(sr);
 	}
 
-	public static void postReqest(final Context context,final int tag, final String url, final RequestListenr re, RequestQueue queue, final Map m) {
+	private static void postReqest(final Context context,final int tag, final String url, final RequestListenr re, RequestQueue queue, final Map m) {
 		if(m!=null) {
 			YAccount user = new UserDataShare(context).getUserData();
 			if(user!=null) {
@@ -77,11 +124,52 @@ public class AsyncGameRunner {
 		StringRequest sr = new StringRequest(Request.Method.POST, url, new Listener<String>() {
 
 			@Override
-			public void onResponse(String arg0) {
-				if (confirmDialog != null && confirmDialog.isShowing()) {
-					confirmDialog.dismiss();
+			public void onResponse(String json) {
+				GsonObject gsonObject  = new GsonObject();;
+				try{
+					gsonObject.setJson(json);
+					gsonObject.setTag(tag);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
+					if(json!=null && json.length()>10){
+						JSONObject object = new JSONObject(json);
+						String msgStr = object.getString(Contents.MSG);
+						if(!msgStr.equals(Contents.SUCCESS)) {
+							Toast.makeText(context, msgStr, Toast.LENGTH_SHORT).show();
+						}
+						gsonObject.setMsg(object.getString(Contents.MSG));
+						gsonObject.setStatus(object.getInt(Contents.STATUS));
+						gsonObject.setData(object.getJSONObject(Contents.DATA));
+						if(object.getInt(Contents.STATUS)==201){
+							dialog = new CustomDialog(context, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
+								@Override
+								public void customDialogClickLeft() {
+									dialog.dismiss();
+									Contents.loginPage(context, null);
+								}
+
+								@Override
+								public void customDialogClickRight() {
+									dialog.dismiss();
+									Contents.loginPage(context,null);
+								}
+							},false);
+							dialog.show();
+						}
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}finally {
+					Message msg = new Message();
+					msg.what = tag;
+					Bundle data = new Bundle();
+					data.putInt(Contents.STATUS,gsonObject.getStatus());
+					data.putSerializable(Contents.GSON_OBJECT, gsonObject);
+					data.putString(Contents.JSON,gsonObject.getJson());
+					msg.setData(data);
+					re.onCompelete(msg);
 				}
-				re.onCompelete(tag, arg0);
 			}
 		}, new Response.ErrorListener() {
 
@@ -119,7 +207,6 @@ public class AsyncGameRunner {
 				return m;
 			}
 		};
-//		RequestManager.getRequestQueue().add(sr);
 		queue.add(sr);
 	}
 

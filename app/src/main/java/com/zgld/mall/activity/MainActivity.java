@@ -125,14 +125,4 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    @Override
-    public void onCompelete(int tag, String json) {
-
-    }
-
-    @Override
-    public void onException(String exception) {
-
-    }
 }

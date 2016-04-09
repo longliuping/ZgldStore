@@ -1,6 +1,7 @@
 package com.zgld.mall.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,41 +44,11 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
     }
 
     @Override
-    public void onCompelete(int tag, String json) {
-        Message msg = handler.obtainMessage();
-      try{
-          msg.what = tag;
-          JSONObject object = new JSONObject(json);
-          String msgStr = object.getString(Contents.MSG);
-          if(!msgStr.equals(Contents.SUCCESS)) {
-              Toast.makeText(activity, msgStr, Toast.LENGTH_SHORT).show();
-          }
-          Bundle data = new Bundle();
-          data.putString(Contents.JSON, json);
-          data.putInt(Contents.STATUS, object.getInt(Contents.STATUS));
-          data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
-          data.putBoolean("cache", false);
-          msg.setData(data);
-          if(object.getInt(Contents.STATUS)==201){
-              dialog = new CustomDialog(getContext(), R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
-                  @Override
-                  public void customDialogClickLeft() {
-                      dialog.dismiss();
-                      Contents.loginPage(getActivity(), null, 200);
-                  }
-
-                  @Override
-                  public void customDialogClickRight() {
-                      dialog.dismiss();
-                      Contents.loginPage(getActivity(),null,200);
-                  }
-              },false);
-              dialog.show();
-          }
-      }catch (Exception e){
-          e.printStackTrace();
-      }
-        handler.sendMessage(msg);
+    public void onCompelete(Message msg) {
+        Message message = handler.obtainMessage();
+        message.what = msg.what;
+        message.setData(msg.getData());
+        handler.sendMessage(message);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.zgld.mall.sync;
 import java.util.Map;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.widget.Toast;
 import com.zgld.mall.R;
 import com.zgld.mall.utils.Contents;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
 
 public class OrderAsync implements RequestListenr {
 	public interface OrderAsyncListener {
-		void complete(int tag, Bundle data);
+		void complete(Message msg);
 	}
 
 	Context context = null;
@@ -49,19 +50,10 @@ public class OrderAsync implements RequestListenr {
 	}
 
 	@Override
-	public void onCompelete(int tag, String json) {
+	public void onCompelete(Message msg) {
 		// TODO Auto-generated method stub
 		try{
-			JSONObject object = new JSONObject(json);
-			String msgStr = object.getString(Contents.MSG);
-			if(!msgStr.equals(Contents.SUCCESS)) {
-				Toast.makeText(context, msgStr, Toast.LENGTH_SHORT).show();
-			}
-			Bundle data = new Bundle();
-			data.putInt(Contents.STATUS,object.getInt(Contents.STATUS));
-			data.putString(Contents.JSON, json);
-			data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
-			listener.complete(tag,data);
+			listener.complete(msg);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

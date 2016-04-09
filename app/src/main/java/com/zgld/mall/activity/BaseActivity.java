@@ -2,6 +2,7 @@ package com.zgld.mall.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import com.android.volley.Cache;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
+import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 import com.zgld.mall.volley.AsyncGameRunner;
@@ -81,40 +83,11 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      * 请求成功
      */
     @Override
-    public void onCompelete(int tag, String json) {
-        Message msg = handler.obtainMessage();
-        msg.what = tag;
-       try{
-           JSONObject object = new JSONObject(json);
-           String msgStr = object.getString(Contents.MSG);
-           if(!msgStr.equals(Contents.SUCCESS)) {
-               Toast.makeText(this, msgStr, Toast.LENGTH_SHORT).show();
-           }
-           Bundle data = new Bundle();
-           data.putInt(Contents.STATUS,object.getInt(Contents.STATUS));
-           data.putString(Contents.JSON, json);
-           data.putString(Contents.DATA,object.getJSONObject(Contents.DATA).toString());
-           msg.setData(data);
-           if(object.getInt(Contents.STATUS)==201){
-               dialog = new CustomDialog(this, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
-                   @Override
-                   public void customDialogClickLeft() {
-                       dialog.dismiss();
-                       Contents.loginPage(BaseActivity.this, null, 200);
-                   }
-
-                   @Override
-                   public void customDialogClickRight() {
-                        dialog.dismiss();
-                       Contents.loginPage(BaseActivity.this,null,200);
-                   }
-               },false);
-               dialog.show();
-           }
-       }catch (Exception e){
-        e.printStackTrace();
-       }
-        handler.sendMessage(msg);
+    public void onCompelete(Message msg) {
+        Message message = handler.obtainMessage();
+        message.what = msg.what;
+        message.setData(msg.getData());
+        handler.sendMessage(message);
     }
 
     /**
@@ -137,7 +110,7 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      */
     public RequestQueue getData(int method, int tag, String url, Map m, String title, int pageIndex) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
+            return AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, getApplicationContext(), m,title,pageIndex);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();
@@ -158,15 +131,6 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      * @param pageIndex
      */
     public void getDataCache(int method, int tag, String url, Map m, String title, int pageIndex) {
-        if (NetWorkTools.isHasNet(getApplicationContext())) {
-            AsyncGameRunner.request(method, tag, Contents.BASE_URL + url, this, this, m,title,pageIndex);
-        } else {
-            if (time + 2000 < new Date().getTime()) {
-                time = new Date().getTime();
-                Toast.makeText(this, getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT).show();
-            }
-            handler.sendEmptyMessage(Contents.TAG_ERROES);
-        }
         if (pageIndex == 1) {
             RequestQueue queue = Volley.newRequestQueue(this);
             Cache.Entry en = queue.getCache().get(Contents.BASE_URL + url);

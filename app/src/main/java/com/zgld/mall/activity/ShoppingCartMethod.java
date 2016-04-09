@@ -35,6 +35,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.ShoppingCarExpandableListAdapter;
+import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.YAccount;
@@ -153,32 +154,8 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	 * 请求成功
 	 */
 	@Override
-	public void onCompelete(int tag, String json) {
+	public void onCompelete(Message msg) {
 		try{
-			Message msg = handler.obtainMessage();
-			msg.what = tag;
-			Bundle data = new Bundle();
-			data.putString(Contents.JSON, json);
-			msg.setData(data);
-			if(json!=null && json.length()>10){
-				JSONObject object = new JSONObject(json);
-				if(object.getInt(Contents.STATUS)==201) {
-					dialog = new CustomDialog(activity, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
-						@Override
-						public void customDialogClickLeft() {
-							dialog.dismiss();
-							Contents.loginPage(activity, null, 200);
-						}
-
-						@Override
-						public void customDialogClickRight() {
-							dialog.dismiss();
-							Contents.loginPage(activity, null, 200);
-						}
-					}, false);
-					dialog.show();
-				}
-			}
 			handler.sendMessage(msg);
 		}catch (Exception e){
 			e.printStackTrace();
@@ -235,6 +212,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		public void handleMessage(Message msg) {
 			listview.onRefreshComplete();
 			try {
+				GsonObject gsonObject = (GsonObject)msg.getData().getSerializable(Contents.GSON_OBJECT);
 				Bundle bundle = msg.getData();
 				String json = "";
 				if (bundle == null) {

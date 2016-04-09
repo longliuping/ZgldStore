@@ -48,13 +48,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
      * 请求成功
      */
     @Override
-    public void onCompelete(int tag, String json) {
-        Message msg = handler.obtainMessage();
-        msg.what = tag;
-        Bundle data = new Bundle();
-        data.putString(Contents.JSON, json);
-        msg.setData(data);
-        handler.sendMessage(msg);
+    public void onCompelete(Message msg) {
+        Message message = handler.obtainMessage();
+        message.what = msg.what;
+        message.setData(msg.getData());
+        handler.sendMessage(message);
     }
 
     /**
