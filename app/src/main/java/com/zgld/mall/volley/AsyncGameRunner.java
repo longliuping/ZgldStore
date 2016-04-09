@@ -117,7 +117,7 @@ public class AsyncGameRunner {
 	private static void postReqest(final Context context,final int tag, final String url, final RequestListenr re, RequestQueue queue, final Map m) {
 		if(m!=null) {
 			YAccount user = new UserDataShare(context).getUserData();
-			if(user!=null) {
+			if(user!=null && user.getUsers()!=null) {
 				m.put(Contents.TOKEN, user.getUsers().getAppUserToken());
 				m.put(Contents.USERID, user.getUsers().getUserId() + "");
 			}
