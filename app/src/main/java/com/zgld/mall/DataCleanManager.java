@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import android.content.Context;
 import android.os.Environment;
 
+import com.android.volley.Cache;
+import com.android.volley.toolbox.DiskBasedCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /** * 本应用数据清除管理器 */
@@ -161,15 +163,20 @@ public class DataCleanManager {
 	 * @param context
 	 */
 	public static void clearAllData(Context context) {
+		//图片缓存
 		ImageLoader imageLoaderCache = ImageLoader.getInstance();
 		imageLoaderCache.clearDiscCache();
 		imageLoaderCache.clearMemoryCache();
+
 		cleanDatabases(context);
 		cleanSharedPreference(context);
 		cleanFiles(context);
 		cleanInternalCache(context);
 		cleanExternalCache(context);
 		clearAllCache(context);
+		//vollery
+//		DiskBasedCache c = new DiskBasedCache(new File(""));
+//		c.clear();;
 	}
 
 	/**

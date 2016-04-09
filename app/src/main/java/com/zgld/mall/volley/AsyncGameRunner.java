@@ -58,9 +58,6 @@ public class AsyncGameRunner {
 				try{
 					gsonObject.setJson(json);
 					gsonObject.setTag(tag);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 					if(json!=null && json.length()>10){
 						JSONObject object = new JSONObject(json);
 						String msgStr = object.getString(Contents.MSG);
@@ -95,9 +92,13 @@ public class AsyncGameRunner {
 					Bundle data = new Bundle();
 					data.putInt(Contents.STATUS,gsonObject.getStatus());
 					data.putSerializable(Contents.GSON_OBJECT, gsonObject);
+					data.putString(Contents.DATA,gsonObject.getData().toString());
 					data.putString(Contents.JSON, gsonObject.getJson());
 					msg.setData(data);
 					re.onCompelete(msg);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
 				}
 			}
 		}, new Response.ErrorListener() {
@@ -129,9 +130,6 @@ public class AsyncGameRunner {
 				try{
 					gsonObject.setJson(json);
 					gsonObject.setTag(tag);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 					if(json!=null && json.length()>10){
 						JSONObject object = new JSONObject(json);
 						String msgStr = object.getString(Contents.MSG);
@@ -166,9 +164,13 @@ public class AsyncGameRunner {
 					Bundle data = new Bundle();
 					data.putInt(Contents.STATUS,gsonObject.getStatus());
 					data.putSerializable(Contents.GSON_OBJECT, gsonObject);
+					data.putString(Contents.DATA, gsonObject.getData().toString());
 					data.putString(Contents.JSON,gsonObject.getJson());
 					msg.setData(data);
 					re.onCompelete(msg);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
 				}
 			}
 		}, new Response.ErrorListener() {
