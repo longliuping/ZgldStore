@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import android.content.Context;
 import android.os.Environment;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 /** * 本应用数据清除管理器 */
 public class DataCleanManager {
 	/** * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * * @param context */
@@ -159,6 +161,9 @@ public class DataCleanManager {
 	 * @param context
 	 */
 	public static void clearAllData(Context context) {
+		ImageLoader imageLoaderCache = ImageLoader.getInstance();
+		imageLoaderCache.clearDiscCache();
+		imageLoaderCache.clearMemoryCache();
 		cleanDatabases(context);
 		cleanSharedPreference(context);
 		cleanFiles(context);

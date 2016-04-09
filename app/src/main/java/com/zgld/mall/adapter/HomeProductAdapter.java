@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.beans.HishopProducts;
+import com.zgld.mall.beans.Products;
 import com.zgld.mall.utils.PriceUtil;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
  */
 public class HomeProductAdapter extends BaseAdapter{
     Context context;
-    List<HishopProducts> listInfo;
-    public HomeProductAdapter(Context context,List<HishopProducts> listInfo){
+    List<Products> listInfo;
+    public HomeProductAdapter(Context context,List<Products> listInfo){
         this.context = context;
         this.listInfo = listInfo;
     }
@@ -57,16 +58,16 @@ public class HomeProductAdapter extends BaseAdapter{
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        HishopProducts info = listInfo.get(position);
+        Products info = listInfo.get(position);
         if(info!=null){
             vh.item_name.setText(info.getProductName());
-            if(info.getHishopSkus()!=null) {
+//            if(info.getHishopSkus()!=null) {
                 vh.item_sale_price.setVisibility(View.VISIBLE);
-                vh.item_sale_price.setText(PriceUtil.priceY(info.getHishopSkus().getSalePrice() + ""));
-            }else{
-                vh.item_sale_price.setVisibility(View.GONE);
-            }
-            SysApplication.DisplayImage(info.getImageUrl1(), vh.item_image);
+                vh.item_sale_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
+//            }else{
+//                vh.item_sale_price.setVisibility(View.GONE);
+//            }
+            SysApplication.DisplayImage(info.getThumbnailsUrl(), vh.item_image);
         }
         return convertView;
     }

@@ -74,7 +74,7 @@ public class MainHomeFragment extends BaseFragment {
                        break;
                    case 202:
                        json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
-                       List<HishopCategories> hishopCategoriesList = new Gson().fromJson(json,new TypeToken<List<HishopCategories>>() {
+                       List<Categories> hishopCategoriesList = new Gson().fromJson(json,new TypeToken<List<Categories>>() {
                        }.getType());
                        infoAdapter = new MaintypeAdapter(getContext(),hishopCategoriesList);
                        listview.setAdapter(infoAdapter);

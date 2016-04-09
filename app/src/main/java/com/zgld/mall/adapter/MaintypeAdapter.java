@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.zgld.mall.R;
 import com.zgld.mall.activity.ProductDetailActivity;
 import com.zgld.mall.activity.ProductTypeActivity;
+import com.zgld.mall.beans.Categories;
 import com.zgld.mall.beans.HishopCategories;
 import com.zgld.mall.beans.HishopProductTypes;
 import com.zgld.mall.utils.Contents;
@@ -25,8 +26,8 @@ import java.util.List;
  */
 public class MaintypeAdapter extends BaseAdapter{
     Context context;
-    List<HishopCategories> listInfo;
-    public MaintypeAdapter(  Context context,List<HishopCategories> listInfo){
+    List<Categories> listInfo;
+    public MaintypeAdapter(  Context context,List<Categories> listInfo){
         this.context = context;
         this.listInfo = listInfo;
     }
@@ -62,15 +63,15 @@ public class MaintypeAdapter extends BaseAdapter{
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        final HishopCategories info = listInfo.get(position);
+        final Categories info = listInfo.get(position);
         if(info!=null){
             vh.item_name.setText(info.getName());
-            vh.item_gridview.setAdapter(new HomeProductAdapter(context, info.getHishopProducts()));
+            vh.item_gridview.setAdapter(new HomeProductAdapter(context, info.getListProducts()));
             vh.item_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra(Contents.PRODUCTID, info.getHishopProducts().get(position).getProductId());
+                    intent.putExtra(Contents.PRODUCTID, info.getListProducts().get(position).getProductId());
                     context.startActivity(intent);
                 }
             });

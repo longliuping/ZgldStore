@@ -19,6 +19,7 @@ import com.zgld.mall.adapter.HomeProductAdapter;
 import com.zgld.mall.beans.HishopCategories;
 import com.zgld.mall.beans.HishopProductTypes;
 import com.zgld.mall.beans.HishopProducts;
+import com.zgld.mall.beans.Products;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONArray;
@@ -33,7 +34,7 @@ public class ProductTypeActivity extends BaseActivity implements AdapterView.OnI
     HishopCategories info = null;
     int pageNum = 1;
     HomeProductAdapter infoAdapter;
-    List<HishopProducts> listInfo = new ArrayList<>();
+    List<Products> listInfo = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ public class ProductTypeActivity extends BaseActivity implements AdapterView.OnI
                             infoAdapter = new HomeProductAdapter(this,listInfo);
                             gridview.setAdapter(infoAdapter);
                         }
-                        List<HishopProducts> listObj  = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<HishopProducts>>() {
+                        List<Products> listObj  = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<Products>>() {
                         }.getType());
                         if(listObj!=null && listObj.size()>0){
                             listInfo.addAll(listObj);

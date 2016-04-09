@@ -19,6 +19,7 @@ import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.adapter.HomeProductAdapter;
 import com.zgld.mall.beans.HishopProducts;
+import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.Supplier;
 import com.zgld.mall.utils.Contents;
 
@@ -33,7 +34,7 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
     Supplier info = null;
     GridView gridview;
     HomeProductAdapter infoAdapter;
-    List<HishopProducts> listInfo = new ArrayList<>();
+    List<Products> listInfo = new ArrayList<>();
     PullToRefreshScrollView scrollview;
     int pageNum = 1;
     @Override
@@ -87,7 +88,7 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
                             infoAdapter = new HomeProductAdapter(this,listInfo);
                             gridview.setAdapter(infoAdapter);
                         }
-                        List<HishopProducts> listObj  = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<HishopProducts>>() {
+                        List<Products> listObj  = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<Products>>() {
                         }.getType());
                         if(listObj!=null && listObj.size()>0){
                             listInfo.addAll(listObj);
