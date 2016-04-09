@@ -19,6 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 
 public class ProductParamFragment extends ProductBaseFragment implements OnRefreshListener2 {
@@ -26,7 +27,7 @@ public class ProductParamFragment extends ProductBaseFragment implements OnRefre
 	PullToRefreshListView listView;
 //	List<ProductParam> list;
 	View view;
-	Supplier product;
+	YShop product;
 	Activity activity;
 
 	@Override
@@ -41,7 +42,7 @@ public class ProductParamFragment extends ProductBaseFragment implements OnRefre
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		Intent intent = activity.getIntent();
-		product = (Supplier) intent.getSerializableExtra("info");
+		product = (YShop) intent.getSerializableExtra("info");
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class ProductParamFragment extends ProductBaseFragment implements OnRefre
 			gson = new Gson();
 			view = inflater.inflate(R.layout.fragment_product_param, null);
 			isPrepared = true;
-//			lazyLoad();
+			lazyLoad();
 		} else {
 			ViewGroup group = (ViewGroup) view.getParent();
 			if (group != null) {

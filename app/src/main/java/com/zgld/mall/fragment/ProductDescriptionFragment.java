@@ -16,11 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
-import android.webkit.WebView;
 
 public class ProductDescriptionFragment extends ProductBaseFragment implements OnRefreshListener2 {
 	View view;
-	WebView textView;
+	PullToRefreshWebView textView;
 	YShop info = new YShop();
 	Activity activity;
 
@@ -70,8 +69,9 @@ public class ProductDescriptionFragment extends ProductBaseFragment implements O
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		textView = (WebView) view.findViewById(R.id.product_details);
-		WebSettings settings = textView.getSettings();
+		textView = (PullToRefreshWebView) view.findViewById(R.id.product_details);
+		textView.setOnRefreshListener(this);
+		WebSettings settings = textView.getRefreshableView().getSettings();
 		// 支持javascript
 		settings.setJavaScriptEnabled(true);
 		// 设置可以支持缩放
@@ -86,19 +86,20 @@ public class ProductDescriptionFragment extends ProductBaseFragment implements O
 		settings.setDefaultTextEncodingName("utf-8");
 		settings.setAppCacheEnabled(true);
 		settings.setCacheMode(settings.LOAD_CACHE_ELSE_NETWORK);
-		String style = "<div style=\"width:100%; text-align:center;\" >"+info.getProducts().getDescription()+"</div>";
-		textView.loadDataWithBaseURL(Contents.BASE_IMAGE_PATH, style, "text/html", "utf-8", "");
+		String style = "<div style=\"width:100%; text-align:center;\" >";
+		textView.getRefreshableView().loadDataWithBaseURL(Contents.BASE_IMAGE_PATH, style + info.getProducts().getDescription() + "</div>",
+				"text/html", "utf-8", "");
 	}
 
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 		// TODO Auto-generated method stub
-//		textView.onRefreshComplete();
+		textView.onRefreshComplete();
 	}
 
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 		// TODO Auto-generated method stub
-//		textView.onRefreshComplete();
+		textView.onRefreshComplete();
 	}
 }
