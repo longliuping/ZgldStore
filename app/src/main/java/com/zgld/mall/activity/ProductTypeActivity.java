@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.HomeProductAdapter;
+import com.zgld.mall.beans.Categories;
 import com.zgld.mall.beans.HishopCategories;
 import com.zgld.mall.beans.HishopProductTypes;
 import com.zgld.mall.beans.HishopProducts;
@@ -31,7 +32,7 @@ import java.util.List;
 public class ProductTypeActivity extends BaseActivity implements AdapterView.OnItemClickListener,PullToRefreshBase.OnRefreshListener2{
     PullToRefreshScrollView scrollview;
     GridView gridview;
-    HishopCategories info = null;
+    Categories info = null;
     int pageNum = 1;
     HomeProductAdapter infoAdapter;
     List<Products> listInfo = new ArrayList<>();
@@ -40,7 +41,7 @@ public class ProductTypeActivity extends BaseActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         initStyle();
         setContentView(R.layout.activity_product_type);
-        info = (HishopCategories) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (Categories) this.getIntent().getSerializableExtra(Contents.INFO);
         if(info==null){
             finish();;
             return;
@@ -64,7 +65,7 @@ public class ProductTypeActivity extends BaseActivity implements AdapterView.OnI
         initData();
     }
     void initData(){
-        getData(Request.Method.GET, 201, "product/home_type_product.html?id="+info.getAssociatedProductType()+"&pageSize=18&pageNum="+pageNum, null, null, pageNum);
+        getData(Request.Method.GET, 201, "product/home_type_product.html?id="+info.getCategoryId()+"&pageSize=18&pageNum="+pageNum, null, null, pageNum);
     }
     @Override
     public void handleMsg(Message msg) {
