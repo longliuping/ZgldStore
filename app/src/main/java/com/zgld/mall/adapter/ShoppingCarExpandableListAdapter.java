@@ -241,6 +241,7 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
 			final int number = Integer.parseInt(holder.d_result.getText().toString());
 			holder.item_car_checkbox.setChecked(info.isChecked());
+			holder.item_detail.setText(info.getShortDescription());
 			holder.item_image.setOnClickListener(new OnClickListener() {
 
 				@Override
