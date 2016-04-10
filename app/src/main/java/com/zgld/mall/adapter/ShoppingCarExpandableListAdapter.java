@@ -177,7 +177,7 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 		}
 		ShoppingCarts info = listInfo.get(groupPosition);
 		if (info != null) {
-			holder.item_car_manufactor_name.setText(info.getyShop().getUserId());
+			holder.item_car_manufactor_name.setText(info.getyShop().getUserId()+"");
 			holder.item_car_manufactor_detail.setText(info.getyShop().getShopAddress());
 			holder.item_car_manufactor.setChecked(info.isChecked());
 			final GroupViewHolder h = holder;

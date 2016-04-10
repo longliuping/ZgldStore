@@ -239,67 +239,20 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 					Contents.loginPage(activity,null,200);
 				}
 				switch (msg.what) {
-				case 201:
-					jsonArray = new JSONObject(json).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
-					listInfo = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<ShoppingCarts>>() {
-				}.getType());
-					infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
-					listview.getRefreshableView().setAdapter(infoAdapter);
-					int groupCount = listview.getRefreshableView().getCount();
-					for (int i = 0; i < groupCount; i++) {
-						listview.getRefreshableView().expandGroup(i);
-					}
-
-					item_car_checkbox.setChecked(false);
-					infoAdapter.notifyDataSetChanged();
-					break;
-				case 202:
-					try {
-						if (!TextUtils.isEmpty(json)) {
-							jsonArray = jsonObject.getJSONArray(Contents.DATA);
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (TextUtils.isEmpty(json)) {
-						if (pageIndex == 1) {
-							listInfo = new ArrayList<ShoppingCarts>();
-							infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo,
-									ShoppingCartMethod.this);
-							listview.getRefreshableView().setAdapter(infoAdapter);
-							bindData();
-						}
-						return;
-					}
-					entityType = new TypeToken<List<ShoppingCarts>>() {
-					}.getType();
-					if (pageIndex == 1) {
-						listInfo = new ArrayList<ShoppingCarts>();
+					case 201:
+						jsonArray = new JSONObject(json).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
+						listInfo = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<ShoppingCarts>>() {
+						}.getType());
 						infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
 						listview.getRefreshableView().setAdapter(infoAdapter);
-					}
-					List<ShoppingCarts> list = gson.fromJson(jsonArray.toString(), entityType);
-					String OwnerUserId = "";
-					if (list == null || list.size() <= 0) {
-						 Toast.makeText(activity,
-						 activity.getString(R.string.no_data),
-						 Toast.LENGTH_SHORT).show();
-					}
-					infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
-					listview.getRefreshableView().setAdapter(infoAdapter);
-					int groupCount1 = listview.getRefreshableView().getCount();
-					for (int i = 0; i < groupCount1; i++) {
-						listview.getRefreshableView().expandGroup(i);
-					}
+						int groupCount = listview.getRefreshableView().getCount();
+						for (int i = 0; i < groupCount; i++) {
+							listview.getRefreshableView().expandGroup(i);
+						}
 
-					item_car_checkbox.setChecked(false);
-					infoAdapter.notifyDataSetChanged();
-
-					infoAdapter.notifyDataSetChanged();
-					pageIndex++;
-					bindData();
-					break;
+						item_car_checkbox.setChecked(false);
+						infoAdapter.notifyDataSetChanged();
+						break;
 					case 203:
 						if(jsonObject.getInt(Contents.STATUS)==200){
 							if(listInfo.get(deleteGroupPosition).getListProducts().size()>=deleteChildPosition){
@@ -567,7 +520,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						m.put(Contents.TOKEN, users.getUsers().getAppUserToken());
 						m.put(Contents.USERID,users.getUsers().getUserId() + "");
 						m.put("productId", listInfo.get(groupPosition).getListProducts().get(childPosition).getProductId() + "");
-//						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getHishopSkus().getSkuId());
+						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getSku().getSku()+"");
 						getData(203, "car/delete_car_product.html", m, null);
 					}
 
