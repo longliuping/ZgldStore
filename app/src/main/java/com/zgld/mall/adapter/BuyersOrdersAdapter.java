@@ -138,7 +138,7 @@ public interface BuyersOrdersAdapterListener{
 //					context.startActivity(intent);
 				}
 			});
-			holder.item_name.setText("订单号："+info.getOrderId());
+			holder.item_name.setText("订单号："+info.getOrderId()+"  时间："+info.getOrderDate());
 			String str = "";
 //			switch (info.getOrderStatus()) {
 //			case 1:
@@ -210,10 +210,10 @@ public interface BuyersOrdersAdapterListener{
 		holder.item_refund.setVisibility(View.GONE);
 		holder.item_view_logistics.setVisibility(View.GONE);
 		if(info!=null){
-//			SysApplication.DisplayImage(info.getThumbnailsUrl(),holder.item_image);
-//			holder.item_title.setText(info.getItemDescription());
-//			holder.item_detail.setText(info.getSkucontent());
-//			holder.item_price.setText(PriceUtil.priceY(info.getItemListPrice() + ""));
+			SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(),holder.item_image);
+			holder.item_title.setText(info.getProducts().getProductName());
+			holder.item_detail.setText(info.getProducts().getShortDescription());
+			holder.item_price.setText(PriceUtil.priceY(info.getListPrice() + ""));
 			holder.item_number.setText("X"+info.getQuantity());
 			if(isLastChild){
 				holder.item_base_bottom.setVisibility(View.VISIBLE);
@@ -224,18 +224,18 @@ public interface BuyersOrdersAdapterListener{
 				}
 				holder.item_number_all.setText(num+"");
 				holder.item_postage.setText(PriceUtil.priceY(listInfo.get(groupPosition).getFreight()+""));
-//				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotal()+""));
+				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotalPrice()+""));
 
 //				switch (listInfo.get(groupPosition).getOrderStatus()) {
 //					case 1:
 ////						str = "等待付款";
-//						holder.item_pay.setVisibility(View.VISIBLE);
-//						holder.item_pay.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//
-//							}
-//						});
+						holder.item_pay.setVisibility(View.VISIBLE);
+						holder.item_pay.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+
+							}
+						});
 //						holder.item_cancel.setVisibility(View.VISIBLE);
 //						holder.item_cancel.setOnClickListener(new OnClickListener() {
 //							@Override

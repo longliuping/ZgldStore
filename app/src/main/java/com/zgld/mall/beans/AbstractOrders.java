@@ -26,7 +26,7 @@ public abstract class AbstractOrders implements java.io.Serializable {
 	private Double otherCost;
 	private Double orderRealPrice;
 	private String remark;
-	private Date orderDate;
+	private String orderDate;
 	private String mobile;
 	private String shipTo;
 	private String address;
@@ -152,11 +152,11 @@ public abstract class AbstractOrders implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return this.orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 

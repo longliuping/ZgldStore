@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
+	android:visibility="gone"
      >
 	<RelativeLayout 
 	    android:id="@+id/item_user_data_base"

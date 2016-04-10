@@ -20,19 +20,7 @@
         android:orientation="horizontal"
         android:padding="10dp" >
 
-        <Button
-            android:id="@+id/correlation_add"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/product_detail_top"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="立即购买"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:visibility="gone" />
+
 
         <Button
             android:id="@+id/cart"
@@ -57,6 +45,20 @@
             android:padding="5dp"
             android:text="加入购物车"
             android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/correlation_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/product_detail_top"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="立即购买"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            />
     </LinearLayout>
 
 </LinearLayout>

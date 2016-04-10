@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.beans.UserShippingAddresses;
+import com.zgld.mall.utils.AddressXmlUtils;
 
 /**
  * 地址
@@ -90,8 +91,9 @@ public class AddressAdapter extends BaseAdapter {
 					listener.selectedChecked(position);
 				}
 			});
-			holder.name.setText("收货人:" + info.getShipTo() + "  ");
-			holder.address.setText("收货地址:" + info.getAddress());
+			holder.name.setText("收货人:" + info.getShipTo() + "  "+info.getMobile());
+			String addStr = AddressXmlUtils.readXML(context, info.getRegionId());
+			holder.address.setText("收货地址:" +addStr+"  "+ info.getAddress());
 			holder.item_car_checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				@Override

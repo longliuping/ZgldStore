@@ -10,10 +10,12 @@ public class OrderItems extends AbstractOrderItems implements java.io.Serializab
 	/** default constructor */
 	public OrderItems() {
 	}
-
-	/** full constructor */
-	public OrderItems(Integer orderId, Integer productId, Integer sku, Integer quantity, Double listPrice, Double cellPrice, String remark) {
-		super(orderId, productId, sku, quantity, listPrice, cellPrice, remark);
+	Products products;
+	public Products getProducts() {
+		return products;
 	}
 
+	public void setProducts(Products products) {
+		this.products = products;
+	}
 }

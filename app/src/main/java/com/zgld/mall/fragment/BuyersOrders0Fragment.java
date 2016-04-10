@@ -142,6 +142,7 @@ public class BuyersOrders0Fragment extends BuyersOrdersBaseFragment implements O
         }
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }

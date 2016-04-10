@@ -80,9 +80,9 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 		title = (TextView) mMenuView.findViewById(R.id.title);
 		sale_price = (TextView) mMenuView.findViewById(R.id.sale_price);
 		title.setText(info.getProducts().getProductName());
-		sale_price.setText("销售价："+PriceUtil.priceY(info.getProducts().getSalePrice() + ""));
+		sale_price.setText("抢购价："+PriceUtil.priceY(info.getProducts().getSalePrice() + ""));
 		market_price = (TextView) mMenuView.findViewById(R.id.market_price);
-		market_price.setText("市场价：" + PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
+		market_price.setText("店面价：" + PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
 		sale_model =  (TextView)mMenuView.findViewById(R.id.sale_model);
 		sale_model.setText("库存："+info.getProducts().getStock()+"");
 		SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(), image);
@@ -185,7 +185,7 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 	public void setDetail(Sku hishopSkus){
 		if(hishopSkus!=null) {
 			sale_model.setText("库存：" + hishopSkus.getStock()+"");
-			sale_price.setText("销售价："+ PriceUtil.priceY(hishopSkus.getPrice() + ""));
+			sale_price.setText("抢购价："+ PriceUtil.priceY(hishopSkus.getPrice() + ""));
 		}
 	}
 }

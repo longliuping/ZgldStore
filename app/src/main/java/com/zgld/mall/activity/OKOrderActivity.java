@@ -20,6 +20,7 @@ import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.utils.AddressXmlUtils;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
@@ -150,8 +151,9 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
 
     void bindAddress() {
         if (address != null) {
-//            name.setText("收货人:" + addressInfo.getShipTo() + "   " + addressInfo.getCellPhone());
-            address.setText("" + addressInfo.getAddress());
+            name.setText("收货人:" + addressInfo.getShipTo() + "  电话：" + addressInfo.getMobile());
+            String addStr = AddressXmlUtils.readXML(this,addressInfo.getRegionId());
+            address.setText("收货地址：" +addStr+"  "+ addressInfo.getAddress());
             address_title.setVisibility(View.GONE);
         }
     }

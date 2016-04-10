@@ -26,6 +26,7 @@ import com.zgld.mall.activity.HotSupplierActivity;
 import com.zgld.mall.adapter.HotCategoryAdapter;
 import com.zgld.mall.adapter.MaintypeAdapter;
 import com.zgld.mall.beans.Categories;
+import com.zgld.mall.beans.HotCategory;
 import com.zgld.mall.pulltorefresh.LocalFileUtils;
 import com.zgld.mall.utils.Contents;
 import org.json.JSONObject;
@@ -41,7 +42,7 @@ public class MainHomeFragment extends BaseFragment {
     MaintypeAdapter infoAdapter;
     HotCategoryAdapter hotCategoryAdapter;
     GridView gridview;
-    List<Categories> listMenu = new ArrayList<>();
+    List<HotCategory> listMenu = new ArrayList<>();
     public MainHomeFragment() {
         // Required empty public constructor
     }
@@ -78,7 +79,7 @@ public class MainHomeFragment extends BaseFragment {
                        break;
                    case 203:
                        json = new JSONObject(json).getJSONArray(Contents.LISTINIFO).toString();
-                       listMenu = new Gson().fromJson(json, new TypeToken<List<Categories>>() {
+                       listMenu = new Gson().fromJson(json, new TypeToken<List<HotCategory>>() {
                        }.getType());
                        hotCategoryAdapter = new HotCategoryAdapter(activity,listMenu);
                        gridview.setAdapter(hotCategoryAdapter);

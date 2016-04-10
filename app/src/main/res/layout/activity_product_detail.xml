@@ -22,7 +22,7 @@
                 android:layout_height="10dp"
                 android:background="#EFEFF0" />
 
-            <include layout="@layout/include_product_detail_user" />
+            <include layout="@layout/include_product_detail_user"  />
 
             <View
                 android:layout_width="fill_parent"

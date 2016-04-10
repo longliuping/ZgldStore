@@ -86,7 +86,7 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
         zip_code = (EditText) findViewById(R.id.zip_code);
 
         name.setText(info.getShipTo());
-//        phone.setText(info.getCellPhone());
+        phone.setText(info.getMobile());
 //        landline.setText(info.getTelPhone());
 //        address.setText(info.getShippingRegion());
         detail.setText(info.getAddress());
