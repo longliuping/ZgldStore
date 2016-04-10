@@ -26,30 +26,16 @@ public abstract class AbstractOrders implements java.io.Serializable {
 	private Double otherCost;
 	private Double orderRealPrice;
 	private String remark;
-	private String orderDate;
+	private Date orderDate;
+	private String mobile;
+	private String shipTo;
+	private String address;
+	private String zipcode;
 
 	// Constructors
 
 	/** default constructor */
 	public AbstractOrders() {
-	}
-
-	/** full constructor */
-	public AbstractOrders(Integer shopId, Integer userId, Double freight, Integer shippingId, String shipOrderNumber, Integer shippingStatus, Integer refundStatus, Integer paymentStatus, Double orderTotalPrice, Integer orderPoint, Double otherCost, Double orderRealPrice, String remark, String orderDate) {
-		this.shopId = shopId;
-		this.userId = userId;
-		this.freight = freight;
-		this.shippingId = shippingId;
-		this.shipOrderNumber = shipOrderNumber;
-		this.shippingStatus = shippingStatus;
-		this.refundStatus = refundStatus;
-		this.paymentStatus = paymentStatus;
-		this.orderTotalPrice = orderTotalPrice;
-		this.orderPoint = orderPoint;
-		this.otherCost = otherCost;
-		this.orderRealPrice = orderRealPrice;
-		this.remark = remark;
-		this.orderDate = orderDate;
 	}
 
 	// Property accessors
@@ -166,12 +152,44 @@ public abstract class AbstractOrders implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	public String getOrderDate() {
+	public Date getOrderDate() {
 		return this.orderDate;
 	}
 
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getShipTo() {
+		return shipTo;
+	}
+
+	public void setShipTo(String shipTo) {
+		this.shipTo = shipTo;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 }

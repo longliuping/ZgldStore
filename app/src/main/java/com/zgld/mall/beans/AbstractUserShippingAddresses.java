@@ -16,23 +16,12 @@ public abstract class AbstractUserShippingAddresses implements java.io.Serializa
 	private String address;
 	private String zipcode;
 	private String emailAddress;
-
+	private String mobile;
 	// Constructors
 
 	/** default constructor */
 	public AbstractUserShippingAddresses() {
 	}
-
-	/** full constructor */
-	public AbstractUserShippingAddresses(Integer regionId, Integer userId, String shipTo, String address, String zipcode, String emailAddress) {
-		this.regionId = regionId;
-		this.userId = userId;
-		this.shipTo = shipTo;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.emailAddress = emailAddress;
-	}
-
 	// Property accessors
 
 	public Integer getAddressId() {
@@ -91,4 +80,11 @@ public abstract class AbstractUserShippingAddresses implements java.io.Serializa
 		this.emailAddress = emailAddress;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 }

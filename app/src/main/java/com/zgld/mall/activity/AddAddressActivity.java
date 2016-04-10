@@ -30,7 +30,7 @@ import org.json.JSONObject;
  *
  */
 public class AddAddressActivity extends BaseActivity implements OnClickListener {
-    EditText address, name, phone, landline, detail, zip_code;
+    EditText address, name, phone, detail, zip_code;
     Button complete;
 
     @Override
@@ -83,7 +83,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
         complete.setOnClickListener(this);
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
-        landline = (EditText) findViewById(R.id.landline);
         detail = (EditText) findViewById(R.id.detail);
         zip_code = (EditText) findViewById(R.id.zip_code);
     }
@@ -133,8 +132,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
                 m.put("address.shipTo", name.getText().toString());
                 m.put("address.address", detail.getText().toString());
                 m.put("address.zipcode", zip_code.getText().toString());
-                m.put("address.cellPhone", phone.getText().toString());
-                m.put("address.telPhone", landline.getText().toString());
+                m.put("address.mobile", phone.getText().toString());
                 if (county.getId() <= 0) {
                     if (city.getId() <= 0) {
                         m.put("address.regionId", province.getId() + "");

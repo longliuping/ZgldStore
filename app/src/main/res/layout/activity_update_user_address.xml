@@ -67,19 +67,6 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/landline"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:hint="座机"
-            android:inputType="number"
-            android:maxLength="17"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:textColorHint="#737373" />
-
-        <EditText
             android:id="@+id/address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -12,7 +12,7 @@ public abstract class AbstractOrderItems implements java.io.Serializable {
 	private Integer itemId;
 	private Integer orderId;
 	private Integer productId;
-	private Double sku;
+	private Integer sku;
 	private Integer quantity;
 	private Double listPrice;
 	private Double cellPrice;
@@ -25,7 +25,7 @@ public abstract class AbstractOrderItems implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AbstractOrderItems(Integer orderId, Integer productId, Double sku, Integer quantity, Double listPrice, Double cellPrice, String remark) {
+	public AbstractOrderItems(Integer orderId, Integer productId, Integer sku, Integer quantity, Double listPrice, Double cellPrice, String remark) {
 		this.orderId = orderId;
 		this.productId = productId;
 		this.sku = sku;
@@ -61,11 +61,11 @@ public abstract class AbstractOrderItems implements java.io.Serializable {
 		this.productId = productId;
 	}
 
-	public Double getSku() {
+	public Integer getSku() {
 		return this.sku;
 	}
 
-	public void setSku(Double sku) {
+	public void setSku(Integer sku) {
 		this.sku = sku;
 	}
 

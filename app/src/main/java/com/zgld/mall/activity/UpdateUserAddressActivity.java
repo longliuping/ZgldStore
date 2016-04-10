@@ -46,7 +46,7 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
     }
     Button complete;
     UserShippingAddresses info = new UserShippingAddresses();
-    EditText address, name, phone, landline, detail, zip_code;
+    EditText address, name, phone, detail, zip_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,6 @@ public class UpdateUserAddressActivity extends BaseActivity implements OnClickLi
         complete.setOnClickListener(this);
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
-        landline = (EditText) findViewById(R.id.landline);
         detail = (EditText) findViewById(R.id.detail);
         zip_code = (EditText) findViewById(R.id.zip_code);
 
@@ -127,10 +126,10 @@ County county;
                     Toast.makeText(this, getString(R.string.name_not_be_empty), Toast.LENGTH_SHORT).show();
                     break;
                 }
-//                if (TextUtils.isEmpty(phone.getText().toString())) {
-//                    Toast.makeText(this, getString(R.string.phone_not_be_empty), Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
+                if (TextUtils.isEmpty(phone.getText().toString())) {
+                    Toast.makeText(this, getString(R.string.phone_not_be_empty), Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (TextUtils.isEmpty(address.getText().toString())) {
                     Toast.makeText(this, getString(R.string.address_not_be_empty), Toast.LENGTH_SHORT).show();
                     break;
@@ -144,8 +143,7 @@ County county;
                 m.put("address.shipTo", name.getText().toString());
                 m.put("address.address", detail.getText().toString());
                 m.put("address.zipcode", zip_code.getText().toString());
-                m.put("address.cellPhone", phone.getText().toString());
-                m.put("address.telPhone", landline.getText().toString());
+                m.put("address.mobile", phone.getText().toString());
                 if (county.getId() <= 0) {
                     if (city.getId() <= 0) {
                         m.put("address.regionId", province.getId() + "");
