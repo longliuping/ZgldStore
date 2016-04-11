@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
+import com.zgld.mall.alipay.AsyncAlipay;
+import com.zgld.mall.alipay.PayResult;
 import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.YAccount;
 
@@ -24,14 +28,14 @@ import java.util.List;
 /**
  * 用户账户
  */
-public class UserAccountActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class UserAccountActivity extends BaseActivity implements AdapterView.OnItemClickListener,View.OnClickListener{
     YAccount users;
     ListView listview;
     MenuAdapter menuAdapter;
     List<Menu> listInfo = new ArrayList<>();
     Class [] className = new Class[]{RechargeDetailsActivity.class,PresentDetailActivity.class,FreezeDetailsActivity.class};
     String [] names = new String[]{"充值明细","提现明细","冻结明细"};
-
+    View recharge;
     @Override
     public void handleMsg(Message msg) {
 
@@ -68,6 +72,8 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         menuAdapter = new MenuAdapter();
         listview.setAdapter(menuAdapter);
         menuAdapter.notifyDataSetChanged();
+        recharge = findViewById(R.id.recharge);
+        recharge.setOnClickListener(this);
     }
 
     @Override
@@ -77,6 +83,54 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         startActivity(intent);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.recharge:
+                pay();
+                break;
+        }
+    }
+    private void pay(){
+        new AsyncAlipay(this, new AsyncAlipay.AsyncAlipayListener() {
+            public static final String RSA_PUBLIC = "";
+            private static final int SDK_PAY_FLAG = 1;
+            @Override
+            public void complete(Message msg) {
+                switch (msg.what) {
+                    case SDK_PAY_FLAG: {
+                        PayResult payResult = new PayResult((String) msg.obj);
+                        /**
+                         * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+                         * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+                         * docType=1) 建议商户依赖异步通知
+                         */
+                        String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+                        String resultStatus = payResult.getResultStatus();
+                        // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                        if (TextUtils.equals(resultStatus, "9000")) {
+                            Toast.makeText(UserAccountActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 判断resultStatus 为非"9000"则代表可能支付失败
+                            // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                            if (TextUtils.equals(resultStatus, "8000")) {
+                                Toast.makeText(UserAccountActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                                Toast.makeText(UserAccountActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }).pay();
+    }
     class Menu implements Serializable{
         int id;
         String name;
