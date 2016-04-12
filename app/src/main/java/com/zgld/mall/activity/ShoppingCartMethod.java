@@ -185,7 +185,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 
 	public RequestQueue getData(int tag, String url, Map m, String title) {
 		if (NetWorkTools.isHasNet(activity)) {
-			return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, activity, m,title);
+			return AsyncGameRunner.request(tag, url, this, activity, m,title);
 		} else {
 			Toast.makeText(activity, activity.getString(R.string.no_wifi_or_open_mobile_data), Toast.LENGTH_SHORT)
 					.show();
