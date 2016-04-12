@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
      */
     public RequestQueue getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(activity)) {
-            return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, getActivity(), m,title);
+            return AsyncGameRunner.request(tag,url, this, getActivity(), m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

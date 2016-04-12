@@ -18,12 +18,8 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 	public Products(Integer shopId, Integer categoryId, Integer brandId, String productName, String shortDescription, String unit, Double weight, String description, String title, String metaDescription, String metaKeywords, String thumbnailsUrl, String inFocusImageUrl, Integer recommended, Integer latest, Integer hotsale, Integer specialOffer, Double costPrice, Double marketPrice, Integer upselling, Double salePrice, Integer stock, Integer quantityLimit, Integer minQuantity, String addedDate, Integer vistiCounts, Integer order, String productionDate, Integer isCustom, Integer customCycle, Integer minCustomQuantity, Integer maxCustomQuantity, String attachment, Integer shipperId, String createdDate, Integer userId, String updatedDate, Integer updatedUserId, String expiryTime) {
 		super(shopId, categoryId, brandId, productName, shortDescription, unit, weight, description, title, metaDescription, metaKeywords, thumbnailsUrl, inFocusImageUrl, recommended, latest, hotsale, specialOffer, costPrice, marketPrice, upselling, salePrice, stock, quantityLimit, minQuantity, addedDate, vistiCounts, order, productionDate, isCustom, customCycle, minCustomQuantity, maxCustomQuantity, attachment, shipperId, createdDate, userId, updatedDate, updatedUserId, expiryTime);
 	}
-	Sku sku;
-	List<Skugroup> listSkugroups;
-	List<Sku> listSkus;
-	List<ProductImages> listProductImages;
 	boolean checked;
-
+	Sku sku;
 	public boolean isChecked() {
 		return checked;
 	}
@@ -31,21 +27,22 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
-
-	public List<Skugroup> getListSkugroups() {
-		return listSkugroups;
-	}
-
-	public void setListSkugroups(List<Skugroup> listSkugroups) {
-		this.listSkugroups = listSkugroups;
-	}
-
+	List<Skugroup> listSkugroups;
+	List<Sku> listSkus;
+	List<ProductImages> listProductImages;
 	public Sku getSku() {
 		return sku;
 	}
 
 	public void setSku(Sku sku) {
 		this.sku = sku;
+	}
+	public List<Skugroup> getListSkugroups() {
+		return listSkugroups;
+	}
+
+	public void setListSkugroups(List<Skugroup> listSkugroups) {
+		this.listSkugroups = listSkugroups;
 	}
 
 	public List<Sku> getListSkus() {
@@ -63,5 +60,4 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 	public void setListProductImages(List<ProductImages> listProductImages) {
 		this.listProductImages = listProductImages;
 	}
-
 }

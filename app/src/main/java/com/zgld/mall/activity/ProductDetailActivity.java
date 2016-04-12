@@ -206,10 +206,9 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
                 }
                 break;
             case R.id.add_car:
-//                if (new UserDataShare(this).getUserData() == null) {
-//                    Contents.loginPage(this,null,200);
-//                    return;
-//                }
+                showPop();
+                break;
+            case R.id.correlation_add:
                 showPop();
                 break;
             case R.id.cart:

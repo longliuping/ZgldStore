@@ -54,7 +54,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
         super.onCreate(savedInstanceState);
         initStyle();
         setContentView(R.layout.activity_okorder);
-        listInfo = (ArrayList<ShoppingCarts>)this.getIntent().getSerializableExtra("listInfo");
+        listInfo = (ArrayList<ShoppingCarts>)this.getIntent().getSerializableExtra(Contents.LISTINIFO);
         if(listInfo==null || listInfo.size()<=0){
             finish();
             return;
@@ -63,8 +63,13 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
             ShoppingCarts car = listInfo.get(i);
             for (int j = 0;j<car.getListProducts().size();j++){
                 Products pro = car.getListProducts().get(j);
-                totalSalePrice+=pro.getSalePrice()*car.getQuantity();
-                totalMarketPrice+=pro.getMarketPrice()*car.getQuantity();
+                if(pro.getSku()!=null) {
+                    totalSalePrice += pro.getSku().getPrice() * car.getQuantity();
+                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
+                }else{
+                    totalSalePrice += pro.getSalePrice() * car.getQuantity();
+                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
+                }
             }
         }
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
@@ -192,10 +197,6 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 m.put("shippingId", addressInfo.getAddressId()+"");
                 m.put("skuId", skuId.toString());
                 m.put("skuNumber", nums.toString());
-                m.put("modeId","8");
-                m.put("templateId","2");
-                m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
-                m.put(Contents.USERID,users.getUsers().getUserId()+"");
                 getData( 205, "order/submit_order.html", m, null);
                 break;
         }

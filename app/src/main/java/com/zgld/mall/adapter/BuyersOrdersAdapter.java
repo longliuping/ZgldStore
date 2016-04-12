@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
@@ -28,12 +30,16 @@ import com.zgld.mall.alipay.AsyncAlipay;
 import com.zgld.mall.alipay.PayResult;
 import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.OrderItems;
+import com.zgld.mall.beans.OrderPayConfig;
 import com.zgld.mall.beans.Orders;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.CustomDialog;
 import com.zgld.mall.utils.PriceUtil;
+import com.zgld.mall.utils.StringUtils;
+import com.zgld.mall.volley.AsyncGameRunner;
+import com.zgld.mall.volley.RequestListenr;
 
 import org.json.JSONObject;
 
@@ -239,7 +245,7 @@ public interface BuyersOrdersAdapterListener{
 						holder.item_pay.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
-
+								payOrder(groupPosition,childPosition);
 							}
 						});
 //						holder.item_cancel.setVisibility(View.VISIBLE);
@@ -361,6 +367,37 @@ public interface BuyersOrdersAdapterListener{
 	public void payOrder(final int groupPosition, final int childPosition) {
 		Map<String, String> m = new HashMap<String, String>();
 		final Orders orderInfo = listInfo.get(groupPosition);
+		m.put("orderid",orderInfo.getOrderId()+"");
+		AsyncGameRunner.request(201,  "order/alipay_order_config.html", new RequestListenr() {
+			@Override
+			public void onCompelete(Message msg) {
+				try{
+					if(msg.getData().getInt(Contents.STATUS)==200){
+						switch (msg.what){
+							case 201:
+								String json = msg.getData().getString(Contents.DATA);
+								JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.INFO);
+								OrderPayConfig config = new Gson().fromJson(jsonObject.toString(), new TypeToken<OrderPayConfig>() {
+								}.getType());
+								if(config!=null){
+									pay(config);
+								}
+								break;
+						}
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onException(String exception) {
+
+			}
+		}, context, m ,null);
+
+	}
+	void pay(OrderPayConfig config){
 		new AsyncAlipay((Activity)context, new AsyncAlipay.AsyncAlipayListener() {
 			public static final String RSA_PUBLIC = "";
 			private static final int SDK_PAY_FLAG = 1;
@@ -398,9 +435,8 @@ public interface BuyersOrdersAdapterListener{
 						break;
 				}
 			}
-		}).pay();
+		}).pay(config);
 	}
-
 	/**
 	 * 取消订单
 	 * @param groupPosition

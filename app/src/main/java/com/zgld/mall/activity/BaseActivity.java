@@ -108,7 +108,7 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
      */
     public RequestQueue getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            return AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, getApplicationContext(), m,title);
+            return AsyncGameRunner.request(tag,url, this, getApplicationContext(), m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

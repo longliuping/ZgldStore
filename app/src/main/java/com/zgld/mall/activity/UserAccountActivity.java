@@ -129,7 +129,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
                         break;
                 }
             }
-        }).pay();
+        }).pay(null);
     }
     class Menu implements Serializable{
         int id;

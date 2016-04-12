@@ -17,7 +17,15 @@ public class Skugroup extends AbstractSkugroup implements java.io.Serializable {
 	public Skugroup(Integer shopId, Integer productId, String skugroupName) {
 		super(shopId, productId, skugroupName);
 	}
+	Sku sku;
 	List<Sku> listSkus;
+	public Sku getSku() {
+		return sku;
+	}
+	public void setSku(Sku sku) {
+		this.sku = sku;
+	}
+
 	public List<Sku> getListSkus() {
 		return listSkus;
 	}

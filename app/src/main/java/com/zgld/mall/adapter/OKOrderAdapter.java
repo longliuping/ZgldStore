@@ -167,7 +167,11 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
 			holder.item_number_base.setText(listInfo.get(groupPosition).getQuantity() + "");
 			holder.item_number.setText("X" + listInfo.get(groupPosition).getQuantity());
-			holder.item_price.setText(PriceUtil.priceY(info.getSalePrice()+""));
+			if(info.getSku()!=null) {
+				holder.item_price.setText(PriceUtil.priceY(info.getSku().getPrice() + ""));
+			}else{
+				holder.item_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
+			}
 			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
 			holder.item_detail.setText(info.getShortDescription());
 			holder.item_price_base.setText(PriceUtil.priceY((info.getSalePrice() * listInfo.get(groupPosition).getQuantity()) + ""));
@@ -201,16 +205,6 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 					listener.remark(groupPosition, childPosition, s.toString());
 				}
 			});
-//			List<HishopSkuitems> listHishopSkuitems = info.getListHishopSkuitems();
-//			if(listHishopSkuitems!=null){
-//				StringBuffer str = new StringBuffer("");
-//				for (int i =0;i<listHishopSkuitems.size();i++){
-//					HishopSkuitems item = listHishopSkuitems.get(i);
-//					str.append(item.getHishopAttributes().getAttributeName()+":");
-//					str.append(item.getHishopAttributeValues().getValueStr()+";");
-//				}
-//				holder.item_detail.setText(str.toString()+"商品货号:"+info.getHishopSkus().getSku());
-//			}
 		}
 		return convertView;
 	}

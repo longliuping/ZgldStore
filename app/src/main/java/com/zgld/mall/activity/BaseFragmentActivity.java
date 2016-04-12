@@ -67,7 +67,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
     }
     public void getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
-            AsyncGameRunner.request(tag, Contents.BASE_URL + url, this, this, m,title);
+            AsyncGameRunner.request(tag, url, this, this, m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.zgld.mall.beans.OrderPayConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,6 +57,7 @@ public class AsyncAlipay {
     private static final int SDK_PAY_FLAG = 1;
     Activity activity;
     AsyncAlipayListener listener;
+    OrderPayConfig config;
     public AsyncAlipay(Activity activity,AsyncAlipayListener listener){
         this.activity = activity;
         this.listener = listener;
@@ -64,8 +66,12 @@ public class AsyncAlipay {
      * call alipay sdk pay. 调用SDK支付
      *
      */
-    public void pay() {
-        if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
+    public void pay(OrderPayConfig config) {
+        if(config == null){
+            return;
+        }
+        this.config = config;
+        if (TextUtils.isEmpty(config.getPartner()) || TextUtils.isEmpty(config.getRsa_private()) || TextUtils.isEmpty(config.getSeller_id())) {
             new AlertDialog.Builder(activity).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialoginterface, int i) {
@@ -75,7 +81,7 @@ public class AsyncAlipay {
                     }).show();
             return;
         }
-        String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+        String orderInfo = getOrderInfo(config.getSubject(), config.getBody(), config.getTotal_fee()+"");
 
         /**
          * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
@@ -139,13 +145,13 @@ public class AsyncAlipay {
     private String getOrderInfo(String subject, String body, String price) {
 
         // 签约合作者身份ID
-        String orderInfo = "partner=" + "\"" + PARTNER + "\"";
+        String orderInfo = "partner=" + "\"" + config.getPartner() + "\"";
 
         // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
+        orderInfo += "&seller_id=" + "\"" + config.getSeller_id() + "\"";
 
         // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
+        orderInfo += "&out_trade_no=" + "\"" + config.getOrderId() + "\"";
 
         // 商品名称
         orderInfo += "&subject=" + "\"" + subject + "\"";
@@ -157,7 +163,7 @@ public class AsyncAlipay {
         orderInfo += "&total_fee=" + "\"" + price + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&notify_url=" + "\"" + "http://www.baidu.com" + "\"";
+        orderInfo += "&notify_url=" + "\"" + config.getNotify_url() + "\"";
 
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
@@ -209,7 +215,7 @@ public class AsyncAlipay {
      *            待签名订单信息
      */
     private String sign(String content) {
-        return SignUtils.sign(content, RSA_PRIVATE);
+        return SignUtils.sign(content, config.getRsa_private());
     }
 
     /**

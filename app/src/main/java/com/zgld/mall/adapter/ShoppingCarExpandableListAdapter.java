@@ -235,7 +235,9 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 		final Products info = listInfo.get(groupPosition).getListProducts().get(childPosition);
 		if (info != null) {
 			holder.item_title.setText(info.getProductName());
-			holder.item_price.setText(PriceUtil.priceY(info.getSalePrice()+""));
+			if(info.getSku()!=null) {
+				holder.item_price.setText(PriceUtil.priceY(info.getSku().getPrice()+ ""));
+			}
 			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
 			holder.d_result.setText(listInfo.get(groupPosition).getQuantity() + "");
 			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
@@ -292,16 +294,6 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 							h.item_car_checkbox.isChecked());
 				}
 			});
-//			List<HishopSkuitems> listHishopSkuitems = info.getListHishopSkuitems();
-//			if(listHishopSkuitems!=null){
-//				StringBuffer str = new StringBuffer("");
-//				for (int i =0;i<listHishopSkuitems.size();i++){
-//						HishopSkuitems item = listHishopSkuitems.get(i);
-//						str.append(item.getHishopAttributes().getAttributeName()+":");
-//						str.append(item.getHishopAttributeValues().getValueStr()+";");
-//				}
-//				holder.item_detail.setText(str.toString()+"商品货号:"+info.getHishopSkus().getSku());
-//			}
 		}
 		return convertView;
 	}

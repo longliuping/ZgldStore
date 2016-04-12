@@ -31,7 +31,8 @@ import java.util.Map;
 public class AsyncGameRunner {
 	public static ConfirmDialog confirmDialog = null;
 	static CustomDialog dialog = null;
-	public static RequestQueue request(final int tag, final String url, final RequestListenr re, Context context, Map m,String title) {
+	public static RequestQueue request(final int tag, String url, final RequestListenr re, Context context, Map m,String title) {
+		url = Contents.BASE_URL +url;
 		if (title!=null && title.length()>2) {
 			if (confirmDialog == null) {
 				confirmDialog = new ConfirmDialog(context, title);
