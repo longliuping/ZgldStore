@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -26,6 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.UserDataShare;
+import com.zgld.mall.activity.OrderDetailsActivity;
+import com.zgld.mall.activity.ProductDetailActivity;
+import com.zgld.mall.activity.ProductTypeActivity;
 import com.zgld.mall.alipay.AsyncAlipay;
 import com.zgld.mall.alipay.PayResult;
 import com.zgld.mall.beans.GsonObject;
@@ -145,30 +149,28 @@ public interface BuyersOrdersAdapterListener{
 
 				@Override
 				public void onClick(View v) {
-//					Intent intent = new Intent(context, OrderDetailsActivity.class);
-//					intent.putExtra("orderId", listInfo.get(groupPosition).getOrderId());
-//					context.startActivity(intent);
+					Intent intent = new Intent(context, OrderDetailsActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putSerializable(Contents.INFO,listInfo.get(groupPosition));
+					intent.putExtras(bundle);
+					context.startActivity(intent);
 				}
 			});
 			holder.item_name.setText("订单号："+info.getOrderId()+"  时间："+info.getOrderDate());
 			String str = "";
-//			switch (info.getOrderStatus()) {
-//			case 1:
-//				str = "等待付款";
-//				break;
-//			case 2:
-//				str = "等待发货";
-//				break;
-//			case 3:
-//				str = "已发货";
-//				break;
-//			case 4:
-//				str = "已关闭";
-//				break;
-//			case 5:
-//				str = "成功订单";
-//				break;
-//			}
+			switch (info.getPaymentStatus()) {
+			case 1:
+				str = "已支付";
+				break;
+			case 0:
+				str = "等待付款";
+				break;
+			}
+			switch (listInfo.get(groupPosition).getRefundStatus()){
+				case 1:
+					str = "已退款";
+					break;
+			}
 			holder.item_status.setText(str);
 		}
 		return convertView;
@@ -181,6 +183,7 @@ public interface BuyersOrdersAdapterListener{
 		TextView item_confirm, item_cancel, item_refund, item_evaluation, item_pay,item_view_logistics;
 		View item_base_bottom, tem_price_base;
 		TextView item_date;
+		View top;
 	}
 
 	/**
@@ -211,17 +214,36 @@ public interface BuyersOrdersAdapterListener{
 			holder.item_date = (TextView) convertView.findViewById(R.id.item_date);
 			holder.tem_price_base = convertView.findViewById(R.id.tem_price_base);
 			holder.item_view_logistics = (TextView) convertView.findViewById(R.id.item_view_logistics);
+			holder.top = convertView.findViewById(R.id.top);
 			convertView.setTag(holder);
 		} else {
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		OrderItems info = listInfo.get(groupPosition).getListOrderItems().get(childPosition);
+		final OrderItems info = listInfo.get(groupPosition).getListOrderItems().get(childPosition);
 		holder.item_base_bottom.setVisibility(View.GONE);
 		holder.item_pay.setVisibility(View.GONE);
 		holder.item_cancel.setVisibility(View.GONE);
 		holder.item_refund.setVisibility(View.GONE);
 		holder.item_view_logistics.setVisibility(View.GONE);
 		if(info!=null){
+			holder.top.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, ProductDetailActivity.class);
+					intent.putExtra(Contents.PRODUCTID, info.getProductId());
+					context.startActivity(intent);
+				}
+			});
+			convertView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, OrderDetailsActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putSerializable(Contents.INFO,listInfo.get(groupPosition));
+					intent.putExtras(bundle);
+					context.startActivity(intent);
+				}
+			});
 			SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(),holder.item_image);
 			holder.item_title.setText(info.getProducts().getProductName());
 			holder.item_detail.setText(info.getProducts().getShortDescription());
@@ -238,9 +260,8 @@ public interface BuyersOrdersAdapterListener{
 				holder.item_postage.setText(PriceUtil.priceY(listInfo.get(groupPosition).getFreight()+""));
 				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotalPrice()+""));
 
-//				switch (listInfo.get(groupPosition).getOrderStatus()) {
-//					case 1:
-////						str = "等待付款";
+				switch (listInfo.get(groupPosition).getPaymentStatus()) {
+					case 0:
 						holder.item_pay.setVisibility(View.VISIBLE);
 						holder.item_pay.setOnClickListener(new OnClickListener() {
 							@Override
@@ -248,49 +269,26 @@ public interface BuyersOrdersAdapterListener{
 								payOrder(groupPosition,childPosition);
 							}
 						});
-//						holder.item_cancel.setVisibility(View.VISIBLE);
-//						holder.item_cancel.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//								cancelOrder(groupPosition,childPosition);
-//							}
-//						});
-//						break;
-//					case 2:
-////						str = "等待发货";
-//						holder.item_refund.setVisibility(View.VISIBLE);
-//						holder.item_refund.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//
-//							}
-//						});
-//						break;
-//					case 3:
-////						str = "已发货";
-//						holder.item_view_logistics.setVisibility(View.VISIBLE);
-//						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//
-//							}
-//						});
-//						break;
-//					case 4:
-////						str = "已关闭";
-//						break;
-//					case 5:
-////						str = "成功订单";
-//						holder.item_view_logistics.setVisibility(View.VISIBLE);
-//						holder.item_view_logistics.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//
-//							}
-//						});
-//						break;
-//				}
+						holder.item_cancel.setVisibility(View.VISIBLE);
+						holder.item_cancel.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								cancelOrder(groupPosition,childPosition);
+							}
+						});
+					case 1:
+						holder.item_pay.setVisibility(View.GONE);
+						holder.item_cancel.setVisibility(View.GONE);
+						break;
+				}
+				switch (listInfo.get(groupPosition).getRefundStatus()){
+					case 0:
 
+						break;
+					case 1:
+
+						break;
+				}
 			}
 		}
 		return convertView;

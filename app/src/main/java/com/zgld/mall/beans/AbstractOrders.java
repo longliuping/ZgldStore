@@ -9,7 +9,6 @@ import java.util.Date;
  */
 
 public abstract class AbstractOrders implements java.io.Serializable {
-
 	// Fields
 
 	private Integer orderId;
@@ -31,6 +30,14 @@ public abstract class AbstractOrders implements java.io.Serializable {
 	private String shipTo;
 	private String address;
 	private String zipcode;
+	private Integer payTypeId;// 支付类型
+	private String payTradeNo;// 支付交易号
+	private String payDateTime;// 交易付款时间
+	private Double payTotalFee;//  交易付款金额
+	private String buyerId;// 买家用户ID(支付宝ID)
+	private String buyerAccount;// 买家账号(支付宝账号)
+	private String refundDateTime;// 退款时间
+	private Double refundTotalFee;//  退款交易金额
 
 	// Constructors
 
@@ -190,6 +197,70 @@ public abstract class AbstractOrders implements java.io.Serializable {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public Integer getPayTypeId() {
+		return payTypeId;
+	}
+
+	public void setPayTypeId(Integer payTypeId) {
+		this.payTypeId = payTypeId;
+	}
+
+	public String getPayTradeNo() {
+		return payTradeNo;
+	}
+
+	public void setPayTradeNo(String payTradeNo) {
+		this.payTradeNo = payTradeNo;
+	}
+
+	public String getPayDateTime() {
+		return payDateTime;
+	}
+
+	public void setPayDateTime(String payDateTime) {
+		this.payDateTime = payDateTime;
+	}
+
+	public Double getPayTotalFee() {
+		return payTotalFee;
+	}
+
+	public void setPayTotalFee(Double payTotalFee) {
+		this.payTotalFee = payTotalFee;
+	}
+
+	public String getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId;
+	}
+
+	public String getBuyerAccount() {
+		return buyerAccount;
+	}
+
+	public void setBuyerAccount(String buyerAccount) {
+		this.buyerAccount = buyerAccount;
+	}
+
+	public String getRefundDateTime() {
+		return refundDateTime;
+	}
+
+	public void setRefundDateTime(String refundDateTime) {
+		this.refundDateTime = refundDateTime;
+	}
+
+	public Double getRefundTotalFee() {
+		return refundTotalFee;
+	}
+
+	public void setRefundTotalFee(Double refundTotalFee) {
+		this.refundTotalFee = refundTotalFee;
 	}
 
 }
