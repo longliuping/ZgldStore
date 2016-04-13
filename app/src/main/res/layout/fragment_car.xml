@@ -18,7 +18,7 @@
             android:layout_height="fill_parent"
             android:background="#EFEFF0"
             android:orientation="vertical" >
-            <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
                 android:id="@+id/listview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -26,7 +26,7 @@
                 android:background="#EFEFF0"
                 android:divider="#00000000"
                 android:dividerHeight="0dp" >
-            </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+            </com.handmark.pulltorefresh.library.PullToRefreshListView>
         </LinearLayout>
     </LinearLayout>
 

@@ -17,14 +17,6 @@
 	    android:layout_margin="5dp"
         android:gravity="center_vertical"
 	    >
-	    <CheckBox
-	        android:id="@+id/item_car_manufactor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:button="@drawable/car_checkbox_style"
-            android:gravity="center_vertical"
-            />
 	    <TextView 
 	        android:id="@+id/item_car_manufactor_name"
 	        android:layout_width="wrap_content"
@@ -35,22 +27,18 @@
 	        android:textColor="#000000"
 	        android:textSize="18sp"
 	        android:layout_marginRight="75dp"
+			android:layout_centerVertical="true"
 	        android:layout_toRightOf="@id/item_car_manufactor"
-	        android:layout_marginLeft="10dp"
-	        />
-	    <TextView 
-	        android:id="@+id/item_car_manufactor_detail"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:singleLine="true"
-	        android:layout_below="@id/item_car_manufactor_name"
-	        android:layout_toRightOf="@id/item_car_manufactor"
-	        android:gravity="center_vertical"
-	        android:text="店铺优惠：全店满5送1"
-	        android:textColor="#727272"
-	        android:layout_marginRight="75dp"
-	        android:textSize="16sp"
 	        android:layout_marginLeft="10dp"
 	        />
 	</RelativeLayout>
+	<com.zgld.mall.widget.MyListView
+		android:id="@+id/item_listview"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:divider="#E5E5E5"
+		android:dividerHeight="0dp"
+		android:background="#EEEFF0"
+		android:listSelector="@color/transparent"
+		></com.zgld.mall.widget.MyListView>
 </LinearLayout>

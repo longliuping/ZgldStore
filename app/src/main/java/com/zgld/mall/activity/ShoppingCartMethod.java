@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.ShoppingCarExpandableListAdapter;
@@ -67,7 +68,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	CustomDialog dialog;
 	Activity activity;
 	List<ShoppingCarts> listInfo;
-	PullToRefreshExpandableListView listview;
+	PullToRefreshListView listview;
 	ShoppingCarExpandableListAdapter infoAdapter;
 	int pageIndex = 1;
 	CheckBox item_car_checkbox;
@@ -124,17 +125,17 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	private void initView() {
 		// TODO Auto-generated method stub
 		back = view.findViewById(R.id.back);
-		listview = (PullToRefreshExpandableListView) view.findViewById(R.id.listview);
+		listview = (PullToRefreshListView) view.findViewById(R.id.listview);
 		listview.setOnItemClickListener(this);
-		listview.getRefreshableView().setGroupIndicator(null);
-		listview.getRefreshableView().setOnGroupClickListener(new OnGroupClickListener() {
-
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-				// TODO Auto-generated method stub
-				return true;
-			}
-		});
+//		listview.getRefreshableView().setGroupIndicator(null);
+//		listview.getRefreshableView().setOnGroupClickListener(new OnGroupClickListener() {
+//
+//			@Override
+//			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+//				// TODO Auto-generated method stub
+//				return true;
+//			}
+//		});
 		listview.setOnRefreshListener(this);
 		item_car_checkbox = (CheckBox) view.findViewById(R.id.item_car_checkbox);
 		item_car_checkbox.setOnCheckedChangeListener(this);
@@ -245,10 +246,10 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						}.getType());
 						infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
 						listview.getRefreshableView().setAdapter(infoAdapter);
-						int groupCount = listview.getRefreshableView().getCount();
-						for (int i = 0; i < groupCount; i++) {
-							listview.getRefreshableView().expandGroup(i);
-						}
+//						int groupCount = listview.getRefreshableView().getCount();
+//						for (int i = 0; i < groupCount; i++) {
+//							listview.getRefreshableView().expandGroup(i);
+//						}
 
 						item_car_checkbox.setChecked(false);
 						infoAdapter.notifyDataSetChanged();
