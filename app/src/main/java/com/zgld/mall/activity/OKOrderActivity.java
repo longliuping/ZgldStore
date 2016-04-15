@@ -1,5 +1,7 @@
 package com.zgld.mall.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,10 +14,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.OKOrderAdapter;
+import com.zgld.mall.alipay.AlipayPay;
+import com.zgld.mall.alipay.AsyncAlipay;
+import com.zgld.mall.alipay.OrderPay;
+import com.zgld.mall.alipay.PayResult;
+import com.zgld.mall.beans.OrderPayConfig;
+import com.zgld.mall.beans.Orders;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.UserShippingAddresses;
@@ -24,6 +34,8 @@ import com.zgld.mall.utils.AddressXmlUtils;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,21 +126,32 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
 
     @Override
     public void handleMsg(Message msg) {
-        Bundle bundle = msg.getData();
-        String json = "";
-        json = bundle.getString(Contents.JSON);
-        switch (msg.what) {
-            case 205:
-                if(msg.getData().getInt(Contents.STATUS)==200){
-                    BroadcastUtils.sendCarProduct(this);
-                    setResult(RESULT_OK);
-                    Intent intent = new Intent();
-                    intent.setClass(this,BuyersOrdersFragmentActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                break;
-        }
+       try{
+           Bundle bundle = msg.getData();
+           String json = "";
+           json = bundle.getString(Contents.JSON);
+           switch (msg.what) {
+               case 205:
+                   if (msg.getData().getInt(Contents.STATUS) == 200) {
+                       BroadcastUtils.sendCarProduct(this);
+                       setResult(RESULT_OK);
+                       Integer orderId = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getInt("orderId");
+                       Toast.makeText(this, orderId, Toast.LENGTH_LONG).show();
+                       new OrderPay().pay(orderId, this, new OrderPay.OrderPayListener() {
+                           @Override
+                           public void onCompelete(Message msg) {
+                               Intent intent = new Intent();
+                               intent.setClass(OKOrderActivity.this,BuyersOrdersFragmentActivity.class);
+                               startActivity(intent);
+                               finish();
+                           }
+                       });
+                   }
+                   break;
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
     }
 
     @Override
