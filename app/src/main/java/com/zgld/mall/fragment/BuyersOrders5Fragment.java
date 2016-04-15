@@ -238,6 +238,17 @@ public class BuyersOrders5Fragment extends BuyersOrdersBaseFragment implements O
 
     @Override
     public void update(int tag, Bundle bundle) {
-        infoAdapter.notifyDataSetChanged();
+        if(tag==2){//更新数据
+            pageNum = 1;
+            initData();
+        }else{
+            infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+            listview.getRefreshableView().setAdapter(infoAdapter);
+            int groupCount = listview.getRefreshableView().getCount();
+            for (int i = 0; i < groupCount; i++) {
+                listview.getRefreshableView().expandGroup(i);
+            }
+            infoAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -89,7 +89,6 @@ public class BuyersOrders0Fragment extends BuyersOrdersBaseFragment implements O
         Map<String,String> m = new HashMap<>();
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,20+"");
-        m.put("id","0");
         getData(202, "order/user_order.html", m, null);
     }
 
@@ -239,12 +238,18 @@ public class BuyersOrders0Fragment extends BuyersOrdersBaseFragment implements O
 
     @Override
     public void update(int tag, Bundle bundle) {
-        infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
-        listview.getRefreshableView().setAdapter(infoAdapter);
-        int groupCount = listview.getRefreshableView().getCount();
-        for (int i = 0; i < groupCount; i++) {
-            listview.getRefreshableView().expandGroup(i);
-        }
-        infoAdapter.notifyDataSetChanged();
+       if(tag==2){
+           pageNum = 1;
+           initData();
+       }else{
+           infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+           listview.getRefreshableView().setAdapter(infoAdapter);
+           int groupCount = listview.getRefreshableView().getCount();
+           for (int i = 0; i < groupCount; i++) {
+               listview.getRefreshableView().expandGroup(i);
+           }
+           infoAdapter.notifyDataSetChanged();
+       }
     }
+
 }

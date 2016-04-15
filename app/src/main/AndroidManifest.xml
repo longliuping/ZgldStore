@@ -133,23 +133,22 @@
         <activity android:name=".activity.UserAccountActivity" />
         <activity android:name=".activity.RechargeDetailsActivity" />
         <activity android:name=".activity.PresentDetailActivity" />
-        <activity android:name=".activity.FreezeDetailsActivity"></activity>
+        <activity android:name=".activity.FreezeDetailsActivity" />
         <!-- alipay sdk begin -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        <activity android:name="com.alipay.sdk.auth.AuthActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!-- alipay sdk end -->
+        <activity android:name=".activity.BalanceDrawRequestActivity"></activity>
     </application>
 
 </manifest>

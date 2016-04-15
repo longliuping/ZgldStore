@@ -96,7 +96,7 @@ public class BuyersOrdersFragmentActivity extends BaseFragmentActivity implement
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_THREE, titles[2], BuyersOrders2Fragment.class));
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FOUR, titles[3], BuyersOrders3Fragment.class));
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FIVE, titles[4], BuyersOrders4Fragment.class));
-        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_SIX, titles[5], BuyersOrders5Fragment.class));
+//        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_SIX, titles[5], BuyersOrders5Fragment.class));
         return Contents.FRAGMENT_ONE;
     }
 

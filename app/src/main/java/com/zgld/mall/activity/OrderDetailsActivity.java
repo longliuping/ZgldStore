@@ -110,6 +110,12 @@ public class OrderDetailsActivity extends BaseActivity {
                 listKey.add("支付交易号：");listValue.add(info.getPayTradeNo());
                 break;
         }
+        switch (info.getShippingStatus()){
+            case 1:
+                listKey.add("配送ID：");listValue.add(info.getShippingId()+"");
+                listKey.add("配送单号：");listValue.add(info.getShipOrderNumber());
+                break;
+        }
         switch (info.getRefundStatus()){
             case 1:
                 listKey.add("退款时间：");listValue.add(info.getRefundDateTime());
