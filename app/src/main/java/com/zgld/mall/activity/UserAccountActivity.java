@@ -31,8 +31,8 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
     ListView listview;
     MenuAdapter menuAdapter;
     List<Menu> listInfo = new ArrayList<>();
-    Class [] className = new Class[]{InpourRequestActivity.class,BalanceDrawRequestActivity.class,BalanceFreezeDetailsActivity.class};
-    String [] names = new String[]{"收入明细","提现明细","冻结明细"};
+    Class [] className = new Class[]{InpourRequestActivity.class,BalanceDrawRequestActivity.class,BalanceFreezeDetailsActivity.class,PointDetailsActivity.class};
+    String [] names = new String[]{"收入明细","提现明细","冻结明细","积分明细"};
     View recharge;
     @Override
     public void handleMsg(Message msg) {
