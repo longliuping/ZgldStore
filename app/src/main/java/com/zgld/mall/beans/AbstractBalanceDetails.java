@@ -9,8 +9,7 @@ import java.util.Date;
  */
 
 public abstract class AbstractBalanceDetails implements java.io.Serializable {
-
-	// Fields
+// Fields
 
 	private Integer balanceId;
 	private Integer userId;
@@ -22,25 +21,18 @@ public abstract class AbstractBalanceDetails implements java.io.Serializable {
 	private Integer payer;
 	private Integer payee;
 	private String remark;
-
+	private Integer payTypeId;// 支付类型
+	private String payTradeNo;// 支付交易号
+	private String payDateTime;// 交易付款时间
+	private Double payTotalFee;//  交易付款金额
+	private String buyerId;// 买家用户ID(支付宝ID)
+	private String buyerAccount;// 买家账号(支付宝账号)
 	// Constructors
 
 	/** default constructor */
 	public AbstractBalanceDetails() {
 	}
 
-	/** full constructor */
-	public AbstractBalanceDetails(Integer userId, String tradeDate, String income, Double expenses, Double reduced, Double balance, Integer payer, Integer payee, String remark) {
-		this.userId = userId;
-		this.tradeDate = tradeDate;
-		this.income = income;
-		this.expenses = expenses;
-		this.reduced = reduced;
-		this.balance = balance;
-		this.payer = payer;
-		this.payee = payee;
-		this.remark = remark;
-	}
 
 	// Property accessors
 
@@ -122,6 +114,66 @@ public abstract class AbstractBalanceDetails implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+
+	public Integer getPayTypeId() {
+		return payTypeId;
+	}
+
+
+	public void setPayTypeId(Integer payTypeId) {
+		this.payTypeId = payTypeId;
+	}
+
+
+	public String getPayTradeNo() {
+		return payTradeNo;
+	}
+
+
+	public void setPayTradeNo(String payTradeNo) {
+		this.payTradeNo = payTradeNo;
+	}
+
+
+	public String getPayDateTime() {
+		return payDateTime;
+	}
+
+
+	public void setPayDateTime(String payDateTime) {
+		this.payDateTime = payDateTime;
+	}
+
+
+	public Double getPayTotalFee() {
+		return payTotalFee;
+	}
+
+
+	public void setPayTotalFee(Double payTotalFee) {
+		this.payTotalFee = payTotalFee;
+	}
+
+
+	public String getBuyerId() {
+		return buyerId;
+	}
+
+
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId;
+	}
+
+
+	public String getBuyerAccount() {
+		return buyerAccount;
+	}
+
+
+	public void setBuyerAccount(String buyerAccount) {
+		this.buyerAccount = buyerAccount;
 	}
 
 }
