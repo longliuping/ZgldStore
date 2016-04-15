@@ -136,7 +136,6 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                        BroadcastUtils.sendCarProduct(this);
                        setResult(RESULT_OK);
                        Integer orderId = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getInt("orderId");
-                       Toast.makeText(this, orderId, Toast.LENGTH_LONG).show();
                        new OrderPay().pay(orderId, this, new OrderPay.OrderPayListener() {
                            @Override
                            public void onCompelete(Message msg) {
