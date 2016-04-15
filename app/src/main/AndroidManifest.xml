@@ -131,9 +131,9 @@
         <activity android:name=".activity.HotSupplierActivity" />
         <activity android:name=".activity.UpdateUserEmailActivity" />
         <activity android:name=".activity.UserAccountActivity" />
-        <activity android:name=".activity.RechargeDetailsActivity" />
-        <activity android:name=".activity.PresentDetailActivity" />
-        <activity android:name=".activity.FreezeDetailsActivity" />
+        <activity android:name=".activity.InpourRequestActivity" />
+        <activity android:name=".activity.BalanceDrawRequestActivity" />
+        <activity android:name=".activity.BalanceFreezeDetailsActivity" />
         <!-- alipay sdk begin -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -148,7 +148,6 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!-- alipay sdk end -->
-        <activity android:name=".activity.BalanceDrawRequestActivity"></activity>
     </application>
 
 </manifest>

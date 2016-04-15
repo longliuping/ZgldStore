@@ -1,6 +1,5 @@
 package com.zgld.mall.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -18,7 +17,6 @@ import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.alipay.AsyncAlipay;
 import com.zgld.mall.alipay.PayResult;
-import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.YAccount;
 
 import java.io.Serializable;
@@ -33,8 +31,8 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
     ListView listview;
     MenuAdapter menuAdapter;
     List<Menu> listInfo = new ArrayList<>();
-    Class [] className = new Class[]{RechargeDetailsActivity.class,PresentDetailActivity.class,FreezeDetailsActivity.class};
-    String [] names = new String[]{"充值明细","提现明细","冻结明细"};
+    Class [] className = new Class[]{InpourRequestActivity.class,BalanceDrawRequestActivity.class,BalanceFreezeDetailsActivity.class};
+    String [] names = new String[]{"收入明细","提现明细","冻结明细"};
     View recharge;
     @Override
     public void handleMsg(Message msg) {

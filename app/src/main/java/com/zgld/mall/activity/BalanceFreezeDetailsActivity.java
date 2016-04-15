@@ -10,8 +10,10 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
-import com.zgld.mall.adapter.BalanceDrawRequestAdapter;
-import com.zgld.mall.beans.BalanceDrawRequest;
+import com.zgld.mall.adapter.BalanceFreezeDetailsAdapter;
+import com.zgld.mall.adapter.InpourRequestAdapter;
+import com.zgld.mall.beans.BalanceFreezeDetails;
+import com.zgld.mall.beans.InpourRequest;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONArray;
@@ -22,16 +24,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PresentDetailActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2{
+public class BalanceFreezeDetailsActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2{
     PullToRefreshListView listview;
     int pageNum = 1;
-    List<BalanceDrawRequest> listInfo = new ArrayList<>();
-    BalanceDrawRequestAdapter infoAdapter;
+    List<BalanceFreezeDetails> listInfo = new ArrayList<>();
+    BalanceFreezeDetailsAdapter infoAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStyle();
-        setContentView(R.layout.activity_present_detail);
+        setContentView(R.layout.activity_balance_freeze_details);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +62,10 @@ public class PresentDetailActivity extends BaseActivity implements PullToRefresh
                     case 201:
                         JSONArray jsonArray = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
                         Gson gson = new Gson();
-                        List<BalanceDrawRequest>listObj = gson.fromJson(jsonArray.toString(),new TypeToken<List<BalanceDrawRequest>>(){}.getType());
+                        List<BalanceFreezeDetails>listObj = gson.fromJson(jsonArray.toString(),new TypeToken<List<BalanceFreezeDetails>>(){}.getType());
                         if(pageNum==1){
                             listInfo = new ArrayList<>();
-                            infoAdapter = new BalanceDrawRequestAdapter(this,listInfo);
+                            infoAdapter = new BalanceFreezeDetailsAdapter(this,listInfo);
                             listview.setAdapter(infoAdapter);
                         }
                         listInfo.addAll(listObj);
@@ -82,7 +84,7 @@ public class PresentDetailActivity extends BaseActivity implements PullToRefresh
         Map<String,String> m = new HashMap<>();
         m.put("pageSize",20+"");
         m.put("pageNum",pageNum+"");
-        getData(201, "account/find_balance_draw_request.html", m,null);
+        getData(201, "account/find_balance_freeze_details.html", m,null);
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {

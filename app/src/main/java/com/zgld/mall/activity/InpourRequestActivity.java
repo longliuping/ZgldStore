@@ -11,7 +11,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.adapter.BalanceDrawRequestAdapter;
-import com.zgld.mall.beans.BalanceDrawRequest;
+import com.zgld.mall.adapter.InpourRequestAdapter;
+import com.zgld.mall.beans.InpourRequest;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONArray;
@@ -22,16 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BalanceDrawRequestActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2{
+public class InpourRequestActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2{
     PullToRefreshListView listview;
     int pageNum = 1;
-    List<BalanceDrawRequest> listInfo = new ArrayList<>();
-    BalanceDrawRequestAdapter infoAdapter;
+    List<InpourRequest> listInfo = new ArrayList<>();
+    InpourRequestAdapter infoAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initStyle();
-        setContentView(R.layout.activity_balance_draw_request);
+        setContentView(R.layout.activity_inpour_request);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +51,6 @@ public class BalanceDrawRequestActivity extends BaseActivity implements PullToRe
         listview.setOnRefreshListener(this);
         listview.setMode(PullToRefreshBase.Mode.BOTH);
         initData();
-
     }
     @Override
     public void handleMsg(Message msg) {
@@ -61,10 +61,10 @@ public class BalanceDrawRequestActivity extends BaseActivity implements PullToRe
                     case 201:
                         JSONArray jsonArray = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
                         Gson gson = new Gson();
-                        List<BalanceDrawRequest>listObj = gson.fromJson(jsonArray.toString(),new TypeToken<List<BalanceDrawRequest>>(){}.getType());
+                        List<InpourRequest>listObj = gson.fromJson(jsonArray.toString(),new TypeToken<List<InpourRequest>>(){}.getType());
                         if(pageNum==1){
                             listInfo = new ArrayList<>();
-                            infoAdapter = new BalanceDrawRequestAdapter(this,listInfo);
+                            infoAdapter = new InpourRequestAdapter(this,listInfo);
                             listview.setAdapter(infoAdapter);
                         }
                         listInfo.addAll(listObj);
@@ -83,7 +83,7 @@ public class BalanceDrawRequestActivity extends BaseActivity implements PullToRe
         Map<String,String> m = new HashMap<>();
         m.put("pageSize",20+"");
         m.put("pageNum",pageNum+"");
-        getData(201, "account/find_balance_draw_request.html", m,null);
+        getData(201, "account/find_inpour_request.html", m,null);
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {
