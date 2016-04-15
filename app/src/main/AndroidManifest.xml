@@ -148,7 +148,9 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- alipay sdk end -->
-        <activity android:name=".activity.PointDetailsActivity"></activity>
+        <activity android:name=".activity.PointDetailsActivity" />
+        <activity android:name=".activity.UserWithdrawActivity" />
+        <activity android:name=".activity.UserRechargeActivity"></activity>
     </application>
 
 </manifest>

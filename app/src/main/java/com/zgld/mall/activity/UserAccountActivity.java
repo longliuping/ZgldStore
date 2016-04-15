@@ -34,6 +34,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
     Class [] className = new Class[]{InpourRequestActivity.class,BalanceDrawRequestActivity.class,BalanceFreezeDetailsActivity.class,PointDetailsActivity.class};
     String [] names = new String[]{"收入明细","提现明细","冻结明细","积分明细"};
     View recharge;
+    View withdraw;
     @Override
     public void handleMsg(Message msg) {
 
@@ -72,6 +73,8 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         menuAdapter.notifyDataSetChanged();
         recharge = findViewById(R.id.recharge);
         recharge.setOnClickListener(this);
+        withdraw = findViewById(R.id.withdraw);
+        withdraw.setOnClickListener(this);
     }
 
     @Override
@@ -83,12 +86,27 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()){
             case R.id.recharge:
-                pay();
+                intent.setClass(this,UserRechargeActivity.class);
+                startActivityForResult(intent, 200);
+                break;
+            case R.id.withdraw:
+                intent.setClass(this,UserWithdrawActivity.class);
+                startActivityForResult(intent, 200);
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==200){
+            finish();
+        }
+    }
+
     private void pay(){
         new AsyncAlipay(this, new AsyncAlipay.AsyncAlipayListener() {
             public static final String RSA_PUBLIC = "";
