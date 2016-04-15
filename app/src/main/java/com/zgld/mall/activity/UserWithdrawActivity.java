@@ -41,7 +41,8 @@ public class UserWithdrawActivity extends BaseActivity {
                     Toast.makeText(UserWithdrawActivity.this,"请收入金额!",Toast.LENGTH_LONG).show();
                     return;
                 }
-                getData(201,"account/apply_withdrawal.html",m,null);
+                m.put("amount",number.getText().toString());
+                getData(201, "account/user_apply_withdrawal.html", m,null);
             }
         });
     }
