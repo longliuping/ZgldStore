@@ -20,7 +20,7 @@ import java.util.List;
 public class Contents {
     public static final String BASE_URL = "http://115.28.20.167:8090/webapi/json/";
 //    public static final String BASE_URL = "http://192.168.1.152:8080/ZgldStoreApi/json/";
-    public static final String BASE_IMAGE_PATH = "http://115.28.20.167:8090/webapi/";
+    public static final String BASE_IMAGE_PATH = "http://115.28.20.167/";
     public static final String PAGESIZE = "pageSize";
     public static final String PAGENUM = "pageNum";
     public static final String TOKEN = "token";
