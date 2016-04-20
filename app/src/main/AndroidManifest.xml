@@ -150,7 +150,8 @@
         <!-- alipay sdk end -->
         <activity android:name=".activity.PointDetailsActivity" />
         <activity android:name=".activity.UserWithdrawActivity" />
-        <activity android:name=".activity.UserRechargeActivity"></activity>
+        <activity android:name=".activity.UserRechargeActivity" />
+        <activity android:name=".activity.OfflinePaymentActivity"></activity>
     </application>
 
 </manifest>

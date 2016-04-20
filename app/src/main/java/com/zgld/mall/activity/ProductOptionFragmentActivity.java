@@ -44,7 +44,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
     private TextView title;
     private Intent intent;
     private YShop info = new YShop();
-    Button correlation_add;
+    Button offline_payment;
     TextView product_menu_1, product_menu_2, product_menu_3, product_menu_4;
 
     protected int mCurrentTab = 0;
@@ -81,8 +81,8 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
         title = (TextView) findViewById(R.id.title);
         title.setText(getString(R.string.title_parameter_page));
         title.setTextSize(18);
-        correlation_add = (Button) findViewById(R.id.correlation_add);
-        correlation_add.setOnClickListener(this);
+        offline_payment = (Button) findViewById(R.id.offline_payment);
+        offline_payment.setOnClickListener(this);
     }
 
     private void initFragment() {
@@ -97,7 +97,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
             mCurrentTab = intent.getIntExtra(Contents.POSITION, mCurrentTab);
         }
         Bundle bundle = new Bundle();
-        bundle.putSerializable("info",info);
+        bundle.putSerializable(Contents.INFO,info);
         myAdapter = new FragmentPagerAdp(this, getSupportFragmentManager(), mTabs,bundle);
 
         mPager.setAdapter(myAdapter);
@@ -215,7 +215,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
             case R.id.back:
                 finish();
                 break;
-            case R.id.correlation_add:
+            case R.id.offline_payment:
                 break;
 
         }

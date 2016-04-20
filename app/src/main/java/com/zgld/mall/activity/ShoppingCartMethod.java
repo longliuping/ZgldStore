@@ -157,6 +157,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	@Override
 	public void onCompelete(Message msg) {
 		try{
+			listview.onRefreshComplete();
 			handler.sendMessage(msg);
 		}catch (Exception e){
 			e.printStackTrace();
@@ -170,7 +171,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	@Override
 	public void onException(String exception) {
 		try {
-
+			listview.onRefreshComplete();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

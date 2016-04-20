@@ -19,6 +19,7 @@ import com.zgld.mall.SysApplication;
 import com.zgld.mall.adapter.HomeProductAdapter;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupperProductActivity extends BaseActivity implements AdapterView.OnItemClickListener,PullToRefreshBase.OnRefreshListener2{
-    Supplier info = null;
+    YShop info = null;
     GridView gridview;
     HomeProductAdapter infoAdapter;
     List<Products> listInfo = new ArrayList<>();
@@ -46,19 +47,19 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
                 ;
             }
         });
-        info = (Supplier) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (YShop) this.getIntent().getSerializableExtra(Contents.INFO);
         if(info==null){
             finish();
             return;
         }
         TextView title = (TextView) findViewById(R.id.title_center);
-        title.setText(info.getSupplierName()+"");
+        title.setText("商家店铺");
         ImageView head = (ImageView) findViewById(R.id.head);
-        SysApplication.DisplayUserImage(info.getSupplierUrl1(), head);
+//        SysApplication.DisplayUserImage(info., head);
         TextView name = (TextView) findViewById(R.id.name);
-        name.setText("商家名称:"+info.getSupplierName());
+        name.setText("商家");
         TextView cdk_number = (TextView) findViewById(R.id.cdk_number);
-        cdk_number.setText("商家店铺号:"+info.getUserId());
+        cdk_number.setText(info.getShopAddress());
         gridview = (GridView) findViewById(R.id.gridview);
         gridview.setOnItemClickListener(this);
         scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);

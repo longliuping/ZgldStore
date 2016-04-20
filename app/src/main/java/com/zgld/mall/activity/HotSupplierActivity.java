@@ -42,7 +42,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class HotSupplierActivity extends BaseActivity implements AdapterView.OnItemSelectedListener,PullToRefreshBase.OnRefreshListener2 ,AdapterView.OnItemClickListener{
-    Categories info = null;
+    HotCategory info = null;
 
     Province province;
     NiceSpinner niceSpinnerProvince;
@@ -72,13 +72,13 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
                 finish();
             }
         });
-        info = (Categories) this.getIntent().getSerializableExtra(Contents.INFO);
+        info = (HotCategory) this.getIntent().getSerializableExtra(Contents.INFO);
         if(info==null){
             finish();
             return;
         }
         TextView title = (TextView) findViewById(R.id.title_center);
-        title.setText(info.getName());
+        title.setText(info.getHotname());
         try {
             InputStream inStream = this.getResources().getAssets().open("address.xml");
             SAXParserFactory spf = SAXParserFactory.newInstance();// 创建解析器
@@ -178,7 +178,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,18+"");
         m.put("areaid",areaid+"");
-        m.put("hotid",info.getCategoryId()+"");
+        m.put("hotid",info.getHotid()+"");
         getData( 201, "supplier/hot_area_supplier.html", m, null);
     }
     @Override

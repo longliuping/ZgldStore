@@ -53,7 +53,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     // product detail
     TextView item_title, item_sale_price,item_market_price;
 
-    Button add_car, cart, correlation_add;
+    Button add_car, cart, offline_payment;
     PublishSelectPicPopupWindow menuWindow;
     ImageView item_user_head;
     TextView item_user_name;
@@ -147,8 +147,8 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
         add_car.setOnClickListener(this);
         cart = (Button) findViewById(R.id.cart);
         cart.setOnClickListener(this);
-        correlation_add = (Button) findViewById(R.id.correlation_add);
-        correlation_add.setOnClickListener(this);
+        offline_payment = (Button) findViewById(R.id.offline_payment);
+        offline_payment.setOnClickListener(this);
         findViewById(R.id.item_product_param).setOnClickListener(this);
         findViewById(R.id.product_details).setOnClickListener(this);
         findViewById(R.id.product_evaluation).setOnClickListener(this);
@@ -159,7 +159,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     }
 
     private void initBData() {
-        item_user_name.setText(info.getUserId()+"");
+        item_user_name.setText("商家");
         item_user_shop_address.setText(info.getShopAddress());
         item_title.setText(info.getProducts().getProductName());
         item_sale_price.setText("抢购价："+ PriceUtil.priceY(info.getProducts().getSalePrice()+""));
@@ -208,9 +208,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             case R.id.add_car:
                 showPop();
                 break;
-            case R.id.correlation_add:
-                showPop();
-                break;
+
             case R.id.cart:
                 if (new UserDataShare(this).getUserData() == null) {
                     Contents.loginPage(this,null,200);
@@ -218,6 +216,15 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
 
                 }
                 startActivity(new Intent(this, ShoppingCartActivity.class));
+                break;
+            case R.id.offline_payment:
+                if (new UserDataShare(this).getUserData() == null) {
+                    Contents.loginPage(this,null,200);
+                    return;
+                }
+                intent.setClass(this,OfflinePaymentActivity.class);
+                intent.putExtra(Contents.INFO,info);
+                startActivity(intent);
                 break;
             case R.id.back:
                 finish();
