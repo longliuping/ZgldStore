@@ -169,7 +169,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
 
     private void initData() {
         // 产品详细
-        getData( 205, "product/product_detail.html?id=" + productId, null,
+        getData(ProductDetailActivity.this, 205, "product/product_detail.html?id=" + productId, null,
                 null);
     }
 
@@ -409,7 +409,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             m.put("skuId", hishopSkus.getSku()+"");
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
-            getData(207, "car/add_product_car.html", m, null
+            getData(ProductDetailActivity.this,207, "car/add_product_car.html", m, null
                     );
         }else{
             Contents.loginPage(this,null,200);

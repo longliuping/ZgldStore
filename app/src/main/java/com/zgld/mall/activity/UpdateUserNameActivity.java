@@ -78,7 +78,7 @@ public class UpdateUserNameActivity extends BaseActivity implements View.OnClick
                 }else{
                     Map<String,String> m = new HashMap<>();
                     m.put("userinfo.email",name.getText().toString());
-                    getData(201,"user/update_user_password.html",m,null);
+                    getData(UpdateUserNameActivity.this,201,"user/update_user_password.html",m,null);
                 }
                 break;
         }

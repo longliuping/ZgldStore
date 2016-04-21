@@ -219,7 +219,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
 //                m.put("shippingId", addressInfo.getAddressId()+"");
                 m.put("skuId", skuId.toString());
                 m.put("skuNumber", nums.toString());
-                getData( 205, "order/submit_order.html", m, null);
+                getData(OKOrderActivity.this,205, "order/submit_order.html", m, null);
                 break;
         }
     }

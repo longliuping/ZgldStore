@@ -80,7 +80,7 @@ public class UpdateUserEmailActivity extends BaseActivity implements View.OnClic
                 }else{
                     Map<String,String> m = new HashMap<>();
                     m.put("userinfo.accountEmail",name.getText().toString());
-                    getData(201,"user/update_user_email.html",m,null);
+                    getData(UpdateUserEmailActivity.this,201,"user/update_user_email.html",m,null);
                 }
                 break;
         }

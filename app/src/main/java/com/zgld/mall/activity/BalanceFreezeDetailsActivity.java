@@ -84,7 +84,7 @@ public class BalanceFreezeDetailsActivity extends BaseActivity implements PullTo
         Map<String,String> m = new HashMap<>();
         m.put("pageSize",20+"");
         m.put("pageNum",pageNum+"");
-        getData(201, "account/find_balance_freeze_details.html", m,null);
+        getData(BalanceFreezeDetailsActivity.this,201, "account/find_balance_freeze_details.html", m,null);
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {

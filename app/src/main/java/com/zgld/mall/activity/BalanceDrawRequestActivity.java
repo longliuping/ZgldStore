@@ -83,7 +83,7 @@ public class BalanceDrawRequestActivity extends BaseActivity implements PullToRe
         Map<String,String> m = new HashMap<>();
         m.put("pageSize",20+"");
         m.put("pageNum",pageNum+"");
-        getData(201, "account/find_balance_draw_request.html", m,null);
+        getData(BalanceDrawRequestActivity.this,201, "account/find_balance_draw_request.html", m,null);
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {

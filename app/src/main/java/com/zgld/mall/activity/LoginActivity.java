@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
     {
         if(et_user_name.getText()==null || et_user_name.getText().toString().isEmpty())
         {
-            Toast.makeText(this,"用户名不能为空!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,"用户名不能为空!",Toast.LENGTH_SHORT).show();
         }else
         if(et_user_password.getText()==null || et_user_password.getText().toString().isEmpty())
         {
@@ -100,14 +100,14 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
             m.put("name",et_user_name.getText().toString());
             m.put("password",et_user_password.getText().toString());
             m.put("id","1");
-            getData(201, "user/user_login.html", m, "登录...");
+            getData(LoginActivity.this,201, "user/user_login.html", m, "登录...");
         }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
             if(requestCode==200){
-                finish();
+//                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

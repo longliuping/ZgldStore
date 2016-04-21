@@ -155,7 +155,7 @@ County county;
                 }
                 m.put("shippingRegion", address.getText().toString());
                 m.put("shippingId", info.getAddressId() + "");
-                getData( 202, "addresses/update_user_shipping_addresses.html", m, null);
+                getData(UpdateUserAddressActivity.this, 202, "addresses/update_user_shipping_addresses.html", m, null);
                 break;
         }
     }

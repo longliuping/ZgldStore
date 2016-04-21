@@ -137,7 +137,7 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
     void initData() {
         Map<String,String> m = new HashMap<>();
         YAccount user =new UserDataShare(this).getUserData();
-        getData(201, "addresses/user_shipping_addresses.html", m, null);
+        getData(AddressManagerActivity.this,201, "addresses/user_shipping_addresses.html", m, null);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class AddressManagerActivity extends BaseActivity implements OnItemClickL
                         dialog.dismiss();
                         Map<String,String> m = new HashMap<>();
                         m.put("address.addressId",listInfo.get(deletePosition).getAddressId()+"");
-                        getData(202, "addresses/delete_user_shipping_addresses.html", m, null);
+                        getData(AddressManagerActivity.this,202, "addresses/delete_user_shipping_addresses.html", m, null);
                     }
 
                     @Override

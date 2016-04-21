@@ -41,7 +41,7 @@ public class UserRechargeActivity extends BaseActivity {
                     return;
                 }
                 m.put("amount",number.getText().toString());
-                getData(201, "account/user_recharge.html", m, null);
+                getData(UserRechargeActivity.this,201, "account/user_recharge.html", m, null);
             }
         });
     }

@@ -2,6 +2,7 @@ package com.zgld.mall.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -104,22 +105,27 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
     }
     long time = 0;
     /**
+     * @param context
      * @param tag  请求标识
      * @param url  请求地址
      * @param m  请求参数
      * @param title  请求过程中对话框的标题
      * @return
      */
-    public RequestQueue getData(int tag, String url, Map m, String title) {
+    public RequestQueue getData(Context context,int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
             if (title!=null && title.length()>2) {
                 if (confirmDialog == null) {
-                    confirmDialog = new ConfirmDialog(this, title);
+                    confirmDialog = new ConfirmDialog(context, title);
                 }
                 if (confirmDialog.isShowing()) {
                     confirmDialog.dismiss();
                 }
-                confirmDialog.show();
+                try{
+                    confirmDialog.show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             return AsyncGameRunner.request(tag,url, this, getApplicationContext(), m,title);
         } else {

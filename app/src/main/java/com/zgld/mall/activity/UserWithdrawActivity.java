@@ -42,7 +42,7 @@ public class UserWithdrawActivity extends BaseActivity {
                     return;
                 }
                 m.put("amount",number.getText().toString());
-                getData(201, "account/user_apply_withdrawal.html", m,null);
+                getData(UserWithdrawActivity.this,201, "account/user_apply_withdrawal.html", m,null);
             }
         });
     }

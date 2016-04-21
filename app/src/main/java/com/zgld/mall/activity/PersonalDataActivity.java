@@ -96,7 +96,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
         logout.setVisibility(View.VISIBLE);
         m.put(Contents.TOKEN,user.getUsers().getAppUserToken());
         m.put(Contents.USERID, user.getUsers().getUserId() + "");
-        getData( 201, "user/userinfo.html", m, null);
+        getData(PersonalDataActivity.this,201, "user/userinfo.html", m, null);
         initData();
     }
 
@@ -152,7 +152,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
         Bitmap bitmap = extras.getParcelable("data");
         String result = BitmapUtil.bitmapToBase64(bitmap);
         m.put("userinfo.accountHead",result);
-        getData(201, "user/update_user_head.html",m,null);
+        getData(PersonalDataActivity.this,201, "user/update_user_head.html",m,null);
     }
 
     void initData() {

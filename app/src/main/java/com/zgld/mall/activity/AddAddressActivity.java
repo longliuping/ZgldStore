@@ -142,7 +142,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener 
                 } else {
                     m.put("address.regionId", county.getId() + "");
                 }
-                getData(202, "addresses/add_user_shipping_addresses.html", m, null);
+                getData(AddAddressActivity.this,202, "addresses/add_user_shipping_addresses.html", m, null);
                 break;
         }
     }

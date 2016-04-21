@@ -71,7 +71,7 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
         initData();
     }
     void initData(){
-        getData( 201, "supplier/supplier_product.html?id="+info.getUserId()+"&pageSize=18&pageNum="+pageNum, null, null);
+        getData(SupperProductActivity.this, 201, "supplier/supplier_product.html?id="+info.getUserId()+"&pageSize=18&pageNum="+pageNum, null, null);
     }
     @Override
     public void handleMsg(Message msg) {

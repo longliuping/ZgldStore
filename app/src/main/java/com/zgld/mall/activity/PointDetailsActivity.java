@@ -86,7 +86,7 @@ public class PointDetailsActivity extends BaseActivity implements PullToRefreshB
         Map<String,String> m = new HashMap<>();
         m.put("pageSize",20+"");
         m.put("pageNum",pageNum+"");
-        getData(201, "account/find_point_details.html", m,null);
+        getData(PointDetailsActivity.this,201, "account/find_point_details.html", m,null);
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {

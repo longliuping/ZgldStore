@@ -160,7 +160,7 @@ public class ModifyUserAddressActivity extends BaseActivity implements OnClickLi
                 }
                 m.put("shippingRegion", address.getText().toString());
                 m.put("shippingId", info.getAddressId() + "");
-                getData(202, "User/UserShippingAddressesUpdate", m, null);
+                getData(ModifyUserAddressActivity.this,202, "User/UserShippingAddressesUpdate", m, null);
                 break;
         }
     }

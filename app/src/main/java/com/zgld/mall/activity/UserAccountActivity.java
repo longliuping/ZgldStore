@@ -113,7 +113,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         balance = (TextView) findViewById(R.id.balance);
         balance.setText(PriceUtil.price(users.getUserProfile().getBalance()+""));
         Map<String,String> m = new HashMap<>();
-        getData(209, "user/userinfo.html", m, null);
+        getData(UserAccountActivity.this,209, "user/userinfo.html", m, null);
     }
 
     @Override
