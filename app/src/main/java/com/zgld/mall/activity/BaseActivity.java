@@ -127,7 +127,7 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
                     e.printStackTrace();
                 }
             }
-            return AsyncGameRunner.request(tag,url, this, getApplicationContext(), m,title);
+            return AsyncGameRunner.request(tag,url, this, context, m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

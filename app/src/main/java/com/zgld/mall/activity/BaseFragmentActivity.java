@@ -84,7 +84,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
                 }
                 confirmDialog.show();
             }
-            AsyncGameRunner.request(tag, url, this, this, m,title);
+            AsyncGameRunner.request(tag, url, this, context, m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {
                 time = new Date().getTime();

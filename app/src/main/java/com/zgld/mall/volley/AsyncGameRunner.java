@@ -17,6 +17,7 @@ import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.dialog.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.dialog.CustomDialog;
 
@@ -29,6 +30,7 @@ import java.util.Map;
 
 public class AsyncGameRunner {
 	static CustomDialog dialog = null;
+	public static ConfirmDialog confirmDialog = null;
 	public static RequestQueue request(final int tag, String url, final RequestListenr re, Context context, Map m,String title) {
 		url = Contents.BASE_URL +url;
 		RequestQueue queue = Volley.newRequestQueue(context);
@@ -74,6 +76,9 @@ public class AsyncGameRunner {
 							dialog.show();
 						}
 					}
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
 				}catch (Exception e){
 					e.printStackTrace();
 				}finally {
@@ -85,6 +90,9 @@ public class AsyncGameRunner {
 					data.putString(Contents.DATA,gsonObject.getData().toString());
 					data.putString(Contents.JSON, gsonObject.getJson());
 					msg.setData(data);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
 					re.onCompelete(msg);
 				}
 			}
@@ -151,6 +159,9 @@ public class AsyncGameRunner {
 					data.putString(Contents.DATA, gsonObject.getData().toString());
 					data.putString(Contents.JSON,gsonObject.getJson());
 					msg.setData(data);
+					if (confirmDialog != null && confirmDialog.isShowing()) {
+						confirmDialog.dismiss();
+					}
 					re.onCompelete(msg);
 				}
 			}
@@ -158,6 +169,9 @@ public class AsyncGameRunner {
 
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
+				if (confirmDialog != null && confirmDialog.isShowing()) {
+					confirmDialog.dismiss();
+				}
 				if (arg0.toString() != null && arg0.toString().equals("com.android.volley.ServerError")) {
 					Toast.makeText(context, context.getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
 				} else {
