@@ -59,7 +59,7 @@ public class RegisterActivity extends BaseActivity implements  View.OnClickListe
                         }.getType());
                         new UserDataShare(this).saveLoginInfo(user_name.getText().toString(),user_password.getText().toString());
                         new UserDataShare(this).saveUserData(users);
-                        setResult(RESULT_OK);
+//                        setResult(RESULT_OK);
                         finish();
                     }
                     break;

@@ -162,10 +162,10 @@ public interface BuyersOrdersAdapterListener{
 			String str = "";
 			switch (info.getPaymentStatus()) {
 			case 1:
-				str = "等待发货";
+				str = "待使用";
 				break;
 			case 0:
-				str = "等待付款";
+				str = "待付款";
 				break;
 			}
 			switch (listInfo.get(groupPosition).getRefundStatus()){

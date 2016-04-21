@@ -199,10 +199,10 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                     Contents.loginPage(this,null,200);
                     return;
                 }
-                if (addressInfo == null) {
-                    Toast.makeText(this, "请选择地址", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+//                if (addressInfo == null) {
+//                    Toast.makeText(this, "请选择地址", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
                 Map<String, String> m = new HashMap<String, String>();
                 StringBuffer skuId = new StringBuffer();
                 StringBuffer nums = new StringBuffer();
@@ -216,7 +216,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                 if (!TextUtils.isEmpty(nums)) {
                     nums.deleteCharAt(nums.length() - 1);
                 }
-                m.put("shippingId", addressInfo.getAddressId()+"");
+//                m.put("shippingId", addressInfo.getAddressId()+"");
                 m.put("skuId", skuId.toString());
                 m.put("skuNumber", nums.toString());
                 getData( 205, "order/submit_order.html", m, null);

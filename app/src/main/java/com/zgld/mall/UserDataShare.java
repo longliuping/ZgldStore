@@ -111,7 +111,7 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 		YAccount info = null;
 		if (isLogin()) {
 			info = new YAccount();
-			info.setAccountId(haredPreferences.getInt("userId", 0));
+			info.setAccountId(haredPreferences.getInt("accountId", 0));
 			info.setRoleSetId(haredPreferences.getInt("roleSetId", 0));
 			info.setUnitSetId(haredPreferences.getInt("unitSetId", 0));
 			info.setAccountSex(haredPreferences.getInt("accountSex", 0));
@@ -125,10 +125,11 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 			info.setAccountEmail(haredPreferences.getString("accountEmail", ""));
 			info.setAccountMobile(haredPreferences.getString("accountMobile", ""));
 			info.setAccountIntro(haredPreferences.getString("accountIntro", ""));
+
 			int userId = haredPreferences.getInt("userId", 0);
-			info.setAccountId(userId);
 
 			Users users = new Users();
+			users.setUserId(haredPreferences.getInt("userId", 0));
 			users.setUserAccountStatus(haredPreferences.getInt("userAccountStatus", 0));
 			users.setUserType(haredPreferences.getInt("userType", 3));
 			users.setAppUserToken(haredPreferences.getString("appUserToken", ""));
@@ -142,12 +143,14 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 			profile.setRegionId(haredPreferences.getInt("regionId", 0));
 			profile.setGender(haredPreferences.getInt("gender", 0));
 			profile.setPublicToken(haredPreferences.getString("publicToken", ""));
-			profile.setRealName(haredPreferences.getString("realName",""));
-			profile.setAddress(haredPreferences.getString("address",""));
-			profile.setQq(haredPreferences.getString("qq",""));
-			profile.setMsn(haredPreferences.getString("msn",""));
-			profile.setTelPhone(haredPreferences.getString("telPhone",""));
-			profile.setCellPhone(haredPreferences.getString("cellPhone",""));
+			profile.setRealName(haredPreferences.getString("realName", ""));
+			profile.setAddress(haredPreferences.getString("address", ""));
+			profile.setQq(haredPreferences.getString("qq", ""));
+			profile.setMsn(haredPreferences.getString("msn", ""));
+			profile.setTelPhone(haredPreferences.getString("telPhone", ""));
+			profile.setCellPhone(haredPreferences.getString("cellPhone", ""));
+			profile.setBalance(Double.parseDouble(haredPreferences.getString("balance", "0")));
+			profile.setDeductMoney(Double.parseDouble(haredPreferences.getString("deductMoney", "0")));
 			profile.setUserId(userId);
 			info.setUserProfile(profile);
 //			Contents.setUser(info);
@@ -164,7 +167,7 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 		// 实例化SharedPreferences.Editor对象（第二步）
 		SharedPreferences.Editor editor = haredPreferences.edit();
 		// 用putString的方法保存数据
-		editor.putInt("userId", info.getAccountId());
+		editor.putInt("accountId",info.getAccountId());
 		editor.putInt("roleSetId", info.getRoleSetId());
 		editor.putInt("unitSetId", info.getUnitSetId());
 		editor.putInt("accountSex", info.getAccountSex());
@@ -179,6 +182,7 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 		editor.putString("accountIntro", info.getAccountIntro());
 
 		if(info.getUsers()!=null) {
+			editor.putInt("userId", info.getUsers().getUserId());
 			editor.putInt("userAccountStatus", info.getUsers().getUserAccountStatus());
 			editor.putInt("userType",info.getUsers().getUserType());
 			editor.putString("appUserToken", info.getUsers().getAppUserToken());
@@ -196,6 +200,8 @@ public class UserDataShare implements OnSharedPreferenceChangeListener {
 			editor.putString("msn", info.getUserProfile().getMsn());
 			editor.putString("telPhone", info.getUserProfile().getTelPhone());
 			editor.putString("cellPhone", info.getUserProfile().getCellPhone());
+			editor.putString("balance", info.getUserProfile().getBalance()+"");
+			editor.putString("deductMoney",info.getUserProfile().getDeductMoney()+"");
 		}
 		editor.putBoolean(ISLOGIN, true);
 		// 提交当前数据

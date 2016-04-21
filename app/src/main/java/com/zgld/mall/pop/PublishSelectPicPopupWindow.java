@@ -119,7 +119,7 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 					return;
 				}
 				int number = Integer.parseInt(d_result.getText().toString());
-				if(number>sku.getStock()){
+				if(sku!=null && number>sku.getStock()){
 					Toast.makeText(context, "购买数量不能大于库存数量:"+sku.getStock(), Toast.LENGTH_SHORT).show();
 					return;
 				}

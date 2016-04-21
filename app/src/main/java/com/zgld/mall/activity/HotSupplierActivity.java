@@ -87,38 +87,38 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
             saxParser.parse(inStream, handler);
             province = handler.getProvinces().get(0);
             inStream.close();
+            niceSpinnerProvince = (NiceSpinner) findViewById(R.id.nice_spinner_province);
+            datasetProvince.add(province.getName());
+            niceSpinnerProvince.attachDataSource(datasetProvince);
 
+            niceSpinnerCity = (NiceSpinner) findViewById(R.id.nice_spinner_city);
+            cityList = province.getCitys();
+            for (int i=0;i<province.getCitys().size();i++){
+                datasetCity.add(province.getCitys().get(i).getName());
+            }
+            niceSpinnerCity.attachDataSource(datasetCity);
+            niceSpinnerCity.setOnItemSelectedListener(this);
+
+            niceSpinnerCounty = (NiceSpinner) findViewById(R.id.nice_spinner_county);
+            countyList = cityList.get(0).getCountys();
+            datasetCounty = new LinkedList<>();
+            for (int i=0;i<countyList.size();i++){
+                datasetCounty.add(countyList.get(i).getName());
+            }
+            niceSpinnerCounty.attachDataSource(datasetCounty);
+            niceSpinnerCounty.setOnItemSelectedListener(this);
+            areaid = countyList.get(0).getId();
+            scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);
+            scrollview.setMode(PullToRefreshBase.Mode.BOTH);
+            scrollview.setOnRefreshListener(this);
+            gridview = (GridView) findViewById(R.id.gridview);
+            gridview.setOnItemClickListener(this);
+            initData();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        niceSpinnerProvince = (NiceSpinner) findViewById(R.id.nice_spinner_province);
-        datasetProvince.add(province.getName());
-        niceSpinnerProvince.attachDataSource(datasetProvince);
 
-        niceSpinnerCity = (NiceSpinner) findViewById(R.id.nice_spinner_city);
-        cityList = province.getCitys();
-        for (int i=0;i<province.getCitys().size();i++){
-            datasetCity.add(province.getCitys().get(i).getName());
-        }
-        niceSpinnerCity.attachDataSource(datasetCity);
-        niceSpinnerCity.setOnItemSelectedListener(this);
-
-        niceSpinnerCounty = (NiceSpinner) findViewById(R.id.nice_spinner_county);
-        countyList = cityList.get(0).getCountys();
-        datasetCounty = new LinkedList<>();
-        for (int i=0;i<countyList.size();i++){
-            datasetCounty.add(countyList.get(i).getName());
-        }
-        niceSpinnerCounty.attachDataSource(datasetCounty);
-        niceSpinnerCounty.setOnItemSelectedListener(this);
-        areaid = countyList.get(0).getId();
-        scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);
-        scrollview.setMode(PullToRefreshBase.Mode.BOTH);
-        scrollview.setOnRefreshListener(this);
-        gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setOnItemClickListener(this);
-        initData();
     }
 
     @Override

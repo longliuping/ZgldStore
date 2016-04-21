@@ -13,15 +13,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.alipay.AsyncAlipay;
 import com.zgld.mall.alipay.PayResult;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.utils.Contents;
+import com.zgld.mall.utils.PriceUtil;
+
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户账户
@@ -35,9 +43,34 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
     String [] names = new String[]{"收入明细","提现明细","冻结明细","积分明细"};
     View recharge;
     View withdraw;
+    TextView balance;
     @Override
     public void handleMsg(Message msg) {
-
+        try{
+            String json = msg.getData().getString(Contents.JSON);
+            if (json == null) {
+                return;
+            }
+            switch (msg.what){
+                case 209:
+                    if(msg.getData().getInt(Contents.STATUS)==200){
+                        JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
+                        Gson gson = new Gson();
+                        YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
+                        }.getType());
+                        new UserDataShare(this).saveUserData(user);
+                        Double balanceValue = user.getUserProfile().getBalance();
+                        if(balanceValue!=null && balanceValue>0){
+                            withdraw.setVisibility(View.VISIBLE);
+                        }
+                        balance.setText(PriceUtil.price(balanceValue+""));
+                        setResult(RESULT_OK);
+                    }
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -68,6 +101,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
             info.setId(i);
             listInfo.add(info);
         }
+
         menuAdapter = new MenuAdapter();
         listview.setAdapter(menuAdapter);
         menuAdapter.notifyDataSetChanged();
@@ -75,6 +109,11 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         recharge.setOnClickListener(this);
         withdraw = findViewById(R.id.withdraw);
         withdraw.setOnClickListener(this);
+        withdraw.setVisibility(View.GONE);
+        balance = (TextView) findViewById(R.id.balance);
+        balance.setText(PriceUtil.price(users.getUserProfile().getBalance()+""));
+        Map<String,String> m = new HashMap<>();
+        getData(209, "user/userinfo.html", m, null);
     }
 
     @Override

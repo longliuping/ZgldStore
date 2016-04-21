@@ -33,6 +33,7 @@
                     android:textAlignment="center"
                     android:textStyle="bold"/>
                 <TextView
+                    android:id="@+id/balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1200.00"
@@ -60,7 +61,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:weightSum="2">
+                    >
                     <TextView
                         android:id="@+id/withdraw"
                         android:layout_width="match_parent"
@@ -68,11 +69,14 @@
                         android:text="提现"
                         android:textColor="@color/black"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:layout_weight="1"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/view_default_background"/>
+                        android:background="@color/view_default_background"
+                        android:visibility="gone"
+                        />
                     <TextView
                         android:id="@+id/recharge"
                         android:layout_width="match_parent"
@@ -81,6 +85,7 @@
                         android:textColor="@color/orchid"
                         android:layout_marginLeft="1dp"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <View
