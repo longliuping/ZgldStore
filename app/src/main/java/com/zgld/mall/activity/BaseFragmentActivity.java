@@ -1,5 +1,6 @@
 package com.zgld.mall.activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,7 +73,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
         }
         handler.sendEmptyMessage(Contents.TAG_ERROES);
     }
-    public void getData(int tag, String url, Map m, String title) {
+    public void getData(Context context,int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
             if (title!=null && title.length()>2) {
                 if (confirmDialog == null) {

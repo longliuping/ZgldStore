@@ -278,7 +278,7 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
             m.put("skuId", hishopSkus.getSku()+"");
             m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
-            getData(207, "car/add_product_car.html", m, null
+            getData(ProductOptionFragmentActivity.this,207, "car/add_product_car.html", m, null
                     );
         }else{
             Contents.loginPage(this, null, 200);
