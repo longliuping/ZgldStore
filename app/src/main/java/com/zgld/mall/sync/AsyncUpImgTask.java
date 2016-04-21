@@ -9,7 +9,7 @@ import java.net.URL;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.zgld.mall.utils.ConfirmDialog;
+import com.zgld.mall.dialog.ConfirmDialog;
 
 /**
  * 异步上传图片

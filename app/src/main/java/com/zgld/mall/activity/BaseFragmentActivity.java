@@ -9,8 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.zgld.mall.R;
+import com.zgld.mall.dialog.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.volley.AsyncGameRunner;
 import com.zgld.mall.volley.NetWorkTools;
@@ -23,6 +23,7 @@ import java.util.Map;
  * Created by LongLiuPing on 2016/3/3.阿巴斯
  */
 public abstract class BaseFragmentActivity extends FragmentActivity  implements RequestListenr {
+    public static ConfirmDialog confirmDialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
         Message message = handler.obtainMessage();
         message.what = msg.what;
         message.setData(msg.getData());
+        if (confirmDialog != null && confirmDialog.isShowing()) {
+            confirmDialog.dismiss();
+        }
         handler.sendMessage(message);
     }
 
@@ -63,10 +67,22 @@ public abstract class BaseFragmentActivity extends FragmentActivity  implements 
 
     @Override
     public void onException(String exception) {
+        if (confirmDialog != null && confirmDialog.isShowing()) {
+            confirmDialog.dismiss();
+        }
         handler.sendEmptyMessage(Contents.TAG_ERROES);
     }
     public void getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(getApplicationContext())) {
+            if (title!=null && title.length()>2) {
+                if (confirmDialog == null) {
+                    confirmDialog = new ConfirmDialog(this, title);
+                }
+                if (confirmDialog.isShowing()) {
+                    confirmDialog.dismiss();
+                }
+                confirmDialog.show();
+            }
             AsyncGameRunner.request(tag, url, this, this, m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {

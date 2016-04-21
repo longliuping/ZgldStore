@@ -1,4 +1,4 @@
-package com.zgld.mall.utils;
+package com.zgld.mall.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

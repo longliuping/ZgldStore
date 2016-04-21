@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
@@ -21,13 +20,12 @@ import com.zgld.mall.AppManager;
 import com.zgld.mall.DataCleanManager;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
-import com.zgld.mall.adapter.HotCategoryAdapter;
 import com.zgld.mall.adapter.SettingMenuAdapter;
 import com.zgld.mall.beans.SettingMenu;
 import com.zgld.mall.utils.BroadcastUtils;
-import com.zgld.mall.utils.ConfirmDialog;
+import com.zgld.mall.dialog.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.CustomDialog;
+import com.zgld.mall.dialog.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;

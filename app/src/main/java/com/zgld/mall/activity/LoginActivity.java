@@ -82,24 +82,27 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_button:
-                if(et_user_name.getText()==null || et_user_name.getText().toString().isEmpty())
-                {
-                    Toast.makeText(this,"用户名不能为空!",Toast.LENGTH_SHORT).show();
-                }else
-                if(et_user_password.getText()==null || et_user_password.getText().toString().isEmpty())
-                {
-                    Toast.makeText(this,"密码不能为空!",Toast.LENGTH_SHORT).show();
-                }else{
-                    Map<String,String> m = new HashMap();
-                    m.put("name",et_user_name.getText().toString());
-                    m.put("password",et_user_password.getText().toString());
-                    m.put("id","1");
-                    getData(201, "user/user_login.html", m, null);
-                }
+                login();
                 break;
         }
     }
-
+    void login()
+    {
+        if(et_user_name.getText()==null || et_user_name.getText().toString().isEmpty())
+        {
+            Toast.makeText(this,"用户名不能为空!",Toast.LENGTH_SHORT).show();
+        }else
+        if(et_user_password.getText()==null || et_user_password.getText().toString().isEmpty())
+        {
+            Toast.makeText(this,"密码不能为空!",Toast.LENGTH_SHORT).show();
+        }else{
+            Map<String,String> m = new HashMap();
+            m.put("name",et_user_name.getText().toString());
+            m.put("password",et_user_password.getText().toString());
+            m.put("id","1");
+            getData(201, "user/user_login.html", m, "登录...");
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){

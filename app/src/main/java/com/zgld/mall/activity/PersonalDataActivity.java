@@ -14,20 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.PersonalDataAdapter;
-import com.zgld.mall.beans.AspnetUsers;
 import com.zgld.mall.beans.Personal;
-import com.zgld.mall.beans.ProductImageUpload;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.BitmapUtil;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.CustomDialog;
+import com.zgld.mall.dialog.CustomDialog;
 
 import org.json.JSONObject;
 

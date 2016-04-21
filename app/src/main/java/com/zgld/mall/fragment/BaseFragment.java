@@ -1,7 +1,6 @@
 package com.zgld.mall.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,12 +8,12 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.zgld.mall.R;
+import com.zgld.mall.dialog.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.CustomDialog;
+import com.zgld.mall.dialog.CustomDialog;
 import com.zgld.mall.volley.AsyncGameRunner;
 import com.zgld.mall.volley.NetWorkTools;
 import com.zgld.mall.volley.RequestListenr;
@@ -29,6 +28,7 @@ import java.util.Map;
  */
 public abstract class BaseFragment extends Fragment implements RequestListenr {
     CustomDialog dialog;
+    public static ConfirmDialog confirmDialog = null;
     public Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             handleMsg(msg);
@@ -49,6 +49,9 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
         Message message = handler.obtainMessage();
         message.what = msg.what;
         message.setData(msg.getData());
+        if (confirmDialog != null && confirmDialog.isShowing()) {
+            confirmDialog.dismiss();
+        }
         handler.sendMessage(message);
     }
 
@@ -58,6 +61,10 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
 
     @Override
     public void onException(String exception) {
+
+        if (confirmDialog != null && confirmDialog.isShowing()) {
+            confirmDialog.dismiss();
+        }
         handler.sendEmptyMessage(Contents.TAG_ERROES);
     }
     /**
@@ -70,6 +77,15 @@ public abstract class BaseFragment extends Fragment implements RequestListenr {
      */
     public RequestQueue getData(int tag, String url, Map m, String title) {
         if (NetWorkTools.isHasNet(activity)) {
+            if (title!=null && title.length()>2) {
+                if (confirmDialog == null) {
+                    confirmDialog = new ConfirmDialog(getActivity(), title);
+                }
+                if (confirmDialog.isShowing()) {
+                    confirmDialog.dismiss();
+                }
+                confirmDialog.show();
+            }
             return AsyncGameRunner.request(tag,url, this, getActivity(), m,title);
         } else {
             if (time + 2000 < new Date().getTime()) {

@@ -17,9 +17,8 @@ import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.YAccount;
-import com.zgld.mall.utils.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.CustomDialog;
+import com.zgld.mall.dialog.CustomDialog;
 
 import org.json.JSONObject;
 
@@ -29,19 +28,9 @@ import java.io.FileWriter;
 import java.util.Map;
 
 public class AsyncGameRunner {
-	public static ConfirmDialog confirmDialog = null;
 	static CustomDialog dialog = null;
 	public static RequestQueue request(final int tag, String url, final RequestListenr re, Context context, Map m,String title) {
 		url = Contents.BASE_URL +url;
-		if (title!=null && title.length()>2) {
-			if (confirmDialog == null) {
-				confirmDialog = new ConfirmDialog(context, title);
-			}
-			if (confirmDialog.isShowing()) {
-				confirmDialog.dismiss();
-			}
-			confirmDialog.show();
-		}
 		RequestQueue queue = Volley.newRequestQueue(context);
 		if (m==null) {
 			getReqest(context,tag, url, re, queue);
@@ -97,18 +86,12 @@ public class AsyncGameRunner {
 					data.putString(Contents.JSON, gsonObject.getJson());
 					msg.setData(data);
 					re.onCompelete(msg);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 				}
 			}
 		}, new Response.ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
-				if (confirmDialog != null && confirmDialog.isShowing()) {
-					confirmDialog.dismiss();
-				}
 				re.onException(arg0.toString());
 			}
 		});
@@ -169,18 +152,12 @@ public class AsyncGameRunner {
 					data.putString(Contents.JSON,gsonObject.getJson());
 					msg.setData(data);
 					re.onCompelete(msg);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 				}
 			}
 		}, new Response.ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
-				if (confirmDialog != null && confirmDialog.isShowing()) {
-					confirmDialog.dismiss();
-				}
 				if (arg0.toString() != null && arg0.toString().equals("com.android.volley.ServerError")) {
 					Toast.makeText(context, context.getString(R.string.network_connection_error), Toast.LENGTH_SHORT).show();
 				} else {

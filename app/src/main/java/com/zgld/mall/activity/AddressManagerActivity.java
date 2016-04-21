@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -17,7 +16,7 @@ import com.zgld.mall.adapter.AddressAdapter;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.utils.Contents;
-import com.zgld.mall.utils.CustomDialog;
+import com.zgld.mall.dialog.CustomDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
