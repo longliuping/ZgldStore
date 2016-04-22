@@ -13,6 +13,7 @@ import com.zgld.mall.SysApplication;
 import com.zgld.mall.beans.SupperArea;
 import com.zgld.mall.beans.SupperHot;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ import java.util.List;
  * Created by Administrator on 2016/3/24.
  */
 public class HotSupplierAdapter extends BaseAdapter{
-    List<Supplier> listInfo;
+    List<YShop> listInfo;
     Context context;
-    public HotSupplierAdapter(Context context,List<Supplier> listInfo){
+    public HotSupplierAdapter(Context context,List<YShop> listInfo){
         this.context = context;
         this.listInfo = listInfo;
     }
@@ -57,11 +58,11 @@ public class HotSupplierAdapter extends BaseAdapter{
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        Supplier info = listInfo.get(position);
+        YShop info = listInfo.get(position);
         if(info!=null){
-            vh.item_name.setText(info.getSupplierName());
-            vh.item_detail.setText(info.getSupplierDescribe());
-            SysApplication.DisplayImage(info.getSupplierLogoUrl(),vh.item_image);
+            vh.item_name.setText(info.getShopName());
+            vh.item_detail.setText(info.getShopAddress());
+            SysApplication.DisplayImage(info.getShopImg(),vh.item_image);
         }
         return convertView;
     }

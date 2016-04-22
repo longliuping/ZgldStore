@@ -76,9 +76,6 @@ public class AsyncGameRunner {
 							dialog.show();
 						}
 					}
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 				}catch (Exception e){
 					e.printStackTrace();
 				}finally {
@@ -90,9 +87,6 @@ public class AsyncGameRunner {
 					data.putString(Contents.DATA,gsonObject.getData().toString());
 					data.putString(Contents.JSON, gsonObject.getJson());
 					msg.setData(data);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 					re.onCompelete(msg);
 				}
 			}
@@ -159,9 +153,6 @@ public class AsyncGameRunner {
 					data.putString(Contents.DATA, gsonObject.getData().toString());
 					data.putString(Contents.JSON,gsonObject.getJson());
 					msg.setData(data);
-					if (confirmDialog != null && confirmDialog.isShowing()) {
-						confirmDialog.dismiss();
-					}
 					re.onCompelete(msg);
 				}
 			}

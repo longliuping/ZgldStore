@@ -24,6 +24,7 @@ import com.zgld.mall.beans.Province;
 import com.zgld.mall.beans.SupperArea;
 import com.zgld.mall.beans.SupperHot;
 import com.zgld.mall.beans.Supplier;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.XMLAddressHandler;
 import com.zgld.mall.widget.NiceSpinner;
@@ -60,7 +61,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
     PullToRefreshScrollView scrollview;
     GridView gridview;
     HotSupplierAdapter infoAdapter;
-    List<Supplier> listInfo;
+    List<YShop> listInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +135,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
                             gridview.setAdapter(infoAdapter);
                         }
                         JSONArray jsonArray = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
-                        List<Supplier> supperAreaList = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<Supplier>>(){}.getType());
+                        List<YShop> supperAreaList = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<YShop>>(){}.getType());
                         if(supperAreaList!=null && supperAreaList.size()>0){
                             listInfo.addAll(supperAreaList);
                         }
@@ -178,8 +179,10 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,18+"");
         m.put("areaid",areaid+"");
-        m.put("hotid",info.getHotid()+"");
-        getData(HotSupplierActivity.this, 201, "supplier/hot_area_supplier.html", m, null);
+        if(info!=null) {
+            m.put("hotid", info.getHotid() + "");
+        }
+        getData(HotSupplierActivity.this, 201, "supplier/hot_area_supplier.html", m, "加载中...");
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

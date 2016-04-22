@@ -121,11 +121,7 @@ public abstract class BaseActivity extends Activity  implements RequestListenr {
                 if (confirmDialog.isShowing()) {
                     confirmDialog.dismiss();
                 }
-                try{
-                    confirmDialog.show();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                confirmDialog.show();
             }
             return AsyncGameRunner.request(tag,url, this, context, m,title);
         } else {
