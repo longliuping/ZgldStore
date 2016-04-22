@@ -15,7 +15,7 @@
         android:background="@color/view_default_background">
         <include layout="@layout/include_head"></include>
         <EditText
-            android:id="@+id/et_user_name"
+            android:id="@+id/money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -38,7 +38,7 @@
             android:layout_margin="5dp"
             ripple:rv_centered="true">
             <Button
-                android:id="@+id/login_button"
+                android:id="@+id/pay_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

@@ -216,6 +216,14 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
                 finish();
                 break;
             case R.id.offline_payment:
+                if (new UserDataShare(this).getUserData() == null) {
+                    Contents.loginPage(this,null,200);
+                    return;
+                }
+                intent.putExtra(Contents.SHOPID,info.getShopId());
+                intent.setClass(this,OfflinePaymentActivity.class);
+                intent.putExtra(Contents.INFO,info);
+                startActivity(intent);
                 break;
 
         }

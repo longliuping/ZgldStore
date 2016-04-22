@@ -223,6 +223,7 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
                     Contents.loginPage(this,null,200);
                     return;
                 }
+                intent.putExtra(Contents.SHOPID,info.getShopId());
                 intent.setClass(this,OfflinePaymentActivity.class);
                 intent.putExtra(Contents.INFO,info);
                 startActivity(intent);
