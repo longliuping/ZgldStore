@@ -43,8 +43,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class HotSupplierActivity extends BaseActivity implements AdapterView.OnItemSelectedListener,PullToRefreshBase.OnRefreshListener2 ,AdapterView.OnItemClickListener{
-    HotCategory info = null;
-
     Province province;
     NiceSpinner niceSpinnerProvince;
     List<String> datasetProvince = new LinkedList<>();
@@ -62,6 +60,13 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
     GridView gridview;
     HotSupplierAdapter infoAdapter;
     List<YShop> listInfo;
+    ArrayList<HotCategory> listMenu = new ArrayList<>();
+
+    HotCategory info = null;
+    List<String> datasetHot = new LinkedList<>();
+    NiceSpinner niceSpinnerHot;
+
+    TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +79,13 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
             }
         });
         info = (HotCategory) this.getIntent().getSerializableExtra(Contents.INFO);
-        if(info==null){
+        listMenu = (ArrayList<HotCategory>)this.getIntent().getSerializableExtra(Contents.LISTINIFO);
+        if(info==null || listMenu ==null){
             finish();
             return;
         }
-        TextView title = (TextView) findViewById(R.id.title_center);
+
+        title = (TextView) findViewById(R.id.title_center);
         title.setText(info.getHotname());
         try {
             InputStream inStream = this.getResources().getAssets().open("address.xml");
@@ -88,6 +95,18 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
             saxParser.parse(inStream, handler);
             province = handler.getProvinces().get(0);
             inStream.close();
+            int poid = 0;
+            niceSpinnerHot = (NiceSpinner) findViewById(R.id.nice_spinner_hot);
+            for (int i =0;i<listMenu.size();i++){
+                if(listMenu.get(i).getHotid().equals(info.getHotid())){
+                    poid = i;
+                }
+                datasetHot.add(listMenu.get(i).getHotname());
+            }
+            niceSpinnerHot.attachDataSource(datasetHot);
+            niceSpinnerHot.setSelectedIndex(poid);
+            niceSpinnerHot.setOnItemSelectedListener(this);
+
             niceSpinnerProvince = (NiceSpinner) findViewById(R.id.nice_spinner_province);
             datasetProvince.add(province.getName());
             niceSpinnerProvince.attachDataSource(datasetProvince);
@@ -170,6 +189,12 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
             case R.id.nice_spinner_county:
                 areaid = countyList.get(position).getId();
                 pageNum = 1;
+                initData();
+                break;
+            case R.id.nice_spinner_hot:
+                info = listMenu.get(position);
+                pageNum = 1;
+                title.setText(info.getHotname());
                 initData();
                 break;
         }

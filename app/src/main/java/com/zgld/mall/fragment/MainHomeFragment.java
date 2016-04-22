@@ -42,7 +42,7 @@ public class MainHomeFragment extends BaseFragment {
     MaintypeAdapter infoAdapter;
     HotCategoryAdapter hotCategoryAdapter;
     GridView gridview;
-    List<HotCategory> listMenu = new ArrayList<>();
+    ArrayList<HotCategory> listMenu = new ArrayList<>();
     public MainHomeFragment() {
         // Required empty public constructor
     }
@@ -139,6 +139,7 @@ public class MainHomeFragment extends BaseFragment {
                 Intent intent = new Intent(activity, HotSupplierActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Contents.INFO,listMenu.get(position));
+                bundle.putSerializable(Contents.LISTINIFO,listMenu);
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
             }
