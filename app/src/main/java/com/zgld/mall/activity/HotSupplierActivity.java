@@ -182,7 +182,7 @@ public class HotSupplierActivity extends BaseActivity implements AdapterView.OnI
         if(info!=null) {
             m.put("hotid", info.getHotid() + "");
         }
-        getData(HotSupplierActivity.this, 201, "supplier/hot_area_supplier.html", m, "加载中...");
+        getData(this, 201, "supplier/hot_area_supplier.html", m, null);
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
