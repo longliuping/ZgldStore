@@ -117,7 +117,7 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		if (info != null) {
 
 			if(info.getyShop()!=null){
-				holder.item_car_manufactor_name.setText("金阳大锅酸汤鱼店");
+				holder.item_car_manufactor_name.setText(info.getyShop().getShopName());
 			}
 		}
 		return convertView;

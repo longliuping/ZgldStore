@@ -125,7 +125,9 @@ public class ShoppingCarExpandableListAdapter extends BaseAdapter {
 		}
 		ShoppingCarts info = listInfo.get(position);
 		if (info != null) {
-			holder.item_car_manufactor_name.setText("产品信息");
+			if(info.getyShop()!=null) {
+				holder.item_car_manufactor_name.setText(info.getyShop().getShopName());
+			}
 			holder.item_listview.setAdapter(new ShoppingCarChildAdapter(position,context,listInfo,listener));
 		}
 		return convertView;
