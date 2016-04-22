@@ -15,11 +15,12 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="horizontal"
-           android:weightSum="3">
+           android:weightSum="2">
            <com.zgld.mall.widget.NiceSpinner
                android:id="@+id/nice_spinner_province"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:visibility="gone"
                android:layout_weight="1"/>
            <com.zgld.mall.widget.NiceSpinner
                android:id="@+id/nice_spinner_city"
