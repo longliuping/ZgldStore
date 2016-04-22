@@ -69,6 +69,8 @@
             android:paddingRight="70dp"
             android:visibility="gone"
             android:textColor="#FFFFFF" />
+
+
     </LinearLayout>
 
     <RelativeLayout

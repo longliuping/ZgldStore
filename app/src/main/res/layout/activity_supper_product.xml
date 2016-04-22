@@ -22,41 +22,7 @@
                 android:layout_height="70dp"
                 android:background="#FFFFFF"
                 >
-                <ImageView
-                    android:id="@+id/head"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/default_avatar"
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/head"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="美美"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/cdk_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="1864532145"
-                        android:textColor="#979797" />
-                </LinearLayout>
+                <include layout="@layout/include_product_detail_user"  />
             </RelativeLayout>
             <com.zgld.mall.widget.MyGridView
                 android:id="@+id/gridview"

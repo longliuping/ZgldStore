@@ -62,7 +62,7 @@ public class HomeProductAdapter extends BaseAdapter{
             vh.item_name.setText(info.getProductName());
 //            if(info.getHishopSkus()!=null) {
                 vh.item_sale_price.setVisibility(View.VISIBLE);
-                vh.item_sale_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
+                vh.item_sale_price.setText(PriceUtil.priceY(info.getMarketPrice() + ""));
 //            }else{
 //                vh.item_sale_price.setVisibility(View.GONE);
 //            }

@@ -159,12 +159,13 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     }
 
     private void initBData() {
-        item_user_name.setText("商家");
+        item_user_name.setText(info.getShopName());
         item_user_shop_address.setText(info.getShopAddress());
+        item_user_shop_address.setText(info.getShopAddress());
+        SysApplication.DisplayUserImage(info.getShopImg(), item_user_head);
         item_title.setText(info.getProducts().getProductName());
-        item_sale_price.setText("抢购价："+ PriceUtil.priceY(info.getProducts().getSalePrice()+""));
-        item_market_price.setText("店面价:"+PriceUtil.priceY(info.getProducts().getMarketPrice()+""));
-        SysApplication.DisplayUserImage(info.getShopLicenseImg(), item_user_head);
+        item_sale_price.setText("抢购价："+ PriceUtil.priceY(info.getProducts().getMarketPrice()+""));
+        item_market_price.setText("店面价:" + PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
     }
 
     private void initData() {

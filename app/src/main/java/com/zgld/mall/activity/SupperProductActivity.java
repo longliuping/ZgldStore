@@ -35,6 +35,9 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
     List<Products> listInfo = new ArrayList<>();
     PullToRefreshScrollView scrollview;
     int pageNum = 1;
+    ImageView item_user_head;
+    TextView item_user_name;
+    TextView item_user_shop_address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +57,6 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
         }
         TextView title = (TextView) findViewById(R.id.title_center);
         title.setText("商家店铺");
-        ImageView head = (ImageView) findViewById(R.id.head);
-//        SysApplication.DisplayUserImage(info., head);
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setText("商家");
-        TextView cdk_number = (TextView) findViewById(R.id.cdk_number);
-        cdk_number.setText(info.getShopAddress());
         gridview = (GridView) findViewById(R.id.gridview);
         gridview.setOnItemClickListener(this);
         scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);
@@ -68,10 +65,17 @@ public class SupperProductActivity extends BaseActivity implements AdapterView.O
         scrollview.requestFocus();
         scrollview.setMode(PullToRefreshBase.Mode.BOTH);
         scrollview.setOnRefreshListener(this);
+        item_user_head = (ImageView) findViewById(R.id.item_user_head);
+        item_user_name = (TextView) findViewById(R.id.item_user_name);
+        item_user_shop_address = (TextView) findViewById(R.id.item_user_shop_address);
+        item_user_name.setText(info.getShopName());
+        item_user_shop_address.setText(info.getShopAddress());
+        item_user_shop_address.setText(info.getShopAddress());
+        SysApplication.DisplayUserImage(info.getShopImg(), item_user_head);
         initData();
     }
     void initData(){
-        getData(SupperProductActivity.this, 201, "supplier/supplier_product.html?id="+info.getUserId()+"&pageSize=18&pageNum="+pageNum, null, null);
+        getData(SupperProductActivity.this, 201, "supplier/supplier_product.html?shopId="+info.getShopId()+"&pageSize=18&pageNum="+pageNum, null, null);
     }
     @Override
     public void handleMsg(Message msg) {
