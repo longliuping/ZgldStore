@@ -127,7 +127,7 @@ public class RecommendUser3Fragment extends BaseFragment implements PullToRefres
     }
     private void initData(){
         Map<String,String> m = new HashMap<>();
-        m.put("id",1+"");
+        m.put("id",3+"");
         getData(201, "recommend/recommend_user.html", m, null);
     }
     @Override
