@@ -151,7 +151,8 @@
         <activity android:name=".activity.PointDetailsActivity" />
         <activity android:name=".activity.UserWithdrawActivity" />
         <activity android:name=".activity.UserRechargeActivity" />
-        <activity android:name=".activity.OfflinePaymentActivity"></activity>
+        <activity android:name=".activity.OfflinePaymentActivity" />
+        <activity android:name=".activity.RecommendUserFragmentActivity"></activity>
     </application>
 
 </manifest>
