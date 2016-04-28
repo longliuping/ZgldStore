@@ -54,10 +54,10 @@ public interface BuyersOrdersAdapterListener{
 	boolean display = false;// 处理完成后，是否显示当前item
 	BuyersOrdersAdapterListener listener;
 	Activity activity;
-	public BuyersOrdersAdapter(Activity activity, List<Orders> listInfo,BuyersOrdersAdapterListener listener) {
+	public BuyersOrdersAdapter(Activity activity,Context context, List<Orders> listInfo,BuyersOrdersAdapterListener listener) {
 		this.listInfo = listInfo;
 		this.layoutInflater = LayoutInflater.from(context);
-		this.context = (Context)activity;
+		this.context = context;
 		this.listener = listener;
 		this.activity = activity;
 	}

@@ -109,7 +109,7 @@ public class BuyersOrders3Fragment extends BuyersOrdersBaseFragment implements O
                 case 202:
                     if (pageNum == 1) {
                         listInfo = new ArrayList<Orders>();
-                        infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+                        infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
                         listview.getRefreshableView().setAdapter(infoAdapter);
                     }
                     JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA);
@@ -119,7 +119,7 @@ public class BuyersOrders3Fragment extends BuyersOrdersBaseFragment implements O
                     List<Orders> list = gson.fromJson(jsonArray.toString(), entityType);
                     if (list != null && list.size() > 0) {
                         listInfo.addAll(list);
-                        infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+                        infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
                         listview.getRefreshableView().setAdapter(infoAdapter);
                         int groupCount = listview.getRefreshableView().getCount();
                         for (int i = 0; i < groupCount; i++) {
@@ -226,7 +226,7 @@ public class BuyersOrders3Fragment extends BuyersOrdersBaseFragment implements O
         });
         pageNum = 1;
         listInfo = new ArrayList<Orders>();
-        infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+        infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
         listview.getRefreshableView().setAdapter(infoAdapter);
         infoAdapter.notifyDataSetChanged();
         null_data_default = view.findViewById(R.id.null_data_default);
@@ -242,7 +242,7 @@ public class BuyersOrders3Fragment extends BuyersOrdersBaseFragment implements O
             pageNum = 1;
             initData();
         }else{
-            infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
+            infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
             listview.getRefreshableView().setAdapter(infoAdapter);
             int groupCount = listview.getRefreshableView().getCount();
             for (int i = 0; i < groupCount; i++) {
