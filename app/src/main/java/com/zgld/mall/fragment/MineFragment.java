@@ -22,6 +22,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.activity.BuyersOrdersFragmentActivity;
 import com.zgld.mall.activity.LoginActivity;
 import com.zgld.mall.activity.PersonalDataActivity;
+import com.zgld.mall.activity.RecommendUserFragmentActivity;
 import com.zgld.mall.activity.SettingActivity;
 import com.zgld.mall.activity.UserAccountActivity;
 import com.zgld.mall.beans.AspnetUsers;
@@ -40,8 +41,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener{
-    String menuString[] = {"我的订单","我的账户","设置"};
-    int menuInt[] = {R.drawable.me_order,R.drawable.me_love,R.drawable.me_setting};
+    String menuString[] = {"我的订单","我的账户","我的推荐","设置"};
+    int menuInt[] = {R.drawable.me_order,R.drawable.me_love,R.drawable.me_product,R.drawable.me_setting};
     ListView list_menu;
 
     public MineFragment() {
@@ -103,7 +104,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
                 if(position==1){
                     startActivity(new Intent(getActivity(), UserAccountActivity.class));
                 }
-                if (position == 2) {
+                if(position==2){
+                    startActivity(new Intent(getActivity(), RecommendUserFragmentActivity.class));
+                }
+                if (position == 3) {
                     startActivity(new Intent(getActivity(), SettingActivity.class));
                 }
             }

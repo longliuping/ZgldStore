@@ -1,6 +1,4 @@
 package com.zgld.mall.activity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -9,10 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zgld.mall.R;
-import com.zgld.mall.fragment.BuyersOrders0Fragment;
-import com.zgld.mall.fragment.BuyersOrders1Fragment;
-import com.zgld.mall.fragment.BuyersOrders2Fragment;
-import com.zgld.mall.fragment.BuyersOrders3Fragment;
+import com.zgld.mall.fragment.RecommendUser1Fragment;
+import com.zgld.mall.fragment.RecommendUser2Fragment;
+import com.zgld.mall.fragment.RecommendUser3Fragment;
 import com.zgld.mall.indicator.FragmentPagerAdp;
 import com.zgld.mall.indicator.TabInfoBean;
 import com.zgld.mall.indicator.TitleIndicator;
@@ -22,8 +19,6 @@ import java.util.ArrayList;
 
 public class RecommendUserFragmentActivity extends BaseFragmentActivity  implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    public static final String EXTRA_TAB = "tab";
-    public static final String EXTRA_QUIT = "extra.quit";
     protected int mCurrentTab = 0;
     protected int mLastTab = -1;
     // 存放选项卡信息的列表
@@ -60,16 +55,8 @@ public class RecommendUserFragmentActivity extends BaseFragmentActivity  impleme
     private void initViews() {
         mPager = (ViewPager) findViewById(R.id.pager);
         mIndicator = (TitleIndicator) findViewById(R.id.pagerindicator);
-        // 设置viewpager内部页面之间的间距
-        // mPager.setPageMargin(0);
-        // 这里初始化界面
         mCurrentTab = supplyTabs(mTabs);
-        Intent intent = this.getIntent();
-        if (intent != null) {
-            mCurrentTab = intent.getIntExtra(EXTRA_TAB, mCurrentTab);
-        }
         myAdapter = new FragmentPagerAdp(this, getSupportFragmentManager(), mTabs);
-
         mPager.setAdapter(myAdapter);
         mPager.setOnPageChangeListener(this);
         mIndicator.init(mCurrentTab, mTabs, mPager);
@@ -79,13 +66,10 @@ public class RecommendUserFragmentActivity extends BaseFragmentActivity  impleme
     }
 
     private int supplyTabs(ArrayList<TabInfoBean> mTabs2) {
-        String[] titles = getResources().getStringArray(R.array.title_buyers_orders);
-        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_ONE, titles[0], BuyersOrders0Fragment.class));
-        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_TWO, titles[1], BuyersOrders1Fragment.class));
-        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_THREE, titles[2], BuyersOrders2Fragment.class));
-        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FOUR, titles[3], BuyersOrders3Fragment.class));
-//        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FIVE, titles[4], BuyersOrders4Fragment.class));
-//        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_SIX, titles[5], BuyersOrders5Fragment.class));
+        String[] titles = getResources().getStringArray(R.array.title_recomment_user);
+        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_ONE, titles[0], RecommendUser1Fragment.class));
+        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_TWO, titles[1], RecommendUser2Fragment.class));
+        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_THREE, titles[2], RecommendUser3Fragment.class));
         return Contents.FRAGMENT_ONE;
     }
 

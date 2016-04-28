@@ -17,6 +17,11 @@
         <item>待使用</item>
         <item>待评价</item>
     </string-array>
+    <string-array name="title_recomment_user">
+        <item>一级人脉</item>
+        <item>一级人脉</item>
+        <item>一级人脉</item>
+    </string-array>
     <string-array name="title_seller_orders">
         <item>全部</item>
         <item>待发货</item>
