@@ -35,15 +35,15 @@ public class PayTypePopupWindow extends PopupWindow {
         listview = (ListView) mMenuView.findViewById(R.id.listview);
         infoAdapter = new PayTypeAdapter(context);
         listview.setAdapter(infoAdapter);
-        close = mMenuView.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                dismiss();
-            }
-        });
+//        close = mMenuView.findViewById(R.id.close);
+//        close.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                dismiss();
+//            }
+//        });
         ok = mMenuView.findViewById(R.id.ok);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
