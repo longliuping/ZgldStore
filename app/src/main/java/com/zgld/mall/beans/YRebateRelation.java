@@ -15,5 +15,12 @@ public class YRebateRelation extends AbstractYRebateRelation implements java.io.
 	public YRebateRelation(Integer parentUserId, Integer currentUserId) {
 		super(parentUserId, currentUserId);
 	}
+	YAccount account;
+	public YAccount getAccount() {
+		return account;
+	}
 
+	public void setAccount(YAccount account) {
+		this.account = account;
+	}
 }

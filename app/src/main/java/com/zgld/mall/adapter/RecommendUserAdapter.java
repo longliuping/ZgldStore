@@ -5,12 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.zgld.mall.R;
-import com.zgld.mall.beans.UserShippingAddresses;
+import com.zgld.mall.SysApplication;
 import com.zgld.mall.beans.YRebateRelation;
 
 import java.util.List;
@@ -50,9 +48,8 @@ public class RecommendUserAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        CheckBox item_car_checkbox;
-        TextView name, address;
-        ImageView item_delete, item_edit;
+        TextView item_user_name, item_user_address;
+        ImageView item_user_head;
     }
 
     @Override
@@ -62,13 +59,18 @@ public class RecommendUserAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.item_recommetn_user, null);
+            holder.item_user_name = (TextView) convertView.findViewById(R.id.item_user_name);
+            holder.item_user_address = (TextView) convertView.findViewById(R.id.item_user_address);
+            holder.item_user_head = (ImageView) convertView.findViewById(R.id.item_user_head);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         YRebateRelation info = listInfo.get(position);
         if (info != null) {
-
+            holder.item_user_name.setText(info.getAccount().getAccountName());
+            holder.item_user_address.setText(info.getAccount().getAccountIntro());
+            SysApplication.DisplayUserImage(info.getAccount().getAccountHead(),holder.item_user_head);
         }
         return convertView;
     }

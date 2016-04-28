@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
@@ -15,6 +17,10 @@ import com.zgld.mall.adapter.RecommendUserAdapter;
 import com.zgld.mall.beans.YRebateRelation;
 import com.zgld.mall.utils.Contents;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +43,8 @@ public class RecommendUser3Fragment extends BaseFragment implements PullToRefres
         // Required empty public constructor
     }
     // TODO: Rename and change types and number of parameters
-    public static RecommendUser3Fragment newInstance(String param1, String param2) {
-        RecommendUser3Fragment fragment = new RecommendUser3Fragment();
+    public static RecommendUser1Fragment newInstance(String param1, String param2) {
+        RecommendUser1Fragment fragment = new RecommendUser1Fragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -48,7 +54,34 @@ public class RecommendUser3Fragment extends BaseFragment implements PullToRefres
     public void handleMsg(Message msg) {
         try {
             if(msg.getData().getInt(Contents.STATUS)==200){
-
+                Bundle bundle = msg.getData();
+                String json = "";
+                json = bundle.getString(Contents.JSON);
+                if(bundle.getInt(Contents.STATUS)!=200)
+                {
+                    return;
+                }
+                if (json == null) {
+                    return;
+                }
+                Gson gson = new Gson();
+                Type entityType = null;
+                switch (msg.what) {
+                    case 201:
+                        JSONArray jsonArray = new JSONObject(json).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
+                        listInfo = new ArrayList<YRebateRelation>();
+                        entityType = new TypeToken<List<YRebateRelation>>() {
+                        }.getType();
+                        List<YRebateRelation> list = gson.fromJson(jsonArray.toString(), entityType);
+                        if (list != null) {
+                            listInfo.addAll(list);
+                        }
+                        infoAdapter = new RecommendUserAdapter(activity,listInfo);
+                        listview.setAdapter(infoAdapter);
+                        infoAdapter.notifyDataSetChanged();
+                        pageNum++;
+                        break;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -85,17 +118,17 @@ public class RecommendUser3Fragment extends BaseFragment implements PullToRefres
         listview = (PullToRefreshListView) view.findViewById(R.id.listview);
         listview.setMode(PullToRefreshBase.Mode.BOTH);
         listview.setOnRefreshListener(this);
-        listview.setOnItemClickListener(this);
         pageNum = 1;
-//        listInfo = new ArrayList<Orders>();
-//        infoAdapter = new BuyersOrdersAdapter(activity, listInfo,this);
-//        listview.getRefreshableView().setAdapter(infoAdapter);
-//        infoAdapter.notifyDataSetChanged();
+        listInfo = new ArrayList<YRebateRelation>();
+        infoAdapter = new RecommendUserAdapter(activity, listInfo);
+        listview.getRefreshableView().setAdapter(infoAdapter);
+        infoAdapter.notifyDataSetChanged();
         initData();
     }
-   private void initData(){
-       Map<String,String> m = new HashMap<>();
-       getData(201, "recommend/user_shipping_addresses.html", m, null);
+    private void initData(){
+        Map<String,String> m = new HashMap<>();
+        m.put("id",1+"");
+        getData(201, "recommend/recommend_user.html", m, null);
     }
     @Override
     public void onDetach() {

@@ -19,8 +19,8 @@
     </string-array>
     <string-array name="title_recomment_user">
         <item>一级人脉</item>
-        <item>一级人脉</item>
-        <item>一级人脉</item>
+        <item>二级人脉</item>
+        <item>三级人脉</item>
     </string-array>
     <string-array name="title_seller_orders">
         <item>全部</item>
