@@ -4,16 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,6 +33,8 @@ import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.OrderItems;
 import com.zgld.mall.beans.Orders;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.pop.PayTypePopupWindow;
+import com.zgld.mall.pop.PublishSelectPicPopupWindow;
 import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.dialog.CustomDialog;
@@ -47,11 +53,13 @@ public interface BuyersOrdersAdapterListener{
 	CustomDialog dialog;
 	boolean display = false;// 处理完成后，是否显示当前item
 	BuyersOrdersAdapterListener listener;
-	public BuyersOrdersAdapter(Context context, List<Orders> listInfo,BuyersOrdersAdapterListener listener) {
+	Activity activity;
+	public BuyersOrdersAdapter(Activity activity, List<Orders> listInfo,BuyersOrdersAdapterListener listener) {
 		this.listInfo = listInfo;
 		this.layoutInflater = LayoutInflater.from(context);
-		this.context = context;
+		this.context = (Context)activity;
 		this.listener = listener;
+		this.activity = activity;
 	}
 
 	/**
@@ -248,14 +256,14 @@ public interface BuyersOrdersAdapterListener{
 				holder.item_number_all.setText(num+"");
 				holder.item_postage.setText(PriceUtil.priceY(listInfo.get(groupPosition).getFreight()+""));
 				holder.item_list_price.setText(PriceUtil.priceY(listInfo.get(groupPosition).getOrderTotalPrice()+""));
-
+				final View v = convertView;
 				switch (listInfo.get(groupPosition).getPaymentStatus()) {
 					case 0:
 						holder.item_pay.setVisibility(View.VISIBLE);
 						holder.item_pay.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
-								payOrder(groupPosition,childPosition);
+								payOrder(v,groupPosition,childPosition);
 							}
 						});
 //						holder.item_cancel.setVisibility(View.VISIBLE);
@@ -352,12 +360,36 @@ public interface BuyersOrdersAdapterListener{
 	 * @param groupPosition
 	 * @param childPosition    
 	 */
-	public void payOrder(final int groupPosition, final int childPosition) {
+	PayTypePopupWindow menuWindow;
+	public void payOrder(View view,final int groupPosition, final int childPosition) {
 		final Orders orderInfo = listInfo.get(groupPosition);
-		new OrderPay().pay(orderInfo.getOrderId(), context, new OrderPay.OrderPayListener() {
+//		new OrderPay().pay(orderInfo.getOrderId(), context, new OrderPay.OrderPayListener() {
+//			@Override
+//			public void onCompelete(Message msg) {
+//				listener.update(2, null);
+//			}
+//		});
+		final WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+		lp.alpha = 0.5F; // 0.0-1.0
+		activity.getWindow().setAttributes(lp);
+		// 实例化SelectPicPopupWindow
+		menuWindow = new PayTypePopupWindow(activity, new PayTypePopupWindow.PayTypePopupWindowListener() {
 			@Override
-			public void onCompelete(Message msg) {
-				listener.update(2, null);
+			public void onComplete(Integer position, String str) {
+
+			}
+		});
+		// 显示窗口
+		menuWindow.showAtLocation(view,
+				Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+		menuWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+			@Override
+			public void onDismiss() {
+				// TODO Auto-generated com.android.volley.Request.Method
+				// stub
+				lp.alpha = 1.0F; // 0.0-1.0
+				activity.getWindow().setAttributes(lp);
 			}
 		});
 	}
