@@ -41,7 +41,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener{
-    String menuString[] = {"我的订单","我的账户","我的推荐","设置"};
+    String menuString[] = {"我的订单","我的账户","我推荐的会员","设置"};
     int menuInt[] = {R.drawable.me_order,R.drawable.me_love,R.drawable.me_product,R.drawable.me_setting};
     ListView list_menu;
 
