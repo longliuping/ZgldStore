@@ -98,6 +98,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
         list_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                initData();
                if(position<3){
                    YAccount users = new UserDataShare(activity).getUserData();
                    if(users!=null){
