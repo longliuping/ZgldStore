@@ -40,8 +40,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener, Cu
 	View check_app_update, logout, about, clear, server_center, wechat, update_pwd, message;
 	ListView listview;
 	int types[] = new int[]{1,2,2};
-	String names[] = new String[]{"关于我们","清楚缓存","检查升级"};
-	String values[] = new String[]{"关于我们","清楚缓存","检查升级"};
+	String names[] = new String[]{"关于我们","清除缓存","检查升级"};
+	String values[] = new String[]{"关于我们","清除缓存","检查升级"};
 	Class className[] = new Class[]{AboutActivity.class,null,null};
 	List<SettingMenu> listInfo = new ArrayList<>();
 

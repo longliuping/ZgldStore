@@ -31,9 +31,9 @@ public class MainActivity extends BaseFragmentActivity {
     private static FragmentManager manager;
     private FragmentTabHost fragmentTabHost;
     private LayoutInflater inflater;
-    private Class fragmengArray[] = {MainHomeFragment.class, BbsFragment.class,
+    private Class fragmengArray[] = {MainHomeFragment.class,
             CarFragment.class, MineFragment.class };
-    private int mImageViewArray[] = { R.drawable.tab_homepage, R.drawable.tab_bbs, R.drawable.tab_shop,
+    private int mImageViewArray[] = { R.drawable.tab_homepage, R.drawable.tab_shop,
             R.drawable.tab_mine };
     private String mTextViewArray[];
 
