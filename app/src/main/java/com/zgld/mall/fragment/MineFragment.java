@@ -98,15 +98,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
         list_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    startActivity(new Intent(getActivity(), BuyersOrdersFragmentActivity.class));
-                }
-                if(position==1){
-                    startActivity(new Intent(getActivity(), UserAccountActivity.class));
-                }
-                if(position==2){
-                    startActivity(new Intent(getActivity(), RecommendUserFragmentActivity.class));
-                }
+               if(position<3){
+                   YAccount users = new UserDataShare(activity).getUserData();
+                   if(users!=null){
+                       if (position == 0) {
+                           startActivity(new Intent(getActivity(), BuyersOrdersFragmentActivity.class));
+                       }
+                       if(position==1){
+                           startActivity(new Intent(getActivity(), UserAccountActivity.class));
+                       }
+                       if(position==2){
+                           startActivity(new Intent(getActivity(), RecommendUserFragmentActivity.class));
+                       }
+                   }else{
+                       Intent intent = new Intent();
+                       intent.setClass(getActivity(),LoginActivity.class);
+                       startActivityForResult(intent, 200);
+                   }
+               }
                 if (position == 3) {
                     startActivity(new Intent(getActivity(), SettingActivity.class));
                 }
