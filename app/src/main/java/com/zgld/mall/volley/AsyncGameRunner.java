@@ -18,6 +18,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.YAccount;
 import com.zgld.mall.dialog.ConfirmDialog;
+import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.dialog.CustomDialog;
 
@@ -126,6 +127,7 @@ public class AsyncGameRunner {
 						gsonObject.setStatus(object.getInt(Contents.STATUS));
 						gsonObject.setData(object.getJSONObject(Contents.DATA));
 						if(object.getInt(Contents.STATUS)==201){
+							BroadcastUtils.sendUserLogout(context);
 							dialog = new CustomDialog(context, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
 								@Override
 								public void customDialogClickLeft() {
