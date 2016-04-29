@@ -102,6 +102,11 @@ public class BuyersOrders5Fragment extends BuyersOrdersBaseFragment implements O
             Gson gson = new Gson();
             Type entityType = null;
             JSONArray jsonArray = new JSONArray();
+            if(msg.getData().getInt(Contents.STATUS)==201){
+                activity.setResult(activity.RESULT_OK);
+                activity.finish();
+                Contents.loginPage(activity,null);
+            }
             if(msg.getData().getInt(Contents.STATUS)!=200){
                 return;
             }

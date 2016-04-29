@@ -53,6 +53,11 @@ public class RecommendUser3Fragment extends BaseFragment implements PullToRefres
     @Override
     public void handleMsg(Message msg) {
         try {
+            if(msg.getData().getInt(Contents.STATUS)==201){
+                activity.setResult(activity.RESULT_OK);
+                activity.finish();
+                Contents.loginPage(activity,null);
+            }
             if(msg.getData().getInt(Contents.STATUS)==200){
                 Bundle bundle = msg.getData();
                 String json = "";
