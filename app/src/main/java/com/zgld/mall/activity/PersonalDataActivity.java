@@ -49,6 +49,11 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
             if (json == null) {
                 return;
             }
+            if(msg.getData().getInt(Contents.STATUS)==201){
+                setResult(RESULT_OK);
+                finish();
+                Contents.loginPage(this,null);
+            }
             switch (msg.what) {
                 case 201:
                     if(msg.getData().getInt(Contents.STATUS)==200){

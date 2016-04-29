@@ -44,6 +44,11 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
             if (json == null) {
                 return;
             }
+            if(msg.getData().getInt(Contents.STATUS)==201){
+                setResult(RESULT_OK);
+                finish();
+                Contents.loginPage(this,null);
+            }
             if(msg.getData().getInt(Contents.STATUS)==200) {
                 switch (msg.what){
                     case 209:

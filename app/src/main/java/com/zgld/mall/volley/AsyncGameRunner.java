@@ -61,6 +61,8 @@ public class AsyncGameRunner {
 						gsonObject.setStatus(object.getInt(Contents.STATUS));
 						gsonObject.setData(object.getJSONObject(Contents.DATA));
 						if(object.getInt(Contents.STATUS)==201){
+							BroadcastUtils.sendUserLogout(context);
+							new UserDataShare(context).logout();
 							dialog = new CustomDialog(context, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
 								@Override
 								public void customDialogClickLeft() {
@@ -128,6 +130,7 @@ public class AsyncGameRunner {
 						gsonObject.setData(object.getJSONObject(Contents.DATA));
 						if(object.getInt(Contents.STATUS)==201){
 							BroadcastUtils.sendUserLogout(context);
+							new UserDataShare(context).logout();
 							dialog = new CustomDialog(context, R.style.mystyle, R.layout.customdialog, R.array.title_not_user, new CustomDialog.CustomDialogListener() {
 								@Override
 								public void customDialogClickLeft() {

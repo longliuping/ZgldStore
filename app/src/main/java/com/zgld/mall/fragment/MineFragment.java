@@ -165,8 +165,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
                 startActivityForResult(intent, 200);
                 break;
             case R.id.default_user:
-                intent.setClass(getActivity(),PersonalDataActivity.class);
-                startActivityForResult(intent, 200);
+                YAccount users = new UserDataShare(activity).getUserData();
+                if(users!=null) {
+                    intent.setClass(getActivity(), PersonalDataActivity.class);
+                    startActivityForResult(intent, 200);
+                }
                 break;
         }
     }

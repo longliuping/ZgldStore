@@ -60,7 +60,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	protected ConfirmDialog confirmDialog = null;
 	CustomDialog dialog;
 	Activity activity;
-	List<ShoppingCarts> listInfo;
+	List<ShoppingCarts> listInfo = new ArrayList<>();
 	PullToRefreshListView listview;
 	ShoppingCarExpandableListAdapter infoAdapter;
 	int pageIndex = 1;
@@ -560,10 +560,12 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 				initData();
 			}
 			if(action.equals(BroadcastUtils.USER_LOGOUT)){
-				listInfo.clear();
-				infoAdapter.notifyDataSetChanged();
-				bottom.setVisibility(View.GONE);
-				null_data_default.setVisibility(View.VISIBLE);
+				if(infoAdapter!=null){
+					listInfo.clear();
+					infoAdapter.notifyDataSetChanged();
+					bottom.setVisibility(View.GONE);
+					null_data_default.setVisibility(View.VISIBLE);
+				}
 			}
 			if(action.equals(BroadcastUtils.USER_LOGIN))
 			{
