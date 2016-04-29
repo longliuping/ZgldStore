@@ -381,7 +381,14 @@ public interface BuyersOrdersAdapterListener{
 						});
 						break;
 					case 1:
+						Map m = new HashMap<>();
+						m.put("orderid",orderInfo.getOrderId()+"");
+						new OrderAsync(context, Request.Method.POST, 202, "supplier/order_offinle_alipay.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
+							@Override
+							public void complete(Message msg) {
 
+							}
+						});
 						break;
 				}
 			}
