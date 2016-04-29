@@ -15,6 +15,7 @@
         android:paddingTop="8dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        android:paddingBottom="5dp"
         android:listSelector="@color/transparent" >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
