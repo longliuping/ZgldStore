@@ -130,7 +130,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==activity.RESULT_OK){
             if(requestCode==200){
-                initData();;
+                initData();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,6 +169,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
                 if(users!=null) {
                     intent.setClass(getActivity(), PersonalDataActivity.class);
                     startActivityForResult(intent, 200);
+                }else{
+                    initData();
                 }
                 break;
         }
