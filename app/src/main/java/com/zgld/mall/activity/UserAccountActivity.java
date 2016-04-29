@@ -51,22 +51,30 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
             if (json == null) {
                 return;
             }
-            switch (msg.what){
-                case 209:
-                    if(msg.getData().getInt(Contents.STATUS)==200){
-                        JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
-                        Gson gson = new Gson();
-                        YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
-                        }.getType());
-                        new UserDataShare(this).saveUserData(user);
-                        Double balanceValue = user.getUserProfile().getBalance();
-                        if(balanceValue!=null && balanceValue>0){
-                            withdraw.setVisibility(View.VISIBLE);
-                        }
-                        balance.setText(PriceUtil.price(balanceValue+""));
-                        setResult(RESULT_OK);
-                    }
-                    break;
+            if(msg.getData().getInt(Contents.STATUS)==200) {
+                switch (msg.what){
+                    case 209:
+                            JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
+                            Gson gson = new Gson();
+                            YAccount user = gson.fromJson(jsonObject.toString(), new TypeToken<YAccount>() {
+                            }.getType());
+                            new UserDataShare(this).saveUserData(user);
+                            Double balanceValue = user.getUserProfile().getBalance();
+                            if(balanceValue!=null && balanceValue>0){
+                                withdraw.setVisibility(View.VISIBLE);
+                            }
+                            balance.setText(PriceUtil.price(balanceValue+""));
+                            setResult(RESULT_OK);
+
+                        break;
+                    case 202:
+                            JSONObject jo = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
+                            YAccount account = new Gson().fromJson(jo.toString(), new TypeToken<YAccount>() {
+                            }.getType());
+                            new UserDataShare(this).saveUserData(account);
+                        balance.setText(PriceUtil.price(account.getUserProfile().getBalance() + ""));
+                        break;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -109,7 +117,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         recharge.setOnClickListener(this);
         withdraw = findViewById(R.id.withdraw);
         withdraw.setOnClickListener(this);
-        withdraw.setVisibility(View.GONE);
+//        withdraw.setVisibility(View.GONE);
         balance = (TextView) findViewById(R.id.balance);
         balance.setText(PriceUtil.price(users.getUserProfile().getBalance()+""));
         Map<String,String> m = new HashMap<>();
@@ -132,8 +140,12 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
                 startActivityForResult(intent, 200);
                 break;
             case R.id.withdraw:
-                intent.setClass(this,UserWithdrawActivity.class);
-                startActivityForResult(intent, 200);
+//                intent.setClass(this,UserWithdrawActivity.class);
+//                startActivityForResult(intent, 200);
+                Map m = new HashMap();
+                m.put("amount",PriceUtil.price(new UserDataShare(this).getUserData().getUserProfile().getBalance()+""));
+                m.put("remark","用户手机端申请提现");
+                getData(this, 202, "account/user_apply_withdrawal.html", m,null);
                 break;
         }
     }
