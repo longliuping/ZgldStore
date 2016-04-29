@@ -3,7 +3,7 @@ package com.zgld.mall.beans;
 import java.io.Serializable;
 
 public class OrderPayConfig implements Serializable{
-	Integer orderId;
+	String orderId;
 	String subject;//商品名称
 	String body;//商品详情
 	Double expenses;//费用
@@ -16,10 +16,10 @@ public class OrderPayConfig implements Serializable{
 	public OrderPayConfig() {
 		// TODO Auto-generated constructor stub
 	}
-	public Integer getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 	public String getSubject() {
