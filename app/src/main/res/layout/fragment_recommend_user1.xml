@@ -12,6 +12,9 @@
         android:divider="#E5E5E5"
         android:dividerHeight="0dp"
         android:background="#EEEFF0"
+        android:paddingTop="8dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:listSelector="@color/transparent" >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 

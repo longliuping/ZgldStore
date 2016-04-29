@@ -50,6 +50,7 @@ public class RecommendUserAdapter extends BaseAdapter {
     class ViewHolder {
         TextView item_user_name, item_user_address;
         ImageView item_user_head;
+        View item_line;
     }
 
     @Override
@@ -62,6 +63,7 @@ public class RecommendUserAdapter extends BaseAdapter {
             holder.item_user_name = (TextView) convertView.findViewById(R.id.item_user_name);
             holder.item_user_address = (TextView) convertView.findViewById(R.id.item_user_address);
             holder.item_user_head = (ImageView) convertView.findViewById(R.id.item_user_head);
+            holder.item_line = convertView.findViewById(R.id.item_line);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -71,6 +73,9 @@ public class RecommendUserAdapter extends BaseAdapter {
             holder.item_user_name.setText(info.getAccount().getAccountName());
             holder.item_user_address.setText(info.getAccount().getAccountIntro());
             SysApplication.DisplayUserImage(info.getAccount().getAccountHead(),holder.item_user_head);
+        }
+        if(listInfo.size()-1==position){
+            holder.item_line.setVisibility(View.GONE);
         }
         return convertView;
     }
