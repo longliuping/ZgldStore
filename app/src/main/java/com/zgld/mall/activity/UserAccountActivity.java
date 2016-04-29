@@ -118,7 +118,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         recharge.setVisibility(View.VISIBLE);
         withdraw = findViewById(R.id.withdraw);
         withdraw.setOnClickListener(this);
-//        withdraw.setVisibility(View.GONE);
+        withdraw.setVisibility(View.GONE);
         balance = (TextView) findViewById(R.id.balance);
         balance.setText(PriceUtil.price(users.getUserProfile().getBalance()+""));
         Map<String,String> m = new HashMap<>();
