@@ -134,7 +134,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
             TextView name = (TextView) view.findViewById(R.id.name);
             name.setText(users.getAccountName());
             TextView cdk_number = (TextView) view.findViewById(R.id.cdk_number);
-            cdk_number.setText(users.getAccountId()+"");
+            cdk_number.setText("账号ID：:"+users.getAccountId()+"");
             ImageView head = (ImageView) view.findViewById(R.id.head);
             SysApplication.DisplayUserImage(users.getAccountHead(), head);
         }else{
