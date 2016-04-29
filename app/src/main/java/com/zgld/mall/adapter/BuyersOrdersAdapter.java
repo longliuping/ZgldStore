@@ -363,12 +363,7 @@ public interface BuyersOrdersAdapterListener{
 	PayTypePopupWindow menuWindow;
 	public void payOrder(View view,final int groupPosition, final int childPosition) {
 		final Orders orderInfo = listInfo.get(groupPosition);
-//		new OrderPay().pay(orderInfo.getOrderId(), context, new OrderPay.OrderPayListener() {
-//			@Override
-//			public void onCompelete(Message msg) {
-//				listener.update(2, null);
-//			}
-//		});
+
 		final WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
 		lp.alpha = 0.5F; // 0.0-1.0
 		activity.getWindow().setAttributes(lp);
@@ -376,7 +371,19 @@ public interface BuyersOrdersAdapterListener{
 		menuWindow = new PayTypePopupWindow(activity, new PayTypePopupWindow.PayTypePopupWindowListener() {
 			@Override
 			public void onComplete(Integer position, String str) {
+				switch (position){
+					case 0:
+						new OrderPay().pay(orderInfo.getOrderId(), context, new OrderPay.OrderPayListener() {
+							@Override
+							public void onCompelete(Message msg) {
+								listener.update(2, null);
+							}
+						});
+						break;
+					case 1:
 
+						break;
+				}
 			}
 		});
 		// 显示窗口

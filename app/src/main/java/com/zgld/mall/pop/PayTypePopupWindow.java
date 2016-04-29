@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -26,7 +27,7 @@ public class PayTypePopupWindow extends PopupWindow {
     Integer position = null;
     PayTypePopupWindowListener listener;
     PayTypeAdapter infoAdapter = null;
-    public PayTypePopupWindow(final Activity context,PayTypePopupWindowListener listener) {
+    public PayTypePopupWindow(final Activity context, final PayTypePopupWindowListener listener) {
         this.listener = listener;
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,24 +36,11 @@ public class PayTypePopupWindow extends PopupWindow {
         listview = (ListView) mMenuView.findViewById(R.id.listview);
         infoAdapter = new PayTypeAdapter(context);
         listview.setAdapter(infoAdapter);
-//        close = mMenuView.findViewById(R.id.close);
-//        close.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                dismiss();
-//            }
-//        });
-        ok = mMenuView.findViewById(R.id.ok);
-        ok.setOnClickListener(new View.OnClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                if(position==null){
-                    Toast.makeText(context,"请选择支付方式",Toast.LENGTH_LONG).show();
-                }else {
-                    complete();
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onComplete(position,infoAdapter.getItem(position).toString());
+                dismiss();
             }
         });
         // 设置按钮监听

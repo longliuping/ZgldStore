@@ -22,6 +22,7 @@ public class PayTypeAdapter  extends BaseAdapter{
         this.context = context;
         listInfo.add("支付宝");
         listInfo.add("线下支付");
+        listInfo.add("取消");
     }
     @Override
     public int getCount() {
