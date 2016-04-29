@@ -237,19 +237,24 @@ public class BuyersOrders0Fragment extends BuyersOrdersBaseFragment implements O
     }
 
     @Override
-    public void update(int tag, Bundle bundle) {
-       if(tag==2){
-           pageNum = 1;
-           initData();
-       }else{
-           infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
-           listview.getRefreshableView().setAdapter(infoAdapter);
-           int groupCount = listview.getRefreshableView().getCount();
-           for (int i = 0; i < groupCount; i++) {
-               listview.getRefreshableView().expandGroup(i);
-           }
-           infoAdapter.notifyDataSetChanged();
-       }
+    public void update(int tag,final int groupPosition, final int childPosition, Bundle bundle) {
+        if(tag==2){
+            pageNum = 1;
+            initData();
+        }else if(tag==109){
+            if(listInfo.size()>=groupPosition) {
+                listInfo.remove(groupPosition);
+            }
+        }else{
+            infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
+            listview.getRefreshableView().setAdapter(infoAdapter);
+            int groupCount = listview.getRefreshableView().getCount();
+            for (int i = 0; i < groupCount; i++) {
+                listview.getRefreshableView().expandGroup(i);
+            }
+            infoAdapter.notifyDataSetChanged();
+        }
+        infoAdapter.notifyDataSetChanged();
     }
 
 }

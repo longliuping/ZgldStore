@@ -231,7 +231,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:text="取消订单"
+                android:text="删除订单"
                 android:textColor="#FEFEFE"
                 android:visibility="gone" />
 

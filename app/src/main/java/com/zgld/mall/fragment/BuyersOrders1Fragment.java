@@ -235,12 +235,15 @@ public class BuyersOrders1Fragment extends BuyersOrdersBaseFragment implements O
         network_error.setVisibility(View.GONE);
         initData();
     }
-
     @Override
-    public void update(int tag, Bundle bundle) {
+    public void update(int tag,final int groupPosition, final int childPosition, Bundle bundle) {
         if(tag==2){
             pageNum = 1;
             initData();
+        }else if(tag==109){
+            if(listInfo.size()>=groupPosition) {
+                listInfo.remove(groupPosition);
+            }
         }else{
             infoAdapter = new BuyersOrdersAdapter(activity,activity, listInfo,this);
             listview.getRefreshableView().setAdapter(infoAdapter);
@@ -250,5 +253,6 @@ public class BuyersOrders1Fragment extends BuyersOrdersBaseFragment implements O
             }
             infoAdapter.notifyDataSetChanged();
         }
+        infoAdapter.notifyDataSetChanged();
     }
 }

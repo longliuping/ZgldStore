@@ -19,6 +19,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -44,7 +45,7 @@ import org.json.JSONObject;
 
 public class BuyersOrdersAdapter extends BaseExpandableListAdapter {
 public interface BuyersOrdersAdapterListener{
-	public void update(int tag,Bundle bundle);
+	public void update(int tag,final int groupPosition, final int childPosition,Bundle bundle);
 }
 
 	List<Orders> listInfo;
@@ -165,7 +166,10 @@ public interface BuyersOrdersAdapterListener{
 			}
 			switch (listInfo.get(groupPosition).getRefundStatus()){
 				case 1:
-					str += "(有退款)";
+					str += "(已申请退款)";
+					break;
+				case 2:
+					str += "(已退款)";
 					break;
 			}
 			holder.item_status.setText(str);
@@ -263,10 +267,10 @@ public interface BuyersOrdersAdapterListener{
 						holder.item_pay.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
-								payOrder(v,groupPosition,childPosition);
+								payOrder(v, groupPosition, childPosition);
 							}
 						});
-//						holder.item_cancel.setVisibility(View.VISIBLE);
+						holder.item_cancel.setVisibility(View.VISIBLE);
 						holder.item_cancel.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
@@ -277,6 +281,17 @@ public interface BuyersOrdersAdapterListener{
 					case 1:
 						holder.item_pay.setVisibility(View.GONE);
 						holder.item_cancel.setVisibility(View.GONE);
+						switch (listInfo.get(groupPosition).getRefundStatus()){
+							case 0:
+								holder.item_refund.setVisibility(View.VISIBLE);
+								holder.item_refund.setOnClickListener(new OnClickListener() {
+									@Override
+									public void onClick(View v) {
+										applyRefund(groupPosition,childPosition);
+									}
+								});
+								break;
+						}
 						break;
 				}
 				switch (listInfo.get(groupPosition).getRefundStatus()){
@@ -327,32 +342,24 @@ public interface BuyersOrdersAdapterListener{
 	 * @param childPosition
 	 */
 	public void applyRefund(final int groupPosition, final int childPosition) {
-//		Map<String, String> m = new HashMap<String, String>();
-//		m.put("token", "123");
-//		m.put("operateType", "3");
-//		m.put("userId", Contents.getUser(context).getUserId());
-//		m.put("orderId", listInfo.get(groupPosition).getOrderId());
-//		m.put("Reason", "");
-//		new OrderAsync(context, Method.POST, 304, "Orders/OrderStatusUpdateNew", m, null, 1, new OrderAsyncListener() {
-//
-//			@Override
-//			public void complete(int tag, String json) {
-//				if (tag == 304) {
-//					Log.i("TAG", "json="+json);
-//					if (json.trim().equals("1")) {
-//						Toast.makeText(context, "申请成功", Toast.LENGTH_SHORT).show();
-//						if (!display) {
-//							listInfo.remove(groupPosition);
-//						}
-//						notifyDataSetChangedAdapter();
-//					} else if (json.trim().equals("21")) {
-//						Toast.makeText(context, "已审请退款", Toast.LENGTH_SHORT).show();
-//					}else {
-//						Toast.makeText(context, "申请失败", Toast.LENGTH_SHORT).show();
-//					}
-//				}
-//			}
-//		});
+		Map<String,String> m = new HashMap<>();
+		m.put("orderid",listInfo.get(groupPosition).getOrderId()+"");
+		new OrderAsync(context, Request.Method.POST, 306, "order/user_order_apply_refound.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
+
+			@Override
+			public void complete(Message msg) {
+				try
+				{
+					GsonObject gsonObject = (GsonObject)msg.getData().getSerializable(Contents.GSON_OBJECT);
+					if (gsonObject.getTag() == 306 && gsonObject.getStatus()==200) {
+						listInfo.get(groupPosition).setRefundStatus(1);
+						listener.update(108,groupPosition,childPosition,null);
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**
@@ -376,7 +383,7 @@ public interface BuyersOrdersAdapterListener{
 						new OrderPay().pay(orderInfo.getOrderId(), context, new OrderPay.OrderPayListener() {
 							@Override
 							public void onCompelete(Message msg) {
-								listener.update(2, null);
+								listener.update(2,groupPosition,childPosition, null);
 							}
 						});
 						break;
@@ -420,41 +427,23 @@ public interface BuyersOrdersAdapterListener{
 					public void customDialogClickRight() {
 						dialog.dismiss();
 						Map<String,String> m = new HashMap<>();
-						YAccount users = new UserDataShare(context).getUserData();
-						if(users!=null){
-							m.put(Contents.TOKEN,users.getUsers().getAppUserToken());
-							m.put(Contents.USERID, users.getUsers().getUserId()+"");
 							m.put("orderid",listInfo.get(groupPosition).getOrderId()+"");
-							new OrderAsync(context, Request.Method.POST, 306, "order/cancel_order.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
+							new OrderAsync(context, Request.Method.POST, 306, "order/user_delete_order.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
 
 								@Override
 								public void complete(Message msg) {
-									try
-									{
-										GsonObject gsonObject = (GsonObject)msg.getData().getSerializable(Contents.GSON_OBJECT);
-										if (gsonObject.getTag() == 306 && gsonObject.getStatus()==200) {
-//										listInfo.remove(groupPosition);
-											String json = gsonObject.getJson();
-											JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.DATA).getJSONObject(Contents.INFO);
-											Orders orders = new Gson().fromJson(jsonObject.toString(),new TypeToken<Orders>(){}.getType());
-											if(orders!=null){
-												listInfo.set(groupPosition,orders);
-											}
-											listener.update(gsonObject.getTag(),null);
-//										listInfo.get(groupPosition).setOrderStatus(4);
-										}
-										BuyersOrdersAdapter.this.notifyDataSetChanged();
-									}catch (Exception e){
-										e.printStackTrace();
-
-
+								try
+								{
+									GsonObject gsonObject = (GsonObject)msg.getData().getSerializable(Contents.GSON_OBJECT);
+									if (gsonObject.getTag() == 306 && gsonObject.getStatus()==200) {
+										listener.update(109,groupPosition,childPosition,null);
 									}
-
+								}catch (Exception e){
+									e.printStackTrace();
+								}
 								}
 							});
-						}
 					}
-
 					@Override
 					public void customDialogClickLeft() {
 						dialog.dismiss();
