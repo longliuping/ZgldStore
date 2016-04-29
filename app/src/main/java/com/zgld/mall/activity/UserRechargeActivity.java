@@ -1,5 +1,6 @@
 package com.zgld.mall.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -8,8 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zgld.mall.R;
+import com.zgld.mall.alipay.AlipayPay;
+import com.zgld.mall.beans.OrderPayConfig;
 import com.zgld.mall.utils.Contents;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +44,11 @@ public class UserRechargeActivity extends BaseActivity {
             public void onClick(View v) {
                 Map<String,String> m = new HashMap<String, String>();
                 if (number.getText().toString() == null || number.getText().length() <= 0) {
-                    Toast.makeText(UserRechargeActivity.this, "请收入金额!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserRechargeActivity.this, "请输入金额!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(Double.parseDouble(number.getText().toString())<0.01){
+                    Toast.makeText(UserRechargeActivity.this, "充值金额必须大于等于0.01元", Toast.LENGTH_LONG).show();
                     return;
                 }
                 m.put("amount",number.getText().toString());
@@ -50,7 +61,23 @@ public class UserRechargeActivity extends BaseActivity {
     public void handleMsg(Message msg) {
         try{
             if(msg.getData().getInt(Contents.STATUS)==200){
-//                finish();
+                switch (msg.what){
+                    case 201:
+                        String json = msg.getData().getString(Contents.DATA);
+                        JSONObject jsonObject = new JSONObject(json).getJSONObject(Contents.INFO);
+                        OrderPayConfig config = new Gson().fromJson(jsonObject.toString(), new TypeToken<OrderPayConfig>() {
+                        }.getType());
+                        if (config != null) {
+                            new AlipayPay().pay(this, config, new AlipayPay.AlipayPayListener() {
+                                @Override
+                                public void onCompelete(Context context, Message msg) {
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+                            });
+                        }
+                        break;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

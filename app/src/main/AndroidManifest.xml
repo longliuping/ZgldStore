@@ -152,7 +152,8 @@
         <activity android:name=".activity.UserWithdrawActivity" />
         <activity android:name=".activity.UserRechargeActivity" />
         <activity android:name=".activity.OfflinePaymentActivity" />
-        <activity android:name=".activity.RecommendUserFragmentActivity"></activity>
+        <activity android:name=".activity.RecommendUserFragmentActivity" />
+        <activity android:name=".activity.BalanceDetailsActivity"></activity>
     </application>
 
 </manifest>
