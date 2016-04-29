@@ -115,6 +115,7 @@ public class UserAccountActivity extends BaseActivity implements AdapterView.OnI
         menuAdapter.notifyDataSetChanged();
         recharge = findViewById(R.id.recharge);
         recharge.setOnClickListener(this);
+        recharge.setVisibility(View.VISIBLE);
         withdraw = findViewById(R.id.withdraw);
         withdraw.setOnClickListener(this);
 //        withdraw.setVisibility(View.GONE);
