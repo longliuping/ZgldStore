@@ -79,7 +79,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	}
 
 	View view;
-
+	TextView title;
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		view = inflater.inflate(R.layout.fragment_car, null);
@@ -100,8 +100,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		if (view == null) {
 			view = inflater.inflate(R.layout.fragment_car, null);
 			view.findViewById(R.id.back).setVisibility(View.GONE);
-			TextView title = (TextView) view.findViewById(R.id.title_center);
-			title.setText("购物车");
 			initView();
 			back.setVisibility(View.GONE);
 		} else {
@@ -117,6 +115,8 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		title = (TextView) view.findViewById(R.id.title_center);
+		title.setText("购物车");
 		back = view.findViewById(R.id.back);
 		listview = (PullToRefreshListView) view.findViewById(R.id.listview);
 		listview.setOnItemClickListener(this);
