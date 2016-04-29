@@ -76,7 +76,7 @@
     </string-array>
     <string-array name="title_not_user">
         <item>提示</item>
-        <item>账号已经在其他设备登录</item>
+        <item>请登录</item>
         <item>取消</item>
         <item>确定</item>
     </string-array>
