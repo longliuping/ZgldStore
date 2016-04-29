@@ -138,7 +138,7 @@ public class AsyncGameRunner {
 									dialog.dismiss();
 									Contents.loginPage(context,null);
 								}
-							},false);
+							},true);
 							dialog.show();
 						}
 					}
