@@ -15,7 +15,7 @@ public abstract class AbstractBalanceDetails implements java.io.Serializable {
 	private Integer balanceId;
 	private Integer userId;
 	private String tradeDate;
-	private Double income;
+	private String income;
 	private Double expenses;
 	private Double reduced;
 	private Double balance;
@@ -61,11 +61,11 @@ public abstract class AbstractBalanceDetails implements java.io.Serializable {
 		this.tradeDate = tradeDate;
 	}
 
-	public Double getIncome() {
+	public String getIncome() {
 		return this.income;
 	}
 
-	public void setIncome(Double income) {
+	public void setIncome(String income) {
 		this.income = income;
 	}
 
