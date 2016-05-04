@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -30,6 +34,8 @@ import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.pop.PayTypePopupWindow;
+import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.AddressXmlUtils;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
@@ -59,7 +65,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
     int totalMarketPrice = 0;// 市场总价
     int totalSalePrice = 0;//销售总价
     String remark = "";
-
+    PayTypePopupWindow menuWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated com.android.volley.Request.Method stub
@@ -135,14 +141,69 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                    if (msg.getData().getInt(Contents.STATUS) == 200) {
                        BroadcastUtils.sendCarProduct(this);
                        setResult(RESULT_OK);
-                       Integer orderId = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getInt("orderId");
-                       new OrderPay().pay(orderId, this, new OrderPay.OrderPayListener() {
+                       final Integer orderId = new JSONObject(msg.getData().getString(Contents.JSON)).getJSONObject(Contents.DATA).getInt("orderId");
+//                       new OrderPay().pay(orderId, this, new OrderPay.OrderPayListener() {
+//                           @Override
+//                           public void onCompelete(Message msg) {
+//                               Intent intent = new Intent();
+//                               intent.setClass(OKOrderActivity.this,BuyersOrdersFragmentActivity.class);
+//                               startActivity(intent);
+//                               finish();
+//                           }
+//                       });
+                       final WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+                       lp.alpha = 0.5F; // 0.0-1.0
+                       this.getWindow().setAttributes(lp);
+                       // 实例化SelectPicPopupWindow
+                       menuWindow = new PayTypePopupWindow(this, new PayTypePopupWindow.PayTypePopupWindowListener() {
                            @Override
-                           public void onCompelete(Message msg) {
-                               Intent intent = new Intent();
-                               intent.setClass(OKOrderActivity.this,BuyersOrdersFragmentActivity.class);
-                               startActivity(intent);
-                               finish();
+                           public void onComplete(Integer position, String str) {
+                               menuWindow.dismiss();
+                               switch (position){
+                                   case 0:
+                                       new OrderPay().pay(orderId, OKOrderActivity.this, new OrderPay.OrderPayListener() {
+                                           @Override
+                                           public void onCompelete(Message msg) {
+                                               Intent intent = new Intent();
+                                                intent.setClass(OKOrderActivity.this,BuyersOrdersFragmentActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                           }
+                                       });
+                                       break;
+                                   case 1:
+                                       Map m = new HashMap<>();
+                                       m.put("orderid",orderId+"");
+                                       new OrderAsync(OKOrderActivity.this, Request.Method.POST, 202, "supplier/order_offinle_alipay.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
+                                           @Override
+                                           public void complete(Message msg) {
+                                               Intent intent = new Intent();
+                                               intent.setClass(OKOrderActivity.this,BuyersOrdersFragmentActivity.class);
+                                               startActivity(intent);
+                                               finish();
+                                           }
+                                       });
+                                       break;
+                                   case 2:
+                                       Intent intent = new Intent();
+                                       intent.setClass(OKOrderActivity.this, BuyersOrdersFragmentActivity.class);
+                                       startActivity(intent);
+                                       finish();
+                                       break;
+                               }
+                           }
+                       });
+                       // 显示窗口
+                       menuWindow.showAtLocation(this.getCurrentFocus(),
+                               Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                       menuWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+                           @Override
+                           public void onDismiss() {
+                               // TODO Auto-generated com.android.volley.Request.Method
+                               // stub
+                               lp.alpha = 1.0F; // 0.0-1.0
+                               OKOrderActivity.this.getWindow().setAttributes(lp);
                            }
                        });
                    }
