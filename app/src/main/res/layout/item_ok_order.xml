@@ -186,6 +186,7 @@
                 android:maxLines="50"
                 android:padding="10dp"
                 android:singleLine="true"
+                android:visibility="gone"
                 android:textColorHint="#727272" />
         </LinearLayout>
     </LinearLayout>
