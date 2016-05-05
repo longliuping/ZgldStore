@@ -177,6 +177,7 @@
                 android:layout_marginTop="5dp"
                 android:background="#CBCBCB" />
 
+
             <EditText
                 android:id="@+id/item_remake"
                 android:layout_width="fill_parent"
