@@ -11,6 +11,7 @@
 	<string name="title_my_order">我的订单</string>
 	<string name="title_love">喜欢</string>
 	<string name="title_buyers_orders">我的购买订单</string>
+	<string name="title_customer_orders">客户订单</string>
 	<string name="title_seller_orders">我的销售订单</string>
 	<string name="title_product_management">产品管理</string>
 	<string name="title_business_join">供应商入驻</string>

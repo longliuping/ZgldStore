@@ -20,6 +20,7 @@ import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.activity.BuyersOrdersFragmentActivity;
+import com.zgld.mall.activity.CustomerOrderFragmentActivity;
 import com.zgld.mall.activity.LoginActivity;
 import com.zgld.mall.activity.PersonalDataActivity;
 import com.zgld.mall.activity.RecommendUserFragmentActivity;
@@ -41,8 +42,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener{
-    String menuString[] = {"我的订单","我的账户","我推荐的会员","设置"};
-    int menuInt[] = {R.drawable.me_order,R.drawable.me_love,R.drawable.me_product,R.drawable.me_setting};
+    String menuString[] = {"客户订单","我的订单","我的账户","我推荐的会员","设置"};
+    int menuInt[] = {R.drawable.me_shop,R.drawable.me_order,R.drawable.me_love,R.drawable.me_product,R.drawable.me_setting};
+    Class className[] =  {CustomerOrderFragmentActivity.class,BuyersOrdersFragmentActivity.class,UserAccountActivity.class,RecommendUserFragmentActivity.class,SettingActivity.class};
+    Boolean useris[] = {true,true,true,true,false};
     ListView list_menu;
 
     public MineFragment() {
@@ -99,27 +102,37 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 initData();
-               if(position<3){
-                   YAccount users = new UserDataShare(activity).getUserData();
-                   if(users!=null){
-                       if (position == 0) {
-                           startActivity(new Intent(getActivity(), BuyersOrdersFragmentActivity.class));
-                       }
-                       if(position==1){
-                           startActivity(new Intent(getActivity(), UserAccountActivity.class));
-                       }
-                       if(position==2){
-                           startActivity(new Intent(getActivity(), RecommendUserFragmentActivity.class));
-                       }
-                   }else{
-                       Intent intent = new Intent();
+                YAccount users = new UserDataShare(activity).getUserData();
+//                if(users!=null){
+//               if(position<3){
+//                   YAccount users = new UserDataShare(activity).getUserData();
+//                   if(users!=null){
+//                       if (position == 0) {
+//                           startActivity(new Intent(getActivity(), BuyersOrdersFragmentActivity.class));
+//                       }
+//                       if(position==1){
+//                           startActivity(new Intent(getActivity(), UserAccountActivity.class));
+//                       }
+//                       if(position==2){
+//                           startActivity(new Intent(getActivity(), RecommendUserFragmentActivity.class));
+//                       }
+//                   }else{
+//                       Intent intent = new Intent();
+//                       intent.setClass(getActivity(),LoginActivity.class);
+//                       startActivityForResult(intent, 200);
+//                   }
+//               }
+//                if (position == 3) {
+//                    startActivity(new Intent(getActivity(), SettingActivity.class));
+//                }
+                    Intent intent = new Intent();
+                    if(users==null && useris[position]){
                        intent.setClass(getActivity(),LoginActivity.class);
                        startActivityForResult(intent, 200);
-                   }
-               }
-                if (position == 3) {
-                    startActivity(new Intent(getActivity(), SettingActivity.class));
-                }
+                        return;
+                    }
+                    intent.setClass(getActivity(),className[position]);
+                    startActivityForResult(intent, 200);
             }
         });
 
