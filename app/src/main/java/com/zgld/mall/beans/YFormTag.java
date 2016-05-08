@@ -15,6 +15,7 @@ public class YFormTag extends AbstractYFormTag implements java.io.Serializable {
 	}
 	YFormValue formValue;
 	List<YFormControl> listFormControl;
+	String str;
 	public YFormValue getFormValue() {
 		return formValue;
 	}
@@ -28,4 +29,11 @@ public class YFormTag extends AbstractYFormTag implements java.io.Serializable {
 		this.listFormControl = listFormControl;
 	}
 
+	public String getStr() {
+		return str;
+	}
+
+	public void setStr(String str) {
+		this.str = str;
+	}
 }

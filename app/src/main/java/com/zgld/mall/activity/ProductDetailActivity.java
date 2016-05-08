@@ -27,6 +27,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.ProductImages;
 import com.zgld.mall.beans.Sku;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YFormCombineValue;
 import com.zgld.mall.beans.YShop;
 import com.zgld.mall.jazzy.JazzPageChangeListener;
 import com.zgld.mall.jazzy.JazzProductDetailAdapter;
@@ -404,12 +405,12 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
     }
 
     @Override
-    public void confirm(int number, String strNorms,Sku hishopSkus, Integer valueId,Integer attributeId) {
+    public void confirm(int number, String strNorms,YFormCombineValue hishopSkus, Integer valueId,Integer attributeId) {
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-            m.put("skuId", hishopSkus.getSku()+"");
-            m.put("productId", hishopSkus.getProductId()+"");
+//            m.put("skuId", hishopSkus.getSku()+"");
+//            m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
             getData(ProductDetailActivity.this,207, "car/add_product_car.html", m, null
                     );

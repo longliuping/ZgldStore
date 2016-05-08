@@ -18,7 +18,7 @@ public abstract class AbstractYFormControl implements java.io.Serializable {
 	private String controlName;
 	private String controlValue;
 	private Integer isDelete;
-	private Date controlTime;
+	private String controlTime;
 
 	// Constructors
 
@@ -75,11 +75,11 @@ public abstract class AbstractYFormControl implements java.io.Serializable {
 		this.isDelete = isDelete;
 	}
 
-	public Date getControlTime() {
+	public String getControlTime() {
 		return this.controlTime;
 	}
 
-	public void setControlTime(Date controlTime) {
+	public void setControlTime(String controlTime) {
 		this.controlTime = controlTime;
 	}
 

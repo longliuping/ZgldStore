@@ -24,21 +24,68 @@ import com.zgld.mall.adapter.SelectedInfoAdapter;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.Sku;
 import com.zgld.mall.beans.Skugroup;
+import com.zgld.mall.beans.YFormCombine;
+import com.zgld.mall.beans.YFormCombineValue;
+import com.zgld.mall.beans.YFormControl;
+import com.zgld.mall.beans.YFormTag;
 import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.PriceUtil;
 
 public class PublishSelectPicPopupWindow extends PopupWindow implements SelectedInfoAdapter.SelectedInfoAdapterCallback {
 	private Integer valueId;
 	private Integer attributeId;
-	Sku sku = null;
+	YFormControl formControl = null;
+	YFormCombineValue formCombineValue;
 	@Override
-	public void onItemClick(Sku info, int position) {
-		sku = info;
-		setDetail(info);
+	public void onItemClick(YFormControl info,YFormTag formTag,int basePosition, int position) {
+		formControl = info;
+		String message = "";
+		String seleStr = "";
+		formTag.setStr("_-"+formTag.getTagFieldName()+"-"+info.getControlValue());
+		listFormTag.set(basePosition,formTag);
+		selectedBaseInfoAdapter.notifyDataSetChanged();
+		boolean havb = true;
+		Products product = shop.getProducts();
+		if(product.getListFormTag()!=null && product.getListFormTag().size()>0) {
+			for (int i=0;i<product.getListFormTag().size();i++){
+				YFormTag ha = product.getListFormTag().get(i);
+				havb = false;
+				for (int j=0;j<ha.getListFormControl().size();j++){
+					seleStr += ha.getTagName()+":";
+					YFormControl hav = ha.getListFormControl().get(j);
+					if(hav.isSelected()){
+						havb = true;
+						seleStr += hav.getControlName()+";";
+					}
+				}
+				if(!havb){
+					message = "请选择:"+ha.getTagName();
+					break;
+				}
+
+			}
+		}
+		if (message.length()>5) {
+
+		}else {
+			String tag = "";
+			for (int c = 0;c<shop.getProducts().getListFormTag().size();c++){
+				tag =  shop.getProducts().getListFormTag().get(c).getStr()+tag;
+			}
+			tag = tag+"_";
+			for (int j = 0; j < shop.getProducts().getListFormCombineValue().size(); j++) {
+				YFormCombineValue v  = shop.getProducts().getListFormCombineValue().get(j);
+				if(v.getCombineString().equals(tag)){
+					formCombineValue = v;
+					setDetail(formCombineValue);
+					return;
+				}
+			}
+		}
 	}
 
 	public interface PublishSelectPicPopupWindowListener {
-		void confirm(int number, String strNorms,Sku hishopSkus, Integer valueId,Integer attributeId);
+		void confirm(int number, String strNorms,YFormCombineValue formCombineValue, Integer valueId,Integer attributeId);
 	}
 	private View mMenuView;
 	View close, ok, d_add, d_reduce;
@@ -49,17 +96,23 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 	TextView style;
 	ListView listview;
 	List<Sku> listHishopSkus = new ArrayList<>();
+	YShop shop = null;
+	SelectedBaseInfoAdapter selectedBaseInfoAdapter;
+	List<YFormTag> listFormTag = new ArrayList<>();
 	@SuppressWarnings("deprecation")
 	public PublishSelectPicPopupWindow(final Activity context, final YShop info,
 			final PublishSelectPicPopupWindowListener callBack) {
 		super(context);
+		shop = info;
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.callBack = callBack;
 		mMenuView = inflater.inflate(R.layout.product_detail_param, null);
 
 		listview = (ListView) mMenuView.findViewById(R.id.listview);
-		listview.setAdapter(new SelectedBaseInfoAdapter(context,info.getProducts().getListSkugroups(),this));
+		listFormTag = info.getProducts().getListFormTag();
+		selectedBaseInfoAdapter = new SelectedBaseInfoAdapter(context,listFormTag,this);
+		listview.setAdapter(selectedBaseInfoAdapter);
 
 		d_result = (EditText) mMenuView.findViewById(R.id.d_result);
 		style = (TextView) mMenuView.findViewById(R.id.style);
@@ -80,11 +133,12 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 		title = (TextView) mMenuView.findViewById(R.id.title);
 		sale_price = (TextView) mMenuView.findViewById(R.id.sale_price);
 		title.setText(info.getProducts().getProductName());
-		sale_price.setText("抢购价："+PriceUtil.priceY(info.getProducts().getSalePrice() + ""));
 		market_price = (TextView) mMenuView.findViewById(R.id.market_price);
-		market_price.setText("店面价：" + PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
 		sale_model =  (TextView)mMenuView.findViewById(R.id.sale_model);
-		sale_model.setText("库存："+info.getProducts().getStock()+"");
+		sale_price.setText("抢购价："+PriceUtil.priceY(info.getProducts().getSalePrice() + ""));
+		sale_model.setText("库存：" + info.getProducts().getStock()+"");
+//		market_price.setText("店面价：" + PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
+//		market_price.setVisibility(View.GONE);
 		SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(), image);
 		ok.setOnClickListener(new View.OnClickListener() {
 
@@ -95,20 +149,20 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 				String message = "";
 				boolean havb = true;
 				Products product = info.getProducts();
-				if(product.getListSkugroups()!=null && product.getListSkugroups().size()>0) {
-					for (int i=0;i<product.getListSkugroups().size();i++){
-						Skugroup ha = product.getListSkugroups().get(i);
+				if(product.getListFormTag()!=null && product.getListFormTag().size()>0) {
+					for (int i=0;i<product.getListFormTag().size();i++){
+						YFormTag ha = product.getListFormTag().get(i);
 						havb = false;
-						for (int j=0;j<ha.getListSkus().size();j++){
-							seleStr += ha.getSkugroupName()+":";
-							Sku hav = ha.getListSkus().get(j);
+						for (int j=0;j<ha.getListFormControl().size();j++){
+							seleStr += ha.getTagName()+":";
+							YFormControl hav = ha.getListFormControl().get(j);
 							if(hav.isSelected()){
 								havb = true;
-								seleStr += hav.getAttributeNames()+";";
+								seleStr += hav.getControlName()+";";
 							}
 						}
 						if(!havb){
-							message = "请选择:"+ha.getSkugroupName();
+							message = "请选择:"+ha.getTagName();
 							break;
 						}
 
@@ -119,12 +173,12 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 					return;
 				}
 				int number = Integer.parseInt(d_result.getText().toString());
-				if(sku!=null && number>sku.getStock()){
-					Toast.makeText(context, "购买数量不能大于库存数量:"+sku.getStock(), Toast.LENGTH_SHORT).show();
+				if(formCombineValue!=null && number>formCombineValue.getGoStore()){
+					Toast.makeText(context, "购买数量不能大于库存数量:"+formCombineValue.getGoStore(), Toast.LENGTH_SHORT).show();
 					return;
 				}
 				dismiss();
-				callBack.confirm(number, seleStr, sku, valueId, attributeId);
+				callBack.confirm(number, seleStr, formCombineValue, valueId, attributeId);
 			}
 		});
 		d_add.setOnClickListener(new View.OnClickListener() {
@@ -182,10 +236,11 @@ public class PublishSelectPicPopupWindow extends PopupWindow implements Selected
 		});
 
 	}
-	public void setDetail(Sku hishopSkus){
+	public void setDetail(YFormCombineValue hishopSkus){
 		if(hishopSkus!=null) {
-			sale_model.setText("库存：" + hishopSkus.getStock()+"");
-			sale_price.setText("抢购价："+ PriceUtil.priceY(hishopSkus.getPrice() + ""));
+			sale_model.setText("库存：" + hishopSkus.getGoStore()+"");
+			sale_price.setText("抢购价："+ PriceUtil.priceY(hishopSkus.getGoSalePrice() + ""));
+			market_price.setText("规格："+hishopSkus.getCombineString());
 		}
 	}
 }

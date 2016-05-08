@@ -11,15 +11,16 @@ import android.widget.TextView;
 import com.zgld.mall.R;
 import com.zgld.mall.beans.Sku;
 import com.zgld.mall.beans.Skugroup;
+import com.zgld.mall.beans.YFormTag;
 
 import java.util.List;
 
 public class SelectedBaseInfoAdapter extends BaseAdapter {
 	Context context;
-	List<Skugroup> listInfo;
+	List<YFormTag> listInfo;
 	LayoutInflater layoutInflater;
 	SelectedInfoAdapter.SelectedInfoAdapterCallback callback;
-	public SelectedBaseInfoAdapter(Context context, List<Skugroup> listInfo,SelectedInfoAdapter.SelectedInfoAdapterCallback callback) {
+	public SelectedBaseInfoAdapter(Context context, List<YFormTag> listInfo,SelectedInfoAdapter.SelectedInfoAdapterCallback callback) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.listInfo = listInfo;
@@ -62,10 +63,10 @@ public class SelectedBaseInfoAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Skugroup info = listInfo.get(position);
+		YFormTag info = listInfo.get(position);
 		if (info != null) {
-			holder.item_name.setText(info.getSkugroupName());
-			holder.item_gridview.setAdapter(new SelectedInfoAdapter(context,info.getListSkus(),callback));
+			holder.item_name.setText(info.getTagName());
+			holder.item_gridview.setAdapter(new SelectedInfoAdapter(context,position,info,info.getListFormControl(),callback));
 		}
 		return convertView;
 	}

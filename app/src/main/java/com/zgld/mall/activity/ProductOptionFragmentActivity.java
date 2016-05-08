@@ -24,6 +24,7 @@ import com.zgld.mall.UserDataShare;
 import com.zgld.mall.beans.Sku;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YFormCombineValue;
 import com.zgld.mall.beans.YShop;
 import com.zgld.mall.fragment.ProductDescriptionFragment;
 import com.zgld.mall.fragment.ProductParamFragment;
@@ -278,13 +279,13 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
     String ids = "";
 
     @Override
-    public void confirm(int number, String strNorms,Sku hishopSkus, Integer valueId,Integer attributeId) {
+    public void confirm(int number, String strNorms,YFormCombineValue hishopSkus, Integer valueId,Integer attributeId) {
         // TODO Auto-generated method stub
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-            m.put("skuId", hishopSkus.getSku()+"");
-            m.put("productId", hishopSkus.getProductId()+"");
+//            m.put("skuId", hishopSkus.getSku()+"");
+//            m.put("productId", hishopSkus.getProductId()+"");
             m.put("number", number+"");
             getData(ProductOptionFragmentActivity.this,207, "car/add_product_car.html", m, null
                     );

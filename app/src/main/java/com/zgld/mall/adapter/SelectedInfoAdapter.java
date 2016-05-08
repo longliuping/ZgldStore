@@ -10,23 +10,29 @@ import android.widget.TextView;
 
 import com.zgld.mall.R;
 import com.zgld.mall.beans.Sku;
+import com.zgld.mall.beans.YFormControl;
+import com.zgld.mall.beans.YFormTag;
 
 public class SelectedInfoAdapter extends BaseAdapter {
 	public interface SelectedInfoAdapterCallback{
-		void onItemClick(Sku info, int position);
+		void onItemClick(YFormControl info,YFormTag formTag,int basePosition, int position);
 	}
 	Context context;
-	List<Sku> listInfo;
+	List<YFormControl> listInfo;
 	LayoutInflater layoutInflater;
 	SelectedInfoAdapterCallback callback;
-	public SelectedInfoAdapter(Context context, List<Sku> listInfo,SelectedInfoAdapterCallback callback) {
+	int basePosition = 0;
+	YFormTag formTag;
+	public SelectedInfoAdapter(Context context,int position,YFormTag formTag, List<YFormControl> listInfo,SelectedInfoAdapterCallback callback) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.listInfo = listInfo;
 		layoutInflater = LayoutInflater.from(context);
+		this.basePosition = position;
+		this.formTag = formTag;
 		this.callback = callback;
 	}
-	public List<Sku>  getListInfo(){
+	public List<YFormControl>  getListInfo(){
 		return listInfo;
 	}
 	@Override
@@ -65,13 +71,13 @@ public class SelectedInfoAdapter extends BaseAdapter {
 		}
 		holder.title.setTextAppearance(context, R.style.item_text_default);
 		convertView.setBackgroundResource(R.drawable.item_text_default_shape);
-		final Sku info = listInfo.get(position);
+		final YFormControl info = listInfo.get(position);
 		if (info != null) {
 			if (info.isSelected()) {
 				holder.title.setTextAppearance(context, R.style.item_text_selected);
 				convertView.setBackgroundResource(R.drawable.item_text_selected_shape);
 			}
-			holder.title.setText(info.getAttributeNames());
+			holder.title.setText(info.getControlName());
 			convertView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -80,7 +86,7 @@ public class SelectedInfoAdapter extends BaseAdapter {
 					}
 					info.setSelected(true);
 					SelectedInfoAdapter.this.notifyDataSetChanged();
-					callback.onItemClick(info,position);
+					callback.onItemClick(info,formTag,basePosition,position);
 				}
 			});
 		}
