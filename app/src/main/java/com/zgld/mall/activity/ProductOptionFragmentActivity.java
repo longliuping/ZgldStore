@@ -284,8 +284,8 @@ public class ProductOptionFragmentActivity extends BaseFragmentActivity implemen
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-//            m.put("skuId", hishopSkus.getSku()+"");
-//            m.put("productId", hishopSkus.getProductId()+"");
+            m.put("skuId", hishopSkus.getCombineValueId()+"");
+            m.put("productId", hishopSkus.getObjId()+"");
             m.put("number", number+"");
             getData(ProductOptionFragmentActivity.this,207, "car/add_product_car.html", m, null
                     );
