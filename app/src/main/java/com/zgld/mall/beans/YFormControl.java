@@ -13,14 +13,4 @@ public class YFormControl extends AbstractYFormControl implements java.io.Serial
 	public YFormControl() {
 	}
 
-	/** minimal constructor */
-	public YFormControl(String controlTime) {
-		super(controlTime);
-	}
-
-	/** full constructor */
-	public YFormControl(Integer tagId, String controlName, String fieldName, String controlValue, String controlTime) {
-		super(tagId, controlName, fieldName, controlValue, controlTime);
-	}
-
 }

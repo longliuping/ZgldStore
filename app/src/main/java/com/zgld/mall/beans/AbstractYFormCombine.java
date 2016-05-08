@@ -10,10 +10,10 @@ public abstract class AbstractYFormCombine implements java.io.Serializable {
 	// Fields
 
 	private Integer combineId;
-	private String conbineFieldName;
-	private String tableName;
+	private String combineString;
 	private Integer objId;
-	private String fieldName;
+	private String objTable;
+	private String tagFieldName;
 	private String controlName;
 	private String controlValue;
 
@@ -21,16 +21,6 @@ public abstract class AbstractYFormCombine implements java.io.Serializable {
 
 	/** default constructor */
 	public AbstractYFormCombine() {
-	}
-
-	/** full constructor */
-	public AbstractYFormCombine(String conbineFieldName, String tableName, Integer objId, String fieldName, String controlName, String controlValue) {
-		this.conbineFieldName = conbineFieldName;
-		this.tableName = tableName;
-		this.objId = objId;
-		this.fieldName = fieldName;
-		this.controlName = controlName;
-		this.controlValue = controlValue;
 	}
 
 	// Property accessors
@@ -43,20 +33,12 @@ public abstract class AbstractYFormCombine implements java.io.Serializable {
 		this.combineId = combineId;
 	}
 
-	public String getConbineFieldName() {
-		return this.conbineFieldName;
+	public String getCombineString() {
+		return this.combineString;
 	}
 
-	public void setConbineFieldName(String conbineFieldName) {
-		this.conbineFieldName = conbineFieldName;
-	}
-
-	public String getTableName() {
-		return this.tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+	public void setCombineString(String combineString) {
+		this.combineString = combineString;
 	}
 
 	public Integer getObjId() {
@@ -67,12 +49,20 @@ public abstract class AbstractYFormCombine implements java.io.Serializable {
 		this.objId = objId;
 	}
 
-	public String getFieldName() {
-		return this.fieldName;
+	public String getObjTable() {
+		return this.objTable;
 	}
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setObjTable(String objTable) {
+		this.objTable = objTable;
+	}
+
+	public String getTagFieldName() {
+		return this.tagFieldName;
+	}
+
+	public void setTagFieldName(String tagFieldName) {
+		this.tagFieldName = tagFieldName;
 	}
 
 	public String getControlName() {

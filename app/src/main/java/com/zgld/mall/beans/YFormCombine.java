@@ -10,10 +10,4 @@ public class YFormCombine extends AbstractYFormCombine implements java.io.Serial
 	/** default constructor */
 	public YFormCombine() {
 	}
-
-	/** full constructor */
-	public YFormCombine(String conbineFieldName, String tableName, Integer objId, String fieldName, String controlName, String controlValue) {
-		super(conbineFieldName, tableName, objId, fieldName, controlName, controlValue);
-	}
-
 }

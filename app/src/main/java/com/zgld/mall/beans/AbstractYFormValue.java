@@ -11,31 +11,17 @@ public abstract class AbstractYFormValue implements java.io.Serializable {
 
 	private Integer valueId;
 	private Integer tagId;
-	private Integer objId;
-	private String tableName;
+	private Integer formId;
 	private Integer tagType;
-	private String fieldName;
-	private String controlValue;
+	private Integer objId;
+	private String objTable;
+	private String tagFieldName;
+	private String tagValue;
 
 	// Constructors
 
 	/** default constructor */
 	public AbstractYFormValue() {
-	}
-
-	/** minimal constructor */
-	public AbstractYFormValue(String controlValue) {
-		this.controlValue = controlValue;
-	}
-
-	/** full constructor */
-	public AbstractYFormValue(Integer tagId, Integer objId, String tableName, Integer tagType, String fieldName, String controlValue) {
-		this.tagId = tagId;
-		this.objId = objId;
-		this.tableName = tableName;
-		this.tagType = tagType;
-		this.fieldName = fieldName;
-		this.controlValue = controlValue;
 	}
 
 	// Property accessors
@@ -56,20 +42,12 @@ public abstract class AbstractYFormValue implements java.io.Serializable {
 		this.tagId = tagId;
 	}
 
-	public Integer getObjId() {
-		return this.objId;
+	public Integer getFormId() {
+		return this.formId;
 	}
 
-	public void setObjId(Integer objId) {
-		this.objId = objId;
-	}
-
-	public String getTableName() {
-		return this.tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+	public void setFormId(Integer formId) {
+		this.formId = formId;
 	}
 
 	public Integer getTagType() {
@@ -80,20 +58,36 @@ public abstract class AbstractYFormValue implements java.io.Serializable {
 		this.tagType = tagType;
 	}
 
-	public String getFieldName() {
-		return this.fieldName;
+	public Integer getObjId() {
+		return this.objId;
 	}
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setObjId(Integer objId) {
+		this.objId = objId;
 	}
 
-	public String getControlValue() {
-		return this.controlValue;
+	public String getObjTable() {
+		return this.objTable;
 	}
 
-	public void setControlValue(String controlValue) {
-		this.controlValue = controlValue;
+	public void setObjTable(String objTable) {
+		this.objTable = objTable;
+	}
+
+	public String getTagFieldName() {
+		return this.tagFieldName;
+	}
+
+	public void setTagFieldName(String tagFieldName) {
+		this.tagFieldName = tagFieldName;
+	}
+
+	public String getTagValue() {
+		return this.tagValue;
+	}
+
+	public void setTagValue(String tagValue) {
+		this.tagValue = tagValue;
 	}
 
 }

@@ -15,15 +15,15 @@ public abstract class AbstractYFormTag implements java.io.Serializable {
 	private Integer tagId;
 	private Integer formId;
 	private String tagName;
-	private String tagType;
+	private Integer tagType;
 	private Integer isCombine;
 	private Integer isDisabled;
 	private Integer isNull;
-	private Integer isValidate;
-	private String validateType;
-	private String fieldName;
+	private String validateRegEx;
+	private String tagFieldName;
 	private String tagUnit;
 	private String tagPlaceholder;
+	private String tagIntro;
 	private Integer isDelete;
 	private String tagTime;
 
@@ -31,28 +31,6 @@ public abstract class AbstractYFormTag implements java.io.Serializable {
 
 	/** default constructor */
 	public AbstractYFormTag() {
-	}
-
-	/** minimal constructor */
-	public AbstractYFormTag(String tagTime) {
-		this.tagTime = tagTime;
-	}
-
-	/** full constructor */
-	public AbstractYFormTag(Integer formId, String tagName, String tagType, Integer isCombine, Integer isDisabled, Integer isNull, Integer isValidate, String validateType, String fieldName, String tagUnit, String tagPlaceholder, Integer isDelete, String tagTime) {
-		this.formId = formId;
-		this.tagName = tagName;
-		this.tagType = tagType;
-		this.isCombine = isCombine;
-		this.isDisabled = isDisabled;
-		this.isNull = isNull;
-		this.isValidate = isValidate;
-		this.validateType = validateType;
-		this.fieldName = fieldName;
-		this.tagUnit = tagUnit;
-		this.tagPlaceholder = tagPlaceholder;
-		this.isDelete = isDelete;
-		this.tagTime = tagTime;
 	}
 
 	// Property accessors
@@ -81,11 +59,11 @@ public abstract class AbstractYFormTag implements java.io.Serializable {
 		this.tagName = tagName;
 	}
 
-	public String getTagType() {
+	public Integer getTagType() {
 		return this.tagType;
 	}
 
-	public void setTagType(String tagType) {
+	public void setTagType(Integer tagType) {
 		this.tagType = tagType;
 	}
 
@@ -113,28 +91,20 @@ public abstract class AbstractYFormTag implements java.io.Serializable {
 		this.isNull = isNull;
 	}
 
-	public Integer getIsValidate() {
-		return this.isValidate;
+	public String getValidateRegEx() {
+		return this.validateRegEx;
 	}
 
-	public void setIsValidate(Integer isValidate) {
-		this.isValidate = isValidate;
+	public void setValidateRegEx(String validateRegEx) {
+		this.validateRegEx = validateRegEx;
 	}
 
-	public String getValidateType() {
-		return this.validateType;
+	public String getTagFieldName() {
+		return this.tagFieldName;
 	}
 
-	public void setValidateType(String validateType) {
-		this.validateType = validateType;
-	}
-
-	public String getFieldName() {
-		return this.fieldName;
-	}
-
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setTagFieldName(String tagFieldName) {
+		this.tagFieldName = tagFieldName;
 	}
 
 	public String getTagUnit() {
@@ -151,6 +121,14 @@ public abstract class AbstractYFormTag implements java.io.Serializable {
 
 	public void setTagPlaceholder(String tagPlaceholder) {
 		this.tagPlaceholder = tagPlaceholder;
+	}
+
+	public String getTagIntro() {
+		return this.tagIntro;
+	}
+
+	public void setTagIntro(String tagIntro) {
+		this.tagIntro = tagIntro;
 	}
 
 	public Integer getIsDelete() {

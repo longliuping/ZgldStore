@@ -16,6 +16,7 @@ public abstract class AbstractYForm implements java.io.Serializable {
 	private Integer classSetId;
 	private String tableName;
 	private String formName;
+	private String formIntro;
 	private Integer accountActId;
 	private Integer isDelete;
 	private String formTime;
@@ -26,20 +27,6 @@ public abstract class AbstractYForm implements java.io.Serializable {
 	public AbstractYForm() {
 	}
 
-	/** minimal constructor */
-	public AbstractYForm(String formTime) {
-		this.formTime = formTime;
-	}
-
-	/** full constructor */
-	public AbstractYForm(Integer classSetId, String tableName, String formName, Integer accountActId, Integer isDelete, String formTime) {
-		this.classSetId = classSetId;
-		this.tableName = tableName;
-		this.formName = formName;
-		this.accountActId = accountActId;
-		this.isDelete = isDelete;
-		this.formTime = formTime;
-	}
 
 	// Property accessors
 
@@ -73,6 +60,14 @@ public abstract class AbstractYForm implements java.io.Serializable {
 
 	public void setFormName(String formName) {
 		this.formName = formName;
+	}
+
+	public String getFormIntro() {
+		return this.formIntro;
+	}
+
+	public void setFormIntro(String formIntro) {
+		this.formIntro = formIntro;
 	}
 
 	public Integer getAccountActId() {
