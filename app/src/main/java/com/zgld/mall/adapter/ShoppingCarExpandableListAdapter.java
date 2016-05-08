@@ -125,12 +125,16 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 			if(info.getFormCombineValue()!=null) {
 				holder.item_price.setText(PriceUtil.priceY(info.getFormCombineValue().getGoSalePrice() + ""));
 			}
-			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
+			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice() + ""));
 			holder.d_result.setText(listInfo.get(groupPosition).getQuantity() + "");
 			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
 			final int number = Integer.parseInt(holder.d_result.getText().toString());
 			holder.item_car_checkbox.setChecked(info.isChecked());
-			holder.item_detail.setText(info.getShortDescription());
+			if(info.getSelectStr()!=null && info.getSelectStr().length()>2) {
+				holder.item_detail.setText(info.getSelectStr());
+			}else{
+				holder.item_detail.setText(info.getShortDescription());
+			}
 			holder.item_image.setOnClickListener(new View.OnClickListener() {
 
 				@Override

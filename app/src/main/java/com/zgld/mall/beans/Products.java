@@ -34,6 +34,7 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 	List<YFormCombine> listFormCombine;
 	List<YFormCombineValue> listFormCombineValue;
 	YFormCombineValue formCombineValue;
+	String selectStr;
 	public Sku getSku() {
 		return sku;
 	}
@@ -94,5 +95,12 @@ public class Products extends AbstractProducts implements java.io.Serializable {
 
 	public void setFormCombineValue(YFormCombineValue formCombineValue) {
 		this.formCombineValue = formCombineValue;
+	}
+	public String getSelectStr() {
+		return selectStr;
+	}
+
+	public void setSelectStr(String selectStr) {
+		this.selectStr = selectStr;
 	}
 }

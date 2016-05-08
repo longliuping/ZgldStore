@@ -172,9 +172,13 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 			}else{
 				holder.item_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
 			}
-			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
-			holder.item_detail.setText(info.getShortDescription());
-			holder.item_price_base.setText(PriceUtil.priceY((info.getSku().getPrice() * listInfo.get(groupPosition).getQuantity()) + ""));
+			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice() + ""));
+			if(info.getSelectStr()!=null && info.getSelectStr().length()>2) {
+				holder.item_detail.setText(info.getSelectStr());
+			}else{
+				holder.item_detail.setText(info.getShortDescription());
+			}
+			holder.item_price_base.setText(PriceUtil.priceY((info.getFormCombineValue().getGoSalePrice() * listInfo.get(groupPosition).getQuantity()) + ""));
 			holder.item_image.setOnClickListener(new OnClickListener() {
 
 				@Override
