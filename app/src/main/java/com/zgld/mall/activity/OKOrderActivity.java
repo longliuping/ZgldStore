@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -66,6 +67,20 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
     int totalSalePrice = 0;//销售总价
     String remark = "";
     PayTypePopupWindow menuWindow;
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 202:
+                    int groupCount = listview.getCount();
+                    for (int i = 0; i < groupCount; i++) {
+                        listview.expandGroup(i);
+                    }
+                    infoAdapter.notifyDataSetChanged();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated com.android.volley.Request.Method stub
@@ -82,10 +97,10 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
             for (int j = 0;j<car.getListProducts().size();j++){
                 Products pro = car.getListProducts().get(j);
                 if(pro.getSku()!=null) {
-                    totalSalePrice += pro.getSku().getPrice() * car.getQuantity();
+                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
                     totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
-                }else{
-                    totalSalePrice += pro.getSalePrice() * car.getQuantity();
+                } else {
+                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
                     totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
                 }
             }
@@ -119,15 +134,14 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
         totalMoney();
         infoAdapter = new OKOrderAdapter(this, listInfo, this);
         listview.setAdapter(infoAdapter);
-        int groupCount = listview.getCount();
-        for (int i = 0; i < groupCount; i++) {
-            listview.expandGroup(i);
-        }
+        infoAdapter.notifyDataSetChanged();
+
         next = (RelativeLayout) findViewById(R.id.next);
         next.setOnClickListener(this);
         name = (TextView) findViewById(R.id.name);
         address = (TextView) findViewById(R.id.address);
         address_title = (TextView) findViewById(R.id.address_title);
+        myHandler.sendEmptyMessage(202);
     }
 
     @Override

@@ -52,15 +52,16 @@ public class CarFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (view == null) {
-            view = shoppingCartMethod.onCreateView(inflater, container, savedInstanceState);
-
-        } else {
-            ViewGroup group = (ViewGroup) view.getParent();
-            if (group != null) {
-                group.removeView(view);
-            }
-        }
+//        if (view == null) {
+//            view = shoppingCartMethod.onCreateView(inflater, container, savedInstanceState);
+//
+//        } else {
+//            ViewGroup group = (ViewGroup) view.getParent();
+//            if (group != null) {
+//                group.removeView(view);
+//            }
+//        }
+        view = shoppingCartMethod.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
     @Override

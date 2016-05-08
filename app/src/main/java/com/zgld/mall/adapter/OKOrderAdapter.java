@@ -167,8 +167,8 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
 			holder.item_number_base.setText(listInfo.get(groupPosition).getQuantity() + "");
 			holder.item_number.setText("X" + listInfo.get(groupPosition).getQuantity());
-			if(info.getSku()!=null) {
-				holder.item_price.setText(PriceUtil.priceY(info.getSku().getPrice() + ""));
+			if(info.getFormCombineValue()!=null) {
+				holder.item_price.setText(PriceUtil.priceY(info.getFormCombineValue().getGoSalePrice() + ""));
 			}else{
 				holder.item_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
 			}

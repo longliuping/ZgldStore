@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
@@ -61,7 +63,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	CustomDialog dialog;
 	Activity activity;
 	List<ShoppingCarts> listInfo = new ArrayList<>();
-	PullToRefreshListView listview;
+	PullToRefreshExpandableListView listview;
 	ShoppingCarExpandableListAdapter infoAdapter;
 	int pageIndex = 1;
 	CheckBox item_car_checkbox;
@@ -97,18 +99,21 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (view == null) {
-			view = inflater.inflate(R.layout.fragment_car, null);
-			view.findViewById(R.id.back).setVisibility(View.GONE);
-			initView();
-			back.setVisibility(View.GONE);
-		} else {
-			ViewGroup group = (ViewGroup) view.getParent();
-			if (group != null) {
-				group.removeView(view);
-			}
-		}
-
+//		if (view == null) {
+//			view = inflater.inflate(R.layout.fragment_car, null);
+//			view.findViewById(R.id.back).setVisibility(View.GONE);
+//			initView();
+//			back.setVisibility(View.GONE);
+//		} else {
+//			ViewGroup group = (ViewGroup) view.getParent();
+//			if (group != null) {
+//				group.removeView(view);
+//			}
+//		}
+		view = inflater.inflate(R.layout.fragment_car, null);
+		view.findViewById(R.id.back).setVisibility(View.GONE);
+		initView();
+		back.setVisibility(View.GONE);
 		return view;
 
 	}
@@ -118,17 +123,17 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		title = (TextView) view.findViewById(R.id.title_center);
 		title.setText("购物车");
 		back = view.findViewById(R.id.back);
-		listview = (PullToRefreshListView) view.findViewById(R.id.listview);
+		listview = (PullToRefreshExpandableListView) view.findViewById(R.id.listview);
 		listview.setOnItemClickListener(this);
-//		listview.getRefreshableView().setGroupIndicator(null);
-//		listview.getRefreshableView().setOnGroupClickListener(new OnGroupClickListener() {
-//
-//			@Override
-//			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//				// TODO Auto-generated method stub
-//				return true;
-//			}
-//		});
+		listview.getRefreshableView().setGroupIndicator(null);
+		listview.getRefreshableView().setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
 		listview.setOnRefreshListener(this);
 		item_car_checkbox = (CheckBox) view.findViewById(R.id.item_car_checkbox);
 		item_car_checkbox.setOnCheckedChangeListener(this);
@@ -199,7 +204,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			null_data_default.setVisibility(View.VISIBLE);
 		} else {
 			Map<String,String> m = new HashMap<>();
-			getData( 201, "car/user_car_product.html", m, null);
+			getData(201, "car/user_car_all_product.html", m, null);
 		}
 	}
 
@@ -240,11 +245,10 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						}.getType());
 						infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
 						listview.getRefreshableView().setAdapter(infoAdapter);
-//						int groupCount = listview.getRefreshableView().getCount();
-//						for (int i = 0; i < groupCount; i++) {
-//							listview.getRefreshableView().expandGroup(i);
-//						}
-
+						int groupCount = listview.getRefreshableView().getCount();
+						for (int i = 0; i < groupCount; i++) {
+							listview.getRefreshableView().expandGroup(i);
+						}
 						item_car_checkbox.setChecked(false);
 						infoAdapter.notifyDataSetChanged();
 						break;
@@ -388,30 +392,9 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		}
 		infoAdapter.notifyDataSetChanged();
 	}
-
-	@Override
-	public void groupViewOnCheckedChangeListener(int groupPosition, boolean isChecked) {
-		// TODO Auto-generated method stub
-		listInfo.get(groupPosition).setChecked(isChecked);
-		for (int i = 0; i < listInfo.get(groupPosition).getListProducts().size(); i++) {
-			listInfo.get(groupPosition).getListProducts().get(i).setChecked(isChecked);
-		}
-		if (!isChecked) {
-			item_car_checkbox.setChecked(isChecked);
-		} else {
-			if (groupChecked(groupPosition)) {
-				listInfo.get(groupPosition).setChecked(isChecked);
-				if (checkAllChecked(groupPosition)) {
-					item_car_checkbox.setChecked(isChecked);
-				}
-			}
-		}
-		infoAdapter.notifyDataSetChanged();
-	}
-
 	/**
 	 * 判断分组是否全部选中
-	 * 
+	 *
 	 * @param groupPosition
 	 * @return
 	 */
@@ -486,11 +469,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		infoAdapter.notifyDataSetChanged();
 	}
 
-	@Override
-	public void viewDrawComplete() {
-		// TODO Auto-generated method stub
-	}
-
 	int deleteGroupPosition = 0;
 	int deleteChildPosition = 0;
 
@@ -515,7 +493,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						m.put(Contents.TOKEN, users.getUsers().getAppUserToken());
 						m.put(Contents.USERID,users.getUsers().getUserId() + "");
 						m.put("productId", listInfo.get(groupPosition).getListProducts().get(childPosition).getProductId() + "");
-						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getSku().getSku()+"");
+						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getFormCombineValue().getCombineValueId()+"");
 						getData(203, "car/delete_car_product.html", m, null);
 					}
 

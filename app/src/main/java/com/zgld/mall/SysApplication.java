@@ -55,7 +55,7 @@ public class SysApplication extends Application implements Thread.UncaughtExcept
 	public void onCreate() {
 		super.onCreate();
 		//关闭volley日志
-		VolleyLog.DEBUG = false;
+//		VolleyLog.DEBUG = false;
 		Thread.setDefaultUncaughtExceptionHandler(this);
 		applicationContext = this;
 		boolean DEVELOPER_MODE = false;

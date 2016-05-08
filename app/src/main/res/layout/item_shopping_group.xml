@@ -32,13 +32,4 @@
 	        android:layout_marginLeft="10dp"
 	        />
 	</RelativeLayout>
-	<com.zgld.mall.widget.MyListView
-		android:id="@+id/item_listview"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:divider="#E5E5E5"
-		android:dividerHeight="0dp"
-		android:background="#EEEFF0"
-		android:listSelector="@color/transparent"
-		></com.zgld.mall.widget.MyListView>
 </LinearLayout>

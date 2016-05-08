@@ -267,6 +267,9 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
             lp.alpha = 0.5F; // 0.0-1.0
             getWindow().setAttributes(lp);
             // 实例化SelectPicPopupWindow
+            if(menuWindow!=null && menuWindow.isShowing()){
+                menuWindow.dismiss();
+            }
             menuWindow = new PublishSelectPicPopupWindow(this, info, this);
             // 显示窗口
             menuWindow.showAtLocation(this.findViewById(R.id.item_product_param),

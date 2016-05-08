@@ -84,8 +84,8 @@ public class ShoppingCarChildAdapter extends BaseAdapter{
         final Products info = listInfo.get(groupPosition).getListProducts().get(childPosition);
         if (info != null) {
             holder.item_title.setText(info.getProductName());
-            if(info.getSku()!=null) {
-                holder.item_price.setText(PriceUtil.priceY(info.getSku().getPrice() + ""));
+            if(info.getFormCombineValue()!=null) {
+                holder.item_price.setText(PriceUtil.priceY(info.getFormCombineValue().getGoSalePrice() + ""));
             }
             holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice()+""));
             holder.d_result.setText(listInfo.get(groupPosition).getQuantity() + "");
