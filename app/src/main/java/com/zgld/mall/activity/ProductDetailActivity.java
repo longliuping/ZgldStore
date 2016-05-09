@@ -412,8 +412,12 @@ public class ProductDetailActivity extends BaseActivity implements AdapterView.O
         Map<String,String> m = new HashMap<>();
         YAccount users = new UserDataShare(this).getUserData();
         if(users!=null) {
-            m.put("skuId", hishopSkus.getCombineValueId()+"");
-            m.put("productId", hishopSkus.getObjId()+"");
+            if(hishopSkus!=null) {
+                m.put("skuId", hishopSkus.getCombineValueId() + "");
+                m.put("productId", hishopSkus.getObjId() + "");
+            }else{
+                m.put("productId", info.getProducts().getProductId() + "");
+            }
             m.put("number", number+"");
             getData(ProductDetailActivity.this,207, "car/add_product_car.html", m, null
                     );

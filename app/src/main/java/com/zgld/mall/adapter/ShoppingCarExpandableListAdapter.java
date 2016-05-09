@@ -19,18 +19,19 @@ import com.zgld.mall.SysApplication;
 import com.zgld.mall.activity.ProductDetailActivity;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
 
 import java.util.List;
 
 public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter {
-	List<ShoppingCarts> listInfo;
+	List<YShop> listInfo;
 	LayoutInflater layoutInflater;
 	Context context;
 	ShoppingCarExpandableListAdapterListener listener;
 
-	public ShoppingCarExpandableListAdapter(Context context, List<ShoppingCarts> listInfo,
+	public ShoppingCarExpandableListAdapter(Context context, List<YShop> listInfo,
 											ShoppingCarExpandableListAdapterListener listener) {
 		// TODO Auto-generated constructor stub
 		this.listInfo = listInfo;
@@ -45,7 +46,7 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return listInfo.get(groupPosition).getListProducts().size();
+		return listInfo.get(groupPosition).getListShoppingCarts().size();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return listInfo.get(groupPosition).getListProducts().get(childPosition);
+		return listInfo.get(groupPosition).getListShoppingCarts().get(childPosition);
 	}
 
 	@Override
@@ -84,11 +85,9 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		ShoppingCarts info = listInfo.get(groupPosition);
+		YShop info = listInfo.get(groupPosition);
 		if (info != null) {
-			if(info.getyShop()!=null) {
-				holder.item_car_manufactor_name.setText(info.getyShop().getShopName());
-			}
+				holder.item_car_manufactor_name.setText(info.getShopName()+"");
 		}
 		return convertView;
 	}
@@ -116,25 +115,23 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 		}
 		final ChildViewHoldeer h = holder;
 		holder.item_line.setVisibility(View.VISIBLE);
-		if (listInfo.get(groupPosition).getListProducts().size()-1 == childPosition) {
+		if (isLastChild) {
 			holder.item_line.setVisibility(View.GONE);
 		}
-		final Products info = listInfo.get(groupPosition).getListProducts().get(childPosition);
+		final ShoppingCarts info = listInfo.get(groupPosition).getListShoppingCarts().get(childPosition);
 		if (info != null) {
-			holder.item_title.setText(info.getProductName());
-			if(info.getFormCombineValue()!=null) {
-				holder.item_price.setText(PriceUtil.priceY(info.getFormCombineValue().getGoSalePrice() + ""));
+			holder.item_title.setText(info.getProducts().getProductName());
+			if(info.getProducts().getFormCombineValue()!=null) {
+				holder.item_price.setText(PriceUtil.priceY(info.getProducts().getFormCombineValue().getGoSalePrice() + ""));
+			}else{
+				holder.item_price.setText(PriceUtil.priceY(info.getProducts().getSalePrice() + ""));
 			}
-			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice() + ""));
-			holder.d_result.setText(listInfo.get(groupPosition).getQuantity() + "");
-			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
+			holder.item_market_price.setText(PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
+			holder.d_result.setText(info.getQuantity() + "");
+			SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(), holder.item_image);
 			final int number = Integer.parseInt(holder.d_result.getText().toString());
 			holder.item_car_checkbox.setChecked(info.isChecked());
-			if(info.getSelectStr()!=null && info.getSelectStr().length()>2) {
-				holder.item_detail.setText(info.getSelectStr());
-			}else{
-				holder.item_detail.setText(info.getShortDescription());
-			}
+			holder.item_detail.setText(info.getProducts().getSelectStr());
 			holder.item_image.setOnClickListener(new View.OnClickListener() {
 
 				@Override

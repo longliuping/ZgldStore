@@ -19,7 +19,7 @@ public class ShoppingCarts extends AbstractShoppingCarts implements java.io.Seri
 	}
 	List<Products> listProducts;
 	YShop yShop;
-
+	Products products;
 	public YShop getyShop() {
 		return yShop;
 	}
@@ -43,5 +43,12 @@ public class ShoppingCarts extends AbstractShoppingCarts implements java.io.Seri
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	public Products getProducts() {
+		return products;
+	}
+
+	public void setProducts(Products products) {
+		this.products = products;
 	}
 }

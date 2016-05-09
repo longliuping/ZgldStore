@@ -28,7 +28,6 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
 import com.zgld.mall.UserDataShare;
 import com.zgld.mall.adapter.ShoppingCarExpandableListAdapter;
@@ -36,6 +35,7 @@ import com.zgld.mall.beans.GsonObject;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.dialog.ConfirmDialog;
 import com.zgld.mall.utils.Contents;
@@ -62,7 +62,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	protected ConfirmDialog confirmDialog = null;
 	CustomDialog dialog;
 	Activity activity;
-	List<ShoppingCarts> listInfo = new ArrayList<>();
+	List<YShop> listInfo = new ArrayList<>();
 	PullToRefreshExpandableListView listview;
 	ShoppingCarExpandableListAdapter infoAdapter;
 	int pageIndex = 1;
@@ -241,7 +241,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 				switch (msg.what) {
 					case 201:
 						jsonArray = new JSONObject(json).getJSONObject(Contents.DATA).getJSONArray(Contents.LISTINIFO);
-						listInfo = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<ShoppingCarts>>() {
+						listInfo = new Gson().fromJson(jsonArray.toString(),new TypeToken<List<YShop>>() {
 						}.getType());
 						infoAdapter = new ShoppingCarExpandableListAdapter(activity, listInfo, ShoppingCartMethod.this);
 						listview.getRefreshableView().setAdapter(infoAdapter);
@@ -254,10 +254,10 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						break;
 					case 203:
 						if(jsonObject.getInt(Contents.STATUS)==200){
-							if(listInfo.get(deleteGroupPosition).getListProducts().size()>=deleteChildPosition){
-								listInfo.get(deleteGroupPosition).getListProducts().remove(deleteChildPosition);
+							if(listInfo.get(deleteGroupPosition).getListShoppingCarts().size()>=deleteChildPosition){
+								listInfo.get(deleteGroupPosition).getListShoppingCarts().remove(deleteChildPosition);
 								deleteChildPosition = 0;
-								if(listInfo.get(deleteGroupPosition).getListProducts().size()<=0){
+								if(listInfo.get(deleteGroupPosition).getListShoppingCarts().size()<=0){
 									listInfo.remove(deleteGroupPosition);
 								}
 								infoAdapter.notifyDataSetChanged();
@@ -313,29 +313,50 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 				Toast.makeText(activity, "请选择要结算的产品", Toast.LENGTH_SHORT).show();
 			} else {
 				ArrayList<ShoppingCarts> listCarts = new ArrayList<>();
+				ArrayList<YShop> listShop = new ArrayList<>();
+				int shopId = 0;
+				YShop shop = new YShop();
+				Map<Integer,Integer> mshopId = new HashMap<>();
 				for (int i = 0; i < listInfo.size(); i++) {
-					ShoppingCarts infoCar = listInfo.get(i);
-					ShoppingCarts infoObj = new ShoppingCarts();
-					List<Products> listHishopProducts = new ArrayList<>();
-					for (int j = 0; j < infoCar.getListProducts().size(); j++) {
-						Products infoPro = infoCar.getListProducts().get(j);
-						if (infoCar.getListProducts().get(j).isChecked()) {
-//							infoPro.setListHishopSkuitems(infoCar.getListProducts().get(j).getListHishopSkuitems());
-							listHishopProducts.add(infoPro);
+//					ShoppingCarts infoCar = listInfo.get(i);
+//					ShoppingCarts infoObj = new ShoppingCarts();
+//					List<Products> listHishopProducts = new ArrayList<>();
+//					for (int j = 0; j < infoCar.getListProducts().size(); j++) {
+//						Products infoPro = infoCar.getListProducts().get(j);
+//						if (infoCar.getListProducts().get(j).isChecked()) {
+//							listHishopProducts.add(infoPro);
+//						}
+//					}
+//					if(listHishopProducts.size()>0){
+//						infoObj.setQuantity(infoCar.getQuantity());
+//						infoObj.setChecked(infoCar.isChecked());
+//						infoObj.setProductId(infoCar.getProductId());
+//						infoObj.setSku(infoCar.getSku());
+//						infoObj.setUserId(infoCar.getUserId());
+//						infoObj.setListProducts(listHishopProducts);
+//						infoObj.setyShop(infoCar.getyShop());
+//						listCarts.add(infoObj);
+//					}
+					YShop infoShop = listInfo.get(i);
+					for (int j=0;j<infoShop.getListShoppingCarts().size();j++){
+						ShoppingCarts shoppingCarts = infoShop.getListShoppingCarts().get(j);
+						if(shoppingCarts.isChecked()){
+							if(mshopId.containsKey(shoppingCarts.getShopId())){
+								listCarts.add(shoppingCarts);
+							}else{
+								shop = infoShop;
+								if(listCarts!=null && listCarts.size()>0){
+									listShop.add(shop);
+								}
+								shopId = shoppingCarts.getShopId();
+								mshopId.put(shopId,shopId);
+								listCarts = new ArrayList<>();
+								listCarts.add(shoppingCarts);
+							}
 						}
 					}
-					if(listHishopProducts.size()>0){
-						infoObj.setQuantity(infoCar.getQuantity());
-						infoObj.setChecked(infoCar.isChecked());
-//						infoObj.setAddTime(infoCar.getAddTime());
-						infoObj.setProductId(infoCar.getProductId());
-						infoObj.setSku(infoCar.getSku());
-						infoObj.setUserId(infoCar.getUserId());
-						infoObj.setListProducts(listHishopProducts);
-						infoObj.setyShop(infoCar.getyShop());
-						listCarts.add(infoObj);
-					}
 				}
+				listShop.add(shop);
 				Intent intent = new Intent(activity, OKOrderActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("listInfo", listCarts);
@@ -377,68 +398,7 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	@Override
 	public void childViewOnCheckedChangeListener(int groupPosition, int childPosition, boolean isChecked) {
 		// TODO Auto-generated method stub
-		listInfo.get(groupPosition).getListProducts().get(childPosition).setChecked(isChecked);
-		if (!isChecked) {
-			listInfo.get(groupPosition).setChecked(isChecked);
-			item_car_checkbox.setChecked(isChecked);
-		} else {
-			// 如果全部选中,，分组也选中
-			if (groupChecked(groupPosition)) {
-				listInfo.get(groupPosition).setChecked(isChecked);
-				if (checkAllChecked(groupPosition)) {
-					item_car_checkbox.setChecked(isChecked);
-				}
-			}
-		}
-		infoAdapter.notifyDataSetChanged();
 	}
-	/**
-	 * 判断分组是否全部选中
-	 *
-	 * @param groupPosition
-	 * @return
-	 */
-	boolean groupChecked(int groupPosition) {
-		boolean result = false;
-		for (int i = 0; i < listInfo.get(groupPosition).getListProducts().size(); i++) {
-			if (!listInfo.get(groupPosition).getListProducts().get(i).isChecked()) {
-				result = listInfo.get(groupPosition).isChecked();
-				break;
-			} else {
-				result = true;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * 判断是否全部选中
-	 * 
-	 * @param groupPosition
-	 * @return
-	 */
-	boolean checkAllChecked(int groupPosition) {
-		boolean result = true;
-		for (int i = 0; i < listInfo.size(); i++) {
-			if (result) {
-				if (!listInfo.get(i).isChecked()) {
-					result = false;
-					break;
-				} else {
-					for (int j = 0; j < listInfo.get(i).getListProducts().size(); j++) {
-						if (result) {
-							if (!listInfo.get(i).getListProducts().get(j).isChecked()) {
-								result = false;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
-
 	/**
 	 * 判断是否有选中结算的产品
 	 * 
@@ -447,8 +407,10 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	boolean checkedProduct() {
 		boolean result = false;
 		for (int i = 0; i < listInfo.size(); i++) {
-			for (int j = 0; j < listInfo.get(i).getListProducts().size(); j++) {
-				if (listInfo.get(i).getListProducts().get(j).isChecked()) {
+			YShop shop = listInfo.get(i);
+			for (int j = 0; j < shop.getListShoppingCarts().size(); j++) {
+				ShoppingCarts carts = shop.getListShoppingCarts().get(j);
+				if (carts.isChecked()) {
 					result = true;
 					return true;
 				}
@@ -456,19 +418,6 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		}
 		return result;
 	}
-
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < listInfo.size(); i++) {
-			listInfo.get(i).setChecked(isChecked);
-			for (int j = 0; j < listInfo.get(i).getListProducts().size(); j++) {
-				listInfo.get(i).getListProducts().get(j).setChecked(isChecked);
-			}
-		}
-		infoAdapter.notifyDataSetChanged();
-	}
-
 	int deleteGroupPosition = 0;
 	int deleteChildPosition = 0;
 
@@ -492,8 +441,11 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 						YAccount users = new UserDataShare(activity).getUserData();
 						m.put(Contents.TOKEN, users.getUsers().getAppUserToken());
 						m.put(Contents.USERID,users.getUsers().getUserId() + "");
-						m.put("productId", listInfo.get(groupPosition).getListProducts().get(childPosition).getProductId() + "");
-						m.put("skuId", listInfo.get(groupPosition).getListProducts().get(childPosition).getFormCombineValue().getCombineValueId()+"");
+						ShoppingCarts carts = listInfo.get(groupPosition).getListShoppingCarts().get(childPosition);
+						m.put("productId", carts.getProductId() + "");
+						if(carts.getProducts().getFormCombineValue()!=null) {
+							m.put("skuId", carts.getProducts().getFormCombineValue().getCombineValueId() + "");
+						}
 						getData(203, "car/delete_car_product.html", m, null);
 					}
 
@@ -515,17 +467,14 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	@Override
 	public void reduceNumber(int groupPosition, int childPosition, int newNumber) {
 		// TODO Auto-generated method stub
-//		listInfo.get(groupPosition).getListHishopProducts().get(childPosition).setQuantity(newNumber + "");
-		listInfo.get(groupPosition).setQuantity(newNumber);
-//		totalMoney();
+		listInfo.get(groupPosition).getListShoppingCarts().get(childPosition).setQuantity(newNumber);
 		infoAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void addNumber(int groupPosition, int childPosition, int newNumber) {
 		// TODO Auto-generated method stub
-//		listInfo.get(groupPosition).getListHishopProducts().get(childPosition).setQuantity(newNumber + "");
-		listInfo.get(groupPosition).setQuantity(newNumber);
+		listInfo.get(groupPosition).getListShoppingCarts().get(childPosition).setQuantity(newNumber);
 		infoAdapter.notifyDataSetChanged();
 	}
 
@@ -568,5 +517,15 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 		if (mBroadcastReceiver != null) {
 			activity.unregisterReceiver(mBroadcastReceiver);
 		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		for (int i=0;i<listInfo.size();i++){
+			for(int j=0;j<listInfo.get(i).getListShoppingCarts().size();j++){
+				listInfo.get(i).getListShoppingCarts().get(j).setChecked(isChecked);
+			}
+		}
+		infoAdapter.notifyDataSetChanged();
 	}
 }
