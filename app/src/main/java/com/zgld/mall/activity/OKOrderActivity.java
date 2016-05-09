@@ -42,11 +42,13 @@ import com.zgld.mall.utils.AddressXmlUtils;
 import com.zgld.mall.utils.BroadcastUtils;
 import com.zgld.mall.utils.Contents;
 import com.zgld.mall.utils.PriceUtil;
+import com.zgld.mall.utils.SubmitOrderParam;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2, AdapterView.OnItemClickListener, View.OnClickListener,
@@ -277,20 +279,26 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                     return;
                 }
                 Map<String, String> m = new HashMap<String, String>();
-                StringBuffer skuId = new StringBuffer();
-                StringBuffer nums = new StringBuffer();
-//                for (int i = 0; i < listInfo.size(); i++) {
-//                    skuId.append(listInfo.get(i).getSku() + ",");
-//                    nums.append(listInfo.get(i).getQuantity() + ",");
-//                }
-                if (!TextUtils.isEmpty(skuId)) {
-                    skuId.deleteCharAt(skuId.length() - 1);
+                List<SubmitOrderParam> listParam = new ArrayList<>();
+                for (int i=0;i<listInfo.size();i++){
+                    YShop shop = listInfo.get(i);
+                    for (int j=0;j<shop.getListShoppingCarts().size();j++){
+                        ShoppingCarts carts = shop.getListShoppingCarts().get(j);
+                        SubmitOrderParam param = new SubmitOrderParam();
+                        param.setShopId(carts.getShopId());
+                        param.setNumber(carts.getQuantity());
+                        param.setProductId(carts.getProductId());
+                        if(carts.getProducts().getFormCombineValue()!=null) {
+                            param.setValueId(carts.getProducts().getFormCombineValue().getCombineValueId());
+                        }else{
+                            param.setValueId(0);
+                        }
+                        listParam.add(param);
+                    }
                 }
-                if (!TextUtils.isEmpty(nums)) {
-                    nums.deleteCharAt(nums.length() - 1);
-                }
-                m.put("skuId", skuId.toString());
-                m.put("skuNumber", nums.toString());
+                Gson gson = new Gson();
+                String json = gson.toJson(listParam);
+                m.put("json",json);
                 getData(OKOrderActivity.this,205, "order/submit_order.html", m, null);
                 break;
         }
