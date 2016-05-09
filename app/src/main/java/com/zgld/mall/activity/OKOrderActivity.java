@@ -35,6 +35,7 @@ import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
 import com.zgld.mall.beans.UserShippingAddresses;
 import com.zgld.mall.beans.YAccount;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.pop.PayTypePopupWindow;
 import com.zgld.mall.sync.OrderAsync;
 import com.zgld.mall.utils.AddressXmlUtils;
@@ -58,7 +59,7 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
     TextView item_pay;
     TextView item_payment_amount;
     RelativeLayout bottom;
-    ArrayList<ShoppingCarts> listInfo = new ArrayList<>();
+    ArrayList<YShop> listInfo = new ArrayList<>();
     RelativeLayout next;
     TextView name, address, address_title;
     UserShippingAddresses addressInfo;
@@ -67,42 +68,40 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
     int totalSalePrice = 0;//销售总价
     String remark = "";
     PayTypePopupWindow menuWindow;
-    Handler myHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 202:
-                    int groupCount = listview.getCount();
-                    for (int i = 0; i < groupCount; i++) {
-                        listview.expandGroup(i);
-                    }
-                    infoAdapter.notifyDataSetChanged();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated com.android.volley.Request.Method stub
         super.onCreate(savedInstanceState);
         initStyle();
         setContentView(R.layout.activity_okorder);
-        listInfo = (ArrayList<ShoppingCarts>)this.getIntent().getSerializableExtra(Contents.LISTINIFO);
+        listInfo = (ArrayList<YShop>)this.getIntent().getSerializableExtra(Contents.LISTINIFO);
         if(listInfo==null || listInfo.size()<=0){
             finish();
             return;
         }
         for (int i = 0;i<listInfo.size();i++){
-            ShoppingCarts car = listInfo.get(i);
-            for (int j = 0;j<car.getListProducts().size();j++){
-                Products pro = car.getListProducts().get(j);
-                if(pro.getSku()!=null) {
-                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
-                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
-                } else {
-                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
-                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
+//            ShoppingCarts car = listInfo.get(i);
+//            for (int j = 0;j<car.getListProducts().size();j++){
+//                Products pro = car.getListProducts().get(j);
+//                if(pro.getSku()!=null) {
+//                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
+//                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
+//                } else {
+//                    totalSalePrice += pro.getFormCombineValue().getGoSalePrice() * car.getQuantity();
+//                    totalMarketPrice += pro.getMarketPrice() * car.getQuantity();
+//                }
+//            }
+            YShop shop = listInfo.get(i);
+            for(int j=0;j<shop.getListShoppingCarts().size();j++){
+                ShoppingCarts carts = shop.getListShoppingCarts().get(j);
+                double price = 0;
+                if(carts.getProducts().getFormCombineValue()!=null){
+                    price = carts.getProducts().getFormCombineValue().getGoSalePrice();
+                }else{
+                    price = carts.getProducts().getSalePrice();
                 }
+                totalSalePrice += price * carts.getQuantity();
+                totalMarketPrice += carts.getProducts().getMarketPrice() * carts.getQuantity();
             }
         }
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
@@ -135,13 +134,16 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
         infoAdapter = new OKOrderAdapter(this, listInfo, this);
         listview.setAdapter(infoAdapter);
         infoAdapter.notifyDataSetChanged();
-
         next = (RelativeLayout) findViewById(R.id.next);
         next.setOnClickListener(this);
         name = (TextView) findViewById(R.id.name);
         address = (TextView) findViewById(R.id.address);
         address_title = (TextView) findViewById(R.id.address_title);
-        myHandler.sendEmptyMessage(202);
+        int groupCount = listview.getCount();
+        for (int i = 0; i < groupCount; i++) {
+            listview.expandGroup(i);
+        }
+        infoAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -274,24 +276,19 @@ public class OKOrderActivity extends BaseActivity implements PullToRefreshBase.O
                     Contents.loginPage(this,null,200);
                     return;
                 }
-//                if (addressInfo == null) {
-//                    Toast.makeText(this, "请选择地址", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
                 Map<String, String> m = new HashMap<String, String>();
                 StringBuffer skuId = new StringBuffer();
                 StringBuffer nums = new StringBuffer();
-                for (int i = 0; i < listInfo.size(); i++) {
-                    skuId.append(listInfo.get(i).getSku() + ",");
-                    nums.append(listInfo.get(i).getQuantity() + ",");
-                }
+//                for (int i = 0; i < listInfo.size(); i++) {
+//                    skuId.append(listInfo.get(i).getSku() + ",");
+//                    nums.append(listInfo.get(i).getQuantity() + ",");
+//                }
                 if (!TextUtils.isEmpty(skuId)) {
                     skuId.deleteCharAt(skuId.length() - 1);
                 }
                 if (!TextUtils.isEmpty(nums)) {
                     nums.deleteCharAt(nums.length() - 1);
                 }
-//                m.put("shippingId", addressInfo.getAddressId()+"");
                 m.put("skuId", skuId.toString());
                 m.put("skuNumber", nums.toString());
                 getData(OKOrderActivity.this,205, "order/submit_order.html", m, null);

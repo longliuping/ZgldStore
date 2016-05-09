@@ -179,9 +179,9 @@ public class ShoppingCarExpandableListAdapter extends BaseExpandableListAdapter 
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					info.setChecked(finalHolder.item_car_checkbox.isChecked());
-//                    listener.childViewOnCheckedChangeListener(groupPosition, childPosition,
-//                            h.item_car_checkbox.isChecked());
+//					info.setChecked(finalHolder.item_car_checkbox.isChecked());
+                    listener.childViewOnCheckedChangeListener(groupPosition, childPosition,
+                            h.item_car_checkbox.isChecked());
 				}
 			});
 		}

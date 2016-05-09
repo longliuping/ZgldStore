@@ -18,6 +18,7 @@ import com.zgld.mall.R;
 import com.zgld.mall.SysApplication;
 import com.zgld.mall.beans.Products;
 import com.zgld.mall.beans.ShoppingCarts;
+import com.zgld.mall.beans.YShop;
 import com.zgld.mall.utils.PriceUtil;
 
 public class OKOrderAdapter extends BaseExpandableListAdapter {
@@ -25,12 +26,12 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		void remark(int groupPosition, int childPosition, String remark);
 	}
 
-	ArrayList<ShoppingCarts> listInfo = new ArrayList<>();
+	ArrayList<YShop> listInfo = new ArrayList<>();
 	LayoutInflater layoutInflater;
 	Context context;
 	BaseExpandableListAdapterListener listener;
 
-	public OKOrderAdapter(Context context, ArrayList<ShoppingCarts> listInfo, BaseExpandableListAdapterListener listener) {
+	public OKOrderAdapter(Context context, ArrayList<YShop> listInfo, BaseExpandableListAdapterListener listener) {
 		// TODO Auto-generated constructor stub
 		this.listInfo = listInfo;
 		layoutInflater = LayoutInflater.from(context);
@@ -67,7 +68,7 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return listInfo.get(groupPosition).getListProducts().size();
+		return listInfo.get(groupPosition).getListShoppingCarts().size();
 	}
 
 
@@ -76,7 +77,7 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return listInfo.get(groupPosition).getListProducts().get(childPosition);
+		return listInfo.get(groupPosition).getListShoppingCarts().get(childPosition);
 	}
 
 	/**
@@ -113,12 +114,9 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		} else {
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		ShoppingCarts info = listInfo.get(groupPosition);
+		YShop info = listInfo.get(groupPosition);
 		if (info != null) {
-
-			if(info.getyShop()!=null){
-				holder.item_car_manufactor_name.setText(info.getyShop().getShopName());
-			}
+				holder.item_car_manufactor_name.setText(info.getShopName());
 		}
 		return convertView;
 	}
@@ -158,27 +156,26 @@ public class OKOrderAdapter extends BaseExpandableListAdapter {
 		}
 		final ChildViewHoldeer h = holder;
 		holder.bottom.setVisibility(View.GONE);
-		final Products info = listInfo.get(groupPosition).getListProducts().get(childPosition);
+		final ShoppingCarts info = listInfo.get(groupPosition).getListShoppingCarts().get(childPosition);
 		if (info != null) {
 			if (isLastChild) {
 				holder.bottom.setVisibility(View.VISIBLE);
 			}
-			holder.item_title.setText(info.getProductName());
-			SysApplication.DisplayImage(info.getThumbnailsUrl(), holder.item_image);
-			holder.item_number_base.setText(listInfo.get(groupPosition).getQuantity() + "");
-			holder.item_number.setText("X" + listInfo.get(groupPosition).getQuantity());
-			if(info.getFormCombineValue()!=null) {
-				holder.item_price.setText(PriceUtil.priceY(info.getFormCombineValue().getGoSalePrice() + ""));
+			holder.item_title.setText(info.getProducts().getProductName());
+			SysApplication.DisplayImage(info.getProducts().getThumbnailsUrl(), holder.item_image);
+			holder.item_number_base.setText(info.getQuantity() + "");
+			holder.item_number.setText("X" + info.getQuantity());
+			Double price = 0.0;
+			if(info.getProducts().getFormCombineValue()!=null) {
+				price = info.getProducts().getFormCombineValue().getGoSalePrice();
+				holder.item_price.setText(PriceUtil.priceY(price + ""));
 			}else{
-				holder.item_price.setText(PriceUtil.priceY(info.getSalePrice() + ""));
+				price = info.getProducts().getSalePrice();
+				holder.item_price.setText(PriceUtil.priceY(price + ""));
 			}
-			holder.item_market_price.setText(PriceUtil.priceY(info.getMarketPrice() + ""));
-			if(info.getSelectStr()!=null && info.getSelectStr().length()>2) {
-				holder.item_detail.setText(info.getSelectStr());
-			}else{
-				holder.item_detail.setText(info.getShortDescription());
-			}
-			holder.item_price_base.setText(PriceUtil.priceY((info.getFormCombineValue().getGoSalePrice() * listInfo.get(groupPosition).getQuantity()) + ""));
+			holder.item_market_price.setText(PriceUtil.priceY(info.getProducts().getMarketPrice() + ""));
+			holder.item_detail.setText(info.getProducts().getShortDescription());
+			holder.item_price_base.setText(PriceUtil.priceY((price * info.getQuantity()) + ""));
 			holder.item_image.setOnClickListener(new OnClickListener() {
 
 				@Override

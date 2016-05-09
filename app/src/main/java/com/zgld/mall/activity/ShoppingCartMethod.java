@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -312,54 +313,29 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 			if (!checkedProduct()) {
 				Toast.makeText(activity, "请选择要结算的产品", Toast.LENGTH_SHORT).show();
 			} else {
-				ArrayList<ShoppingCarts> listCarts = new ArrayList<>();
 				ArrayList<YShop> listShop = new ArrayList<>();
-				int shopId = 0;
-				YShop shop = new YShop();
-				Map<Integer,Integer> mshopId = new HashMap<>();
 				for (int i = 0; i < listInfo.size(); i++) {
-//					ShoppingCarts infoCar = listInfo.get(i);
-//					ShoppingCarts infoObj = new ShoppingCarts();
-//					List<Products> listHishopProducts = new ArrayList<>();
-//					for (int j = 0; j < infoCar.getListProducts().size(); j++) {
-//						Products infoPro = infoCar.getListProducts().get(j);
-//						if (infoCar.getListProducts().get(j).isChecked()) {
-//							listHishopProducts.add(infoPro);
-//						}
-//					}
-//					if(listHishopProducts.size()>0){
-//						infoObj.setQuantity(infoCar.getQuantity());
-//						infoObj.setChecked(infoCar.isChecked());
-//						infoObj.setProductId(infoCar.getProductId());
-//						infoObj.setSku(infoCar.getSku());
-//						infoObj.setUserId(infoCar.getUserId());
-//						infoObj.setListProducts(listHishopProducts);
-//						infoObj.setyShop(infoCar.getyShop());
-//						listCarts.add(infoObj);
-//					}
 					YShop infoShop = listInfo.get(i);
+					YShop shop = new YShop();
+					ArrayList<ShoppingCarts> listCarts = new ArrayList<>();
+					Log.i("店铺名称:",infoShop.getShopName());
 					for (int j=0;j<infoShop.getListShoppingCarts().size();j++){
 						ShoppingCarts shoppingCarts = infoShop.getListShoppingCarts().get(j);
 						if(shoppingCarts.isChecked()){
-							if(mshopId.containsKey(shoppingCarts.getShopId())){
-								listCarts.add(shoppingCarts);
-							}else{
-								shop = infoShop;
-								if(listCarts!=null && listCarts.size()>0){
-									listShop.add(shop);
-								}
-								shopId = shoppingCarts.getShopId();
-								mshopId.put(shopId,shopId);
-								listCarts = new ArrayList<>();
-								listCarts.add(shoppingCarts);
-							}
+							Log.i("产品名称:",shoppingCarts.getProducts().getProductName());
+							listCarts.add(shoppingCarts);
 						}
 					}
+					shop = infoShop;
+					if(listCarts!=null && listCarts.size()>0){
+						shop.setListShoppingCarts(listCarts);
+						listShop.add(shop);
+					}
 				}
-				listShop.add(shop);
+//				listShop.add(shop);
 				Intent intent = new Intent(activity, OKOrderActivity.class);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("listInfo", listCarts);
+				bundle.putSerializable("listInfo", listShop);
 				intent.putExtras(bundle);
 				activity.startActivityForResult(intent, 208);
 			}
@@ -398,6 +374,8 @@ public class ShoppingCartMethod implements RequestListenr, OnRefreshListener2, O
 	@Override
 	public void childViewOnCheckedChangeListener(int groupPosition, int childPosition, boolean isChecked) {
 		// TODO Auto-generated method stub
+		listInfo.get(groupPosition).getListShoppingCarts().get(childPosition).setChecked(isChecked);
+		infoAdapter.notifyDataSetChanged();
 	}
 	/**
 	 * 判断是否有选中结算的产品
