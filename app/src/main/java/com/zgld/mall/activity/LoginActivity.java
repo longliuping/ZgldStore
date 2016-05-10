@@ -107,7 +107,8 @@ public class LoginActivity extends BaseActivity implements  View.OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
             if(requestCode==200){
-//                finish();
+                setResult(RESULT_OK);
+                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
