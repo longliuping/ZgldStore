@@ -38,7 +38,9 @@ public abstract class AbstractOrders implements java.io.Serializable {
 	private String buyerAccount;// 买家账号(支付宝账号)
 	private String refundDateTime;// 退款时间
 	private Double refundTotalFee;//  退款交易金额
-
+	private String consumptionDate;
+	private String consumptionCode;
+	private Integer consumptionStatus;
 	// Constructors
 
 	/** default constructor */
@@ -262,5 +264,27 @@ public abstract class AbstractOrders implements java.io.Serializable {
 	public void setRefundTotalFee(Double refundTotalFee) {
 		this.refundTotalFee = refundTotalFee;
 	}
+	public String getConsumptionDate() {
+		return consumptionDate;
+	}
 
+	public void setConsumptionDate(String consumptionDate) {
+		this.consumptionDate = consumptionDate;
+	}
+
+	public String getConsumptionCode() {
+		return consumptionCode;
+	}
+
+	public void setConsumptionCode(String consumptionCode) {
+		this.consumptionCode = consumptionCode;
+	}
+
+	public Integer getConsumptionStatus() {
+		return consumptionStatus;
+	}
+
+	public void setConsumptionStatus(Integer consumptionStatus) {
+		this.consumptionStatus = consumptionStatus;
+	}
 }

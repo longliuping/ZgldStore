@@ -154,7 +154,10 @@
         <activity android:name=".activity.OfflinePaymentActivity" />
         <activity android:name=".activity.RecommendUserFragmentActivity" />
         <activity android:name=".activity.BalanceDetailsActivity" />
-        <activity android:name=".activity.CustomerOrderFragmentActivity"></activity>
+        <activity android:name=".activity.CustomerOrderFragmentActivity" />
+        <activity android:name=".activity.UpdateUserCodeActivity" />
+        <activity android:name=".activity.CaptureActivity" />
+        <activity android:name=".activity.ResultActivity"></activity>
     </application>
 
 </manifest>
