@@ -17,6 +17,12 @@
         <item>待使用</item>
         <item>待评价</item>
     </string-array>
+    <string-array name="title_customer_orders">
+        <item>所有订单</item>
+        <item>待付款</item>
+        <item>待使用</item>
+        <item>待评价</item>
+    </string-array>
     <string-array name="title_recomment_user">
         <item>一度人脉</item>
         <item>二度人脉</item>
