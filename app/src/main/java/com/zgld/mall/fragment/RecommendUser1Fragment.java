@@ -1,6 +1,7 @@
 package com.zgld.mall.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zgld.mall.R;
+import com.zgld.mall.activity.RebateActivity;
 import com.zgld.mall.adapter.RecommendUserAdapter;
 import com.zgld.mall.beans.YRebateRelation;
 import com.zgld.mall.utils.Contents;
@@ -123,6 +125,7 @@ public class RecommendUser1Fragment extends BaseFragment implements PullToRefres
         listview = (PullToRefreshListView) view.findViewById(R.id.listview);
         listview.setMode(PullToRefreshBase.Mode.BOTH);
         listview.setOnRefreshListener(this);
+        listview.setOnItemClickListener(this);
         pageNum = 1;
         listInfo = new ArrayList<YRebateRelation>();
         infoAdapter = new RecommendUserAdapter(activity, listInfo);
@@ -147,7 +150,9 @@ public class RecommendUser1Fragment extends BaseFragment implements PullToRefres
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(activity, RebateActivity.class);
+        intent.putExtra(Contents.INFO,(YRebateRelation)parent.getAdapter().getItem(position));
+        startActivity(intent);
     }
 
     @Override

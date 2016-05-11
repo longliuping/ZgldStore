@@ -186,6 +186,7 @@ public class PersonalDataActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
+
     public void customDialogClickLeft() {
         dialog.dismiss();
         Intent intent = new Intent();

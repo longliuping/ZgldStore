@@ -71,7 +71,7 @@ public class RecommendUserAdapter extends BaseAdapter {
         YRebateRelation info = listInfo.get(position);
         if (info != null) {
             holder.item_user_name.setText(info.getAccount().getAccountName());
-            holder.item_user_address.setText(info.getAccount().getAccountIntro());
+            holder.item_user_address.setText(info.getAccount().getAccountPlace());
             SysApplication.DisplayUserImage(info.getAccount().getAccountHead(),holder.item_user_head);
         }
         if(listInfo.size()-1==position){
