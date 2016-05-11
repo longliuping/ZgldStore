@@ -77,16 +77,8 @@
                         android:text="0.00"
                         />
                 </LinearLayout>
-                <com.zgld.mall.widget.MyListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    >
-                </com.zgld.mall.widget.MyListView>
             </RelativeLayout>
-            <ListView
+            <com.zgld.mall.widget.MyListView
                 android:id="@+id/listview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -94,7 +86,7 @@
                 android:divider="@color/white"
                 android:layout_marginTop="10dp"
                 >
-            </ListView>
+            </com.zgld.mall.widget.MyListView>
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </LinearLayout>
