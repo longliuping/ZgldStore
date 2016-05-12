@@ -86,23 +86,9 @@ public class OrderDetailsActivity extends BaseActivity {
         listKey.add("订单编号：");listValue.add(info.getOrderId() + "");
         listKey.add("下单时间：");listValue.add(info.getOrderDate());
         listKey.add("商品金额：");listValue.add(PriceUtil.priceY(info.getOrderTotalPrice() + ""));
-//        listKey.add("运费：");listValue.add(PriceUtil.priceY(info.getFreight() + ""));
-//        listKey.add("收货地址：");listValue.add(info.getAddress());
-//        listKey.add("收货人：");listValue.add(info.getShipTo());
-//        listKey.add("收货人电话：");listValue.add(info.getMobile());
-//        listKey.add("邮编：");listValue.add(info.getZipcode());
         switch (info.getPaymentStatus()){
             case 1:
-                switch (info.getPayTypeId()){
-                    case 1:
-                        listKey.add("支付类型：");
-                        listValue.add("余额支付");
-                        break;
-                    case 2:
-                        listKey.add("支付类型：");
-                        listValue.add("支付宝支付");
-                        break;
-                }
+                listKey.add("支付状态："); listValue.add("已付款");
                 listKey.add("支付时间：");listValue.add(info.getPayDateTime());
                 listKey.add("支付用户号：");listValue.add(info.getBuyerId()+"");
                 listKey.add("支付账号：");listValue.add(info.getBuyerAccount());
@@ -110,12 +96,11 @@ public class OrderDetailsActivity extends BaseActivity {
                 listKey.add("支付交易号：");listValue.add(info.getPayTradeNo());
                 break;
         }
-//        switch (info.getShippingStatus()){
-//            case 1:
-//                listKey.add("配送ID：");listValue.add(info.getShippingId()+"");
-//                listKey.add("配送单号：");listValue.add(info.getShipOrderNumber());
-//                break;
-//        }
+        switch (info.getConsumptionStatus()){
+            case 1:
+                listKey.add("使用状态："); listValue.add("已使用");
+                break;
+        }
         switch (info.getRefundStatus()){
             case 1:
                 listKey.add("退款时间：");listValue.add(info.getRefundDateTime());

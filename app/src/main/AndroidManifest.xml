@@ -158,7 +158,8 @@
         <activity android:name=".activity.UpdateUserCodeActivity" />
         <activity android:name=".activity.CaptureActivity" />
         <activity android:name=".activity.ResultActivity" />
-        <activity android:name=".activity.RebateActivity"></activity>
+        <activity android:name=".activity.RebateActivity" />
+        <activity android:name=".activity.AlipayAccountActivity"></activity>
     </application>
 
 </manifest>

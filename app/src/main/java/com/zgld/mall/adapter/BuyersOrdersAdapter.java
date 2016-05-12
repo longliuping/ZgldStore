@@ -163,6 +163,14 @@ public interface BuyersOrdersAdapterListener{
 			case 0:
 				str = "待付款";
 				break;
+				case 2:
+					str = "已经申请线下支付";
+					break;
+			}
+			switch (info.getConsumptionStatus()){
+				case 1:
+					str +="已使用";
+					break;
 			}
 			switch (listInfo.get(groupPosition).getRefundStatus()){
 				case 1:
@@ -390,7 +398,7 @@ public interface BuyersOrdersAdapterListener{
 					case 1:
 						Map m = new HashMap<>();
 						m.put("orderid",orderInfo.getOrderId()+"");
-						new OrderAsync(context, Request.Method.POST, 202, "supplier/order_offinle_alipay.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
+						new OrderAsync(context, Request.Method.POST, 202, "supplier/order_offinle_payment.html", m, null, 1, new OrderAsync.OrderAsyncListener() {
 							@Override
 							public void complete(Message msg) {
 

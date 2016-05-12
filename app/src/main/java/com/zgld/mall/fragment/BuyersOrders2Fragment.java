@@ -89,7 +89,7 @@ public class BuyersOrders2Fragment extends BuyersOrdersBaseFragment implements O
         Map<String,String> m = new HashMap<>();
         m.put(Contents.PAGENUM,pageNum+"");
         m.put(Contents.PAGESIZE,20+"");
-        m.put("id","1");
+        m.put("id","3");
         getData(202, "order/user_order.html", m, null);
     }
 

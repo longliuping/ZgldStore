@@ -14,6 +14,7 @@ import com.zgld.mall.fragment.BuyersOrders0Fragment;
 import com.zgld.mall.fragment.BuyersOrders1Fragment;
 import com.zgld.mall.fragment.BuyersOrders2Fragment;
 import com.zgld.mall.fragment.BuyersOrders3Fragment;
+import com.zgld.mall.fragment.BuyersOrders4Fragment;
 import com.zgld.mall.fragment.CustomerOrders0Fragment;
 import com.zgld.mall.fragment.CustomerOrders1Fragment;
 import com.zgld.mall.fragment.CustomerOrders2Fragment;
@@ -91,7 +92,7 @@ public class CustomerOrderFragmentActivity extends BaseFragmentActivity implemen
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_TWO, titles[1], CustomerOrders1Fragment.class));
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_THREE, titles[2], CustomerOrders2Fragment.class));
         mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FOUR, titles[3], CustomerOrders3Fragment.class));
-//        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FIVE, titles[4], BuyersOrders4Fragment.class));
+        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_FIVE, titles[4], BuyersOrders4Fragment.class));
 //        mTabs2.add(new TabInfoBean(Contents.FRAGMENT_SIX, titles[5], BuyersOrders5Fragment.class));
         return Contents.FRAGMENT_ONE;
     }
